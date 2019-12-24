@@ -1,13 +1,13 @@
 # Hunter CS Winter 2019 CodeFest
 
 # Team Info
-### Team name:
+### Team name: THe Procrastinators 
 ### Team members (format: GitHub username, last name, first name):
-- 
-- 
-- 
--
-- 
+- Panlasigui, Christopher
+- Sabnur, Fardous
+- Lu, Jackson
+-Gbadamassi, Justin
+- Ng, Catherine
 - 
 
 ### Group info (check all that apply - add an X in the [ ])
