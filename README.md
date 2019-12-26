@@ -7,7 +7,7 @@
 - Sabnur, Fardous
 - Lu, Jackson
 - Gbadamassi, Justin
-- Ng, Catherine
+- catherine 8224 (Ng, Catherine)
 - 
 
 ### Group info (check all that apply - add an X in the [ ])
