@@ -1,72 +1,75 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="en-us" dir='ltr'>
+  {% extends "template.html" %}
+  {% block content %}
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    {% extends "template.html" %}
-    {% block content %}
-    <title>Open Speech Recording</title>	
+    <title>Speech Recording</title>	
     <link href="static/styles/app.css" rel="stylesheet" type="text/css">
   </head>
   <script type="text/javascript">
     var csrf_token = "{{ csrf_token }}";
   </script>
   <body>
-
+    <center><p id="timer" style="display: block;"><font size ="20">00:00</font></p></center>
     <div class="wrapper">
-
-      <!--<header>      </header>-->
-        <h1>Speech Recording</h1>
-
-
+      <h1>Speech Recording</h1>
       <section class="top-display">
-	<div class="directions">
-	  Press Record to start.
-	  <br/>
-	  Record yourself saying only the word in the box below.
-	  <br/>
-	  Press Stop to stop recording, and when all the requested words are completed you'll be able to upload the recordings.
-	</div>
-	<div class="progress-display">
-	</div>
-	<div class="info-display">
-	</div>
+        <div class="directions">
+          Press Record to start.
+          <br/>
+          Record yourself in the box below.
+          <br/>
+          Press Stop to stop recording, and you will be able to upload the recordings.
+        </div>
+        <div class="progress-display">
+        </div>
+        <div class="info-display">
+        </div>
       </section>
 
       <section class="main-controls">
         <canvas class="visualizer"></canvas>
         <div id="buttons">
-          <button class="record">Record</button>
-          <button class="stop">Stop</button>
-          <button class="upload">Upload</button>
+          <button value = "babe" onclick="revealMessage()" class="record" id = "recordButton">Record</button>
+          <button value = "babe" class="pause" id="pauseButton" disabled>Pause</button>
+          <button value = "babe" class="stop" id = "stopButton">Stop</button>
+          <button value = "babe" class="upload" name = "file">Upload</button>
         </div>
       </section>
-
       <section class="sound-clips">
 
         <!-- This is left here as a helper for testing the style of the clips
         If you want to edit their appearance without having to record clips,
-        uncomment this and reload the page. Remember to comment it again when done!
+        uncomment this and reload the page. Remember to comment it again when done! 
         <article class="clip">
           <audio controls></audio>
           <p>Sample clip name</p>
           <button class="delete">Delete</button>
-        </article>
-        -->
-
+        </article>-->
+      
       </section>
 
     </div>
 
+    <label for ="toggle">?</label>
+    <input type="checkbox" id="toggle">
+    <aside>
+      <h2>Info</h2>
+      <p>
+        "Web dictaphone is built using "
+        <a href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator.getUserMedia">getUserMedia</a>
+        "and the "
+        <a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder_API">MediaRecorder API</a>
+        ", which provides an easier way to capture Media streams."
+      </p>
+      <p>Icon courtesy of <a href="http://findicons.com/search/microphone">Find Icons</a>. Thanks to <a href="http://soledadpenades.com/">Sole</a> for the Oscilloscope code!</p>
+    </aside>
+    <script src="scripts/mediaDevices-getUserMedia-polyfill.js"></script>
     <a href="https://github.com/hunter-classes/winter-2020-codefest-submissions-the-procrastinators">
-      <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+      <img style="position: absolute; bottom: 0; right: 0; border: 0;" src="https://media3.giphy.com/media/Y01wot3Bt9Bpdz8xvs/source.gif" width="200" height="200" alt="Fork me on GitHub" data-canonical-src="https://media3.giphy.com/media/Y01wot3Bt9Bpdz8xvs/source.gif">
     </a>
-
-    <footer>
-      <a href="https://www.google.com/intl/en/policies/privacy/">Privacy</a>
-      <a href="https://www.google.com/intl/en/policies/terms/">Terms</a>
-      <a href="/legal">Participant Agreement</a>
-    </footer>
 
     <script src="static/scripts/app.js"></script>
     {% endblock %}

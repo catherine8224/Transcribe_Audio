@@ -4,6 +4,54 @@ from pydub import AudioSegment
 import sounddevice as sd
 from scipy.io.wavfile import write
 import soundfile as sf 
+import os 
+from pathlib import Path
+
+
+def transcribe_audio(f):
+  print(Path(f).suffix)
+  if Path(f).suffix == '.mp3': 
+    print("Hola!")
+    sound = AudioSegment.from_mp3(f)
+    #root.destroy()
+    #filenm = input("What file would you like to export as(wav)? ")
+    sound.export("transcript.wav", format="wav")
+
+    AUDIO_FILE = "transcript.wav"
+
+    r = sr.Recognizer()
+    with sr.AudioFile(AUDIO_FILE) as source:
+        audio = r.record(source)
+
+    #print("Transcription: " + r.recognize_google(audio))
+    transcription = r.recognize_google(audio) #class 'str'
+    return "Transcript: "+ transcription
+  elif Path(f).suffix == '.wav':
+    print("Howa!")
+    AUDIO_FILE = f
+
+    r = sr.Recognizer()
+    with sr.AudioFile(AUDIO_FILE) as source:
+        audio = r.record(source)
+
+    #print("Transcription: " + r.recognize_google(audio))
+    transcription = r.recognize_google(audio) #class 'str'
+    return "Transcript: "+ transcription
+
+#with open('transcript.mp3', 'rb') as f:
+#  pat = transcribe_audio(f)
+
+#print(pat)  
+
+F = open('transcript.mp3')
+print(transcribe_audio(F))
+
+'''import speech_recognition as sr
+from os import path
+from pydub import AudioSegment
+import sounddevice as sd
+from scipy.io.wavfile import write
+import soundfile as sf 
 
 from tkinter import filedialog
 from tkinter import *
@@ -87,7 +135,7 @@ plt.imshow(wordcloud, interpolation='bilinear')
 plt.axis("off") 
 plt.margins(x=0, y=0)
 #plt.tight_layout(pad = 0) 
-wordcloud.to_file("wordCloud.png")  
+wordcloud.to_file("wordCloud.png")  '''
 
 '''
 #1. RECORD AND SAVE AUDIO FILE
@@ -216,4 +264,35 @@ tk.Button(master,
                                                        pady=4)
 
 master.mainloop()  
+
+
+(function(){
+  "use strict";
+  var $start_button = document.getElementById("recordButton");
+  var $stop_button = document.getElementById("stopButton");
+  //var $reset_button = document.getElementById("reset-button");
+  var $timer = document.getElementById("timer");
+  var second = 0;
+  function zf(x) { return (x > 9 ? "" : "0") + x; }
+  function updateSecond(x) {
+    second = x;
+    $timer.textContent = zf(second / 60 | 0) + ":" + zf(second % 60);
+  }
+  function nextSecond() {
+    updateSecond(second + 1);
+  }
+  var timer_handle = -1;
+  $start_button.addEventListener("click", function(ev) {
+    timer_handle = setInterval(nextSecond, 1000);
+  }, false);
+  $stop_button.addEventListener("click", function(ev) {
+    if (timer_handle != -1) {
+      clearInterval(timer_handle);
+      timer_handle = -1;
+    }
+  }, false);
+  //$reset_button.addEventListener("click", function(ev) {
+    //updateSecond(0);
+  //}, false);
+})();
 '''

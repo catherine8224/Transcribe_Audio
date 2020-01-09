@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-us">
+  {% extends "template.html" %}
+  {% block content %}
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
@@ -9,22 +11,47 @@
   <body>
 
     <div class="wrapper">
-
-      <header>
         <h1>Open Speech Recording</h1>
-      </header>
-
       <section class="top-display">
-	<div class="welcome-display">
-          Thanks for contributing your spoken words to this collection! Please do share this
-          page widely so we can create as comprehensive an archive as possible.
-	</div>
+        <div class="welcome-display">
+          Thank you for contributing your audio file and recorded speech to this collection! Please share this
+          page widely amongst your peers so we can create as comprehensive an archive as possible.
+        </div>
+        <div id="tableview">
+          <br><br>Contributed by: </br></br>
+          <table style="width:100%" align="left">
+            <tr>
+              <th><font face="Trattatello">Catherine Ng</font></th>
+              <th><font face="Trattatello">Christopher Panlasigui</font> </th>
+              <th><font face="Trattatello">Justin Gbadamassi </font></th>
+              <th><font face="Trattatello">Jackson Lu </font></th>
+              <th><font face="Trattatello">Fardous Sabnur </font></th>
+            </tr>
+            <tr>
+              <th>
+                <img src= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO5WBdSf-FpcHriuH97ywTArkh2OEi6BskfjuL5PLUaNt7VRi4&s" alt="Me"style="display:block;"  >
+              </th>
+              <th>
+                <img src= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO5WBdSf-FpcHriuH97ywTArkh2OEi6BskfjuL5PLUaNt7VRi4&s" alt="Me" style="display:block;" >
+              </th>
+              <th>
+                <img src= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO5WBdSf-FpcHriuH97ywTArkh2OEi6BskfjuL5PLUaNt7VRi4&s" alt="Me"style="display:block;"  >
+              </th>
+              <th>
+                <img src= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO5WBdSf-FpcHriuH97ywTArkh2OEi6BskfjuL5PLUaNt7VRi4&s" alt="Me" style="display:block;" >
+              </th>
+              <th>
+                <img src= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO5WBdSf-FpcHriuH97ywTArkh2OEi6BskfjuL5PLUaNt7VRi4&s" alt="Me" style="display:block;" >
+              </th>
+            </tr>
+            </table>
+          </div>
       </section>
 
     </div>
 
-    <a href="https://github.com/petewarden/open-speech-recording">
-      <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+    <a href="https://github.com/hunter-classes/winter-2020-codefest-submissions-the-procrastinators">
+      <img style="position: absolute; bottom: 0; right: 0; border: 0;" src="https://media3.giphy.com/media/Y01wot3Bt9Bpdz8xvs/source.gif" width="200" height="200" alt="Fork me on GitHub" data-canonical-src="https://media3.giphy.com/media/Y01wot3Bt9Bpdz8xvs/source.gif">
     </a>
 
     <footer>
@@ -32,6 +59,6 @@
       <a href="https://www.google.com/intl/en/policies/terms/">Terms</a>
       <a href="/legal">Participant Agreement</a>
     </footer>
-
+    {% endblock %}
   </body>
 </html>

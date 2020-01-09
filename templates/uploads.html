@@ -1,0 +1,53 @@
+<!doctype html>
+{% extends "template.html" %}
+{% block content %}
+<title>Python Flask Multiple Files Upload Example</title>
+<h2>Select file(s) to upload</h2>
+<p>
+	{% with messages = get_flashed_messages() %}
+	  {% if messages %}
+		<ul class=flashes>
+		{% for message in messages %}
+		  <li>{{ message }}</li>
+		{% endfor %}
+		</ul>
+	  {% endif %}
+	{% endwith %}
+</p>
+<form method="submit" action="/uploads_form" enctype="multipart/form-data">
+    <dl>
+		<p>
+			<input type="file" name="file[]" multiple="true" class="span3" >
+		</p>
+    </dl>
+    <p>
+		<input type="submit" value="submit" class="span2">
+	</p>
+	<br>
+<!--	<div class="container">
+	<div class="header">
+        <h3 class="text-muted">Uploaded files</h3>
+	  </div>
+	  <hr/>
+	<div>
+		This is a list of the files you just uploaded, click on them to load/download them
+		<ul>
+		  {% for file in filenames %}
+			<li><a href="{{url_for('uploaded_files', filename=file)}}">{{file}}</a></li>
+		  {% endfor %}
+		</ul>
+	</div>
+	<div class="header">
+		<h3 class="text-muted">Code to manage a Upload</h3>
+	</div>
+	<hr/> 
+		</div>
+    </div>-->
+    {% for file in uploaded_files %}
+    <p> {{output}} </p>
+	<!--<img src="data:image/png;base64,{{article}}" class = "galimage" style="width:500px;height:500px;" onerror="hideImage(this);" />
+    <img src="data:image/png;base64,{{graph}}" class = "galimage" style="width:500px;height:500px;" onerror="hideImage(this);" />-->
+    {% endfor %}
+</br>
+	{% endblock %}
+</form>
