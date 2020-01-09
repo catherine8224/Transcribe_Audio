@@ -22,6 +22,7 @@ this is used to upload the files that user provides in the 'Upload' or 'Record' 
 this is used to translate the webpage
 this is used to use lexrank
 <hr>
+
 # Setup #
 Download the Google Cloud SDK to your local machine, and you must initialize the Google Cloud SDK. 
 <br>Enable billing for your project!</br>
