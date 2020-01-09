@@ -23,6 +23,7 @@ this is used to translate the webpage
 this is used to use lexrank
 <hr>
 
+#Running Locally#
 **Set up virtual environment (This is only for MAC) ** 
 ```
 virtualenv -p python3 env
@@ -30,7 +31,17 @@ source env/bin/activate
 pip install -r requirements.txt
 ```
 
-**Then in the virtual environment (you will see <env> to the left of your terminal), run these commands: **
+**Create a Cloud Storage bucket. It is recommended that you name it the same as your project ID: ( I named it awesome bucketness, so whatever)**
+```
+gsutil mb gs://${PROJECT_ID}
+```
+
+**Set the environmental variable CLOUD_STORAGE_BUCKET:**
+```
+export CLOUD_STORAGE_BUCKET=${PROJECT_ID}
+```
+
+**Then in the virtual environment (you will see <env> to the left of your terminal), run these commands:**
 ```
 export FLASK_ENV="development"
 main python.py
