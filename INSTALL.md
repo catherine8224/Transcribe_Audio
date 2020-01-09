@@ -17,7 +17,7 @@ pip install googletrans #this is used to translate the webpage
 pip install sumy 
 ```
 <div class="bg-green-light mb-2"> in the document, it says speech_recognition. That is not the package name!</div>
-#helps to record audio
+<div class="bg-yellow mb-2">helps to record audio</div>
 this is used to upload the files that user provides in the 'Upload' or 'Record' section
 this is used to translate the webpage
 this is used to use lexrank
