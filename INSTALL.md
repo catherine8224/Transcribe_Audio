@@ -56,5 +56,7 @@ once you are ready to leave virtual environment (env)
 Open app.yampl and replace with the name of your Cloud Storage bucket.
 
 Deploy your application to App Enginge with gcloud. Please note this takes several minutes. 
-```gcloud app deploy```
+```
+gcloud app deploy
+```
 Visit https://[YOUR_PROJECT_ID].appspot.com to view your deployed web application.
