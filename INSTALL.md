@@ -21,3 +21,6 @@ pip install sumy
 this is used to upload the files that user provides in the 'Upload' or 'Record' section
 this is used to translate the webpage
 this is used to use lexrank
+
+export FLASK_ENV="development"
+main python.py
