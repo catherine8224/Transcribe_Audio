@@ -23,7 +23,8 @@ this is used to translate the webpage
 this is used to use lexrank
 <hr>
 
-#Running Locally#
+# Running Locally #
+
 **Set up virtual environment (This is only for MAC) ** 
 ```
 virtualenv -p python3 env
