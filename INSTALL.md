@@ -22,6 +22,12 @@ this is used to upload the files that user provides in the 'Upload' or 'Record' 
 this is used to translate the webpage
 this is used to use lexrank
 <hr>
+# Setup #
+Download the Google Cloud SDK to your local machine, and you must initialize the Google Cloud SDK
+Enable billing for your project!
+```
+gcloud init
+```
 
 # Running Locally #
 
@@ -37,7 +43,7 @@ pip install -r requirements.txt
 gsutil mb gs://${PROJECT_ID}
 ```
 
-**Set the environmental variable CLOUD_STORAGE_BUCKET:**
+**Set the environmental variable `CLOUD_STORAGE_BUCKET`:**
 ```
 export CLOUD_STORAGE_BUCKET=${PROJECT_ID}
 ```
@@ -48,15 +54,15 @@ export FLASK_ENV="development"
 main python.py
 ```
   
-Visit localhost:8000 to view your application running locally (or 127.0.0.1). Press Control-C on your command line when you are finished.
+Visit `localhost:8000` to view your application running locally (or `127.0.0.1:5000`). Press `Control-C` on your command line when you are finished.
 ```deactivate``` 
 once you are ready to leave virtual environment (env)
 
 # Deploying to App Engine #
-Open app.yampl and replace with the name of your Cloud Storage bucket.
+Open `app.yampl` and replace with the name of your Cloud Storage bucket.
 
 Deploy your application to App Enginge with gcloud. Please note this takes several minutes. 
 ```
 gcloud app deploy
 ```
-Visit https://[YOUR_PROJECT_ID].appspot.com to view your deployed web application.
+Visit `https://[YOUR_PROJECT_ID].appspot.com` to view your deployed web application.
