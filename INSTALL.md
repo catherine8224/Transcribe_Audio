@@ -8,7 +8,7 @@ Run python. if you have Python3, then you can pip install. If you are not in Pyt
 Run the following on your terminal: 
 ```
 pip install flask
-pip install SpeechRecognition ```diff #in the document, it says speech_recognition. That is not the true package name!```
+pip install SpeechRecognition diff in the document, it says speech_recognition. That is not the true package name!
 pip install sounddevice #helps to record audio
 pip install pydub
 pip install soundfile
