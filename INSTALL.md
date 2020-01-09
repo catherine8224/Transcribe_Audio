@@ -47,3 +47,14 @@ export CLOUD_STORAGE_BUCKET=${PROJECT_ID}
 export FLASK_ENV="development"
 main python.py
 ```
+  
+Visit localhost:8000 to view your application running locally (or 127.0.0.1). Press Control-C on your command line when you are finished.
+```deactivate``` 
+once you are ready to leave virtual environment (env)
+
+# Deploying to App Engine #
+Open app.yampl and replace with the name of your Cloud Storage bucket.
+
+Deploy your application to App Enginge with gcloud. Please note this takes several minutes. 
+```gcloud app deploy```
+Visit https://[YOUR_PROJECT_ID].appspot.com to view your deployed web application.
