@@ -23,8 +23,9 @@ this is used to translate the webpage
 this is used to use lexrank
 <hr>
 # Setup #
-Download the Google Cloud SDK to your local machine, and you must initialize the Google Cloud SDK
-Enable billing for your project!
+Download the Google Cloud SDK to your local machine, and you must initialize the Google Cloud SDK. 
+<br>Enable billing for your project!</br>
+
 ```
 gcloud init
 ```
