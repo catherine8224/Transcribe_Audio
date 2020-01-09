@@ -22,5 +22,14 @@ this is used to upload the files that user provides in the 'Upload' or 'Record' 
 this is used to translate the webpage
 this is used to use lexrank
 
+**Set up virtual environment ** (This is only for MAC)
+```
+virtualenv -p python3 env
+source env/bin/activate
+pip install -r requirements.txt
+```
+
+ ```
 export FLASK_ENV="development"
 main python.py
+```
