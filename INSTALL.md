@@ -25,7 +25,7 @@ this is used to use lexrank
 
 # Setup #
 Download the <a href = "https://cloud.google.com/sdk/install">Google Cloud SDK</a> to your local machine, and you must initialize the Google Cloud SDK. 
-![Alt image](images/googlesdk.png)
+![Alt image](googlesdk.png)
 <br>Enable billing for your project!</br>
 
 ```
