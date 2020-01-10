@@ -24,7 +24,7 @@ this is used to use lexrank
 <hr>
 
 # Setup #
-Download the Google Cloud SDK to your local machine, and you must initialize the Google Cloud SDK. 
+Download the <a href = "https://cloud.google.com/sdk/install">Google Cloud SDK</a> to your local machine, and you must initialize the Google Cloud SDK. 
 <br>Enable billing for your project!</br>
 
 ```
@@ -33,7 +33,7 @@ gcloud init
 
 # Running Locally #
 
-**Set up virtual environment (This is only for MAC) ** 
+**Set up virtual environment (This is only for MAC)** 
 ```
 virtualenv -p python3 env
 source env/bin/activate
