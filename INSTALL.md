@@ -32,6 +32,18 @@ Download the <a href = "https://cloud.google.com/sdk/install">Google Cloud SDK</
 gcloud init
 ```
 
+
+ # Get the Sample Code # 
+ Run the following command to clone the Github repository:
+ ```
+git clone https://github.com/hunter-classes/winter-2020-codefest-submissions-the-procrastinators.git
+```
+
+ Change directory to the sample code location:
+```
+cd python-docs-samples/codelabs/flex_and_vision
+ ```
+ 
 # Running Locally #
 
 **Set up virtual environment (This is only for MAC)** 
