@@ -12,90 +12,106 @@
    <link href="static/css/app.css" rel="stylesheet" type="text/css">
  </head>
  <body>
+
     <header>
+      <h1 class="logo">SPEAK</h1>
       <div class="container">
-        <h1 class="logo">SPEAK</h1>
         <strong><nav>
           <ul class="menu">
             <li><a href="{{ url_for('home') }}">Home</a></li>
             <li><div class="dropdown">
-              <button class="dropbtn">Learn More</button>
+              <span class="dropbtn">Learn More</span>
               <div class="dropdown-content">
                 <a href="{{ url_for('about') }}"> About </a>
                 <a href="{{ url_for('thanks') }}">Thanks</a>
               </div>
             </div></li>
-            <li><div class="dropdown">
-              <button class="dropbtn">Uploads</button>
-              <div class="dropdown-content">
-                <a href="{{ url_for('upload_form') }}">Upload One File</a>
-                <a href="{{ url_for('uploads_form') }}">Upload Multiple Files</a>
-              </div>
-            </div></li>
+            <li><a href="{{ url_for('youtube_form') }}">Upload</a></li>
             <li><a href="{{ url_for('record_form') }}">Record</a></li>
             <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+            <li><form id="form1" runat="server">
+              <div id="google_translate_element" style="display: none"></div>
+              <script type="text/javascript">
+              function googleTranslateElementInit() {
+                  new google.translate.TranslateElement({ pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false }, 'google_translate_element');
+              }
+              </script>
+              <script src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" type="text/javascript"></script>
+              <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+              <script>
+              function translateLanguage(lang) {
+                  var $frame = $('.goog-te-menu-frame:first');
+                  if (!$frame.size()) {
+                      alert("Error: Could not find Google translate frame.");
+                      return false;
+                  }
+                  $frame.contents().find('.goog-te-menu2-item span.text:contains(' + lang + ')').get(0).click();
+                  return false;
+              }
+              </script>
+              <div style="float:right;" class="dropdown dropdown-lang">
+                <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="flag-icon flag-icon-us">Select Language</span>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <div class="dropdown-menu-col">
+                  <a href="javascript:;" id="English" onclick="translateLanguage(this.id);"><span><img src="static/american_flag.png" alt="" style="width:15px;height:10px;"/>English </span></a>
+                    <a href="javascript:;" id="German" onclick="translateLanguage(this.id);"><img src="static/germany_flag.png" alt="" style="width:15px;height:10px;"/><span>Deutsch </span></a>
+                    <a href="javascript:;" id="Italian" onclick="translateLanguage(this.id);"><span><img src="static/italy_flag.png" alt="" style="width:15px;height:10px;"/>Italiano </span></a>
+                      <a href="javascript:;" id="Hindi" onclick="translateLanguage(this.id);"><span><img src="static/india_flag.png" alt="" style="width:15px;height:10px;"/></a>
+                      हिंदी </span>
+                      <a href="javascript:;" id="French" onclick="translateLanguage(this.id);"><span>Français </span>
+                        <img src="static/french_flag.png" alt="" style="width:15px;height:10px;"/></a>
+                      </div>
+                      <div class="dropdown-menu-col">
+                <a href="javascript:;" id="Spanish" onclick="translateLanguage(this.id);"><span>Español</span>
+                <img src="static/spain_flag.png" alt="" style="width:15px;height:10px;"/></a>
+                <a href="javascript:;" id="Russian" onclick="translateLanguage(this.id);"><span>Русский</span>
+                <img src="static/russia_flag.png" alt="" style="width:15px;height:10px;"/></a>
+                <a href="javascript:;" id="Filipino" onclick="translateLanguage(this.id);"><span>Tagalog</span>
+                <img src="static/philippines_flag.png" alt="" style="width:15px;height:10px;"/></a>
+                <a href="javascript:;" id="Bengali" onclick="translateLanguage(this.id);"><span>বাংলা</span>
+                <img src="static/bangladesh_flag.png" alt="" style="width:15px;height:10px;"/></a>
+              </div>
+            </div>
+            </div>
+            </form></li>
           </ul>
     </nav></strong>
 </header>
-<form id="form1" runat="server">
-  <div id="google_translate_element" style="display: none"></div>
-  <script type="text/javascript">
-  function googleTranslateElementInit() {
-      new google.translate.TranslateElement({ pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false }, 'google_translate_element');
-  }
-  </script>
-  <script src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" type="text/javascript"></script>
-  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-  <script>
-  function translateLanguage(lang) {
-      var $frame = $('.goog-te-menu-frame:first');
-      if (!$frame.size()) {
-          alert("Error: Could not find Google translate frame.");
-          return false;
-      }
-      $frame.contents().find('.goog-te-menu2-item span.text:contains(' + lang + ')').get(0).click();
-      return false;
-  }
-  </script>
-  <div style="float:right;" class="dropdown dropdown-lang">
-      <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <span class="flag-icon flag-icon-us">Select Language</span>
-      </button>
-<div class="dropdown-menu dropdown-menu-right">
-  <div class="dropdown-menu-col">
-    <a href="javascript:;" id="English" onclick="translateLanguage(this.id);"><span>English </span>
-    <img src="static/american_flag.png" alt="" style="width:15px;height:10px;"/></a>
-    <a href="javascript:;" id="German" onclick="translateLanguage(this.id);"><span>Deutsch </span>
-    <img src="static/germany_flag.png" alt="" style="width:15px;height:10px;"/></a>
-    <a href="javascript:;" id="Italian" onclick="translateLanguage(this.id);"><span>Italiano </span>
-      <img src="static/italy_flag.png" alt="" style="width:15px;height:10px;"/></a>
-    <a href="javascript:;" id="Hindi" onclick="translateLanguage(this.id);"><span>हिंदी </span>
-    <img src="static/india_flag.png" alt="" style="width:15px;height:10px;"/></a>
-    <a href="javascript:;" id="French" onclick="translateLanguage(this.id);"><span>Français </span>
-    <img src="static/french_flag.png" alt="" style="width:15px;height:10px;"/></a>
-    </div>
-    
-    <div class="dropdown-menu-col">
-    <a href="javascript:;" id="Spanish" onclick="translateLanguage(this.id);"><span>Español</span>
-    <img src="static/spain_flag.png" alt="" style="width:15px;height:10px;"/></a>
-    <a href="javascript:;" id="Russian" onclick="translateLanguage(this.id);"><span>Русский</span>
-    <img src="static/russia_flag.png" alt="" style="width:15px;height:10px;"/></a>
-    <a href="javascript:;" id="Filipino" onclick="translateLanguage(this.id);"><span>Tagalog</span>
-    <img src="static/philippines_flag.png" alt="" style="width:15px;height:10px;"/></a>
-    <a href="javascript:;" id="Bengali" onclick="translateLanguage(this.id);"><span>বাংলা</span>
-    <img src="static/bangladesh_flag.png" alt="" style="width:15px;height:10px;"/></a>
-  </div>
-</div>
-</div>
-</form>
+
 <!--<img style="position: absolute; bottom: 0; right: 0; border: 10;" src="https://service.liveperson.net/visitor/purina/images/LiveChat_Icon_purina_sm.png" id="LPMimage-1578198732075-1" alt="Live Chat" class="LPMimage" style="margin: 0px; padding: 0px; border-style: none; border-width: 0px; font-style: normal; font-weight: normal; font-variant: normal; list-style: outside none none; letter-spacing: normal; line-height: normal; text-decoration: none; vertical-align: baseline; white-space: normal; word-spacing: normal; position: absolute; top: 0px; left: 0px; z-index: 600;">-->
 
+<button class="open-button" onclick="openForm()">Chat</button>
+
+<div class="chat-popup" id="myForm">
+  <form action="/action_page.php" class="form-container">
+    <h1>Chat</h1>
+
+    <label for="msg"><b>Message</b></label>
+    <textarea placeholder="Type message.." name="msg" required></textarea>
+
+    <button type="submit" class="btn">Send</button>
+    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+  </form>
+</div>
+
+<script>
+function openForm() {
+  document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+}
+</script>
+
   
-    <footer>
-      <a href="https://www.google.com/intl/en/policies/privacy/">Privacy</a>
-      <a href="https://www.google.com/intl/en/policies/terms/">Terms</a>
-    </footer>'
-  </head>
+<footer>
+  <a href="https://www.google.com/intl/en/policies/privacy/">Privacy</a>
+  <a href="https://www.google.com/intl/en/policies/terms/">Terms</a>
+</footer>'
+</head>
 <!--</body>
 </html>
 </head>-->
@@ -104,6 +120,14 @@
  </body>
 
 </html>
+
+<div id = "footer"></div>
+<a href="https://github.com/hunter-classes/winter-2020-codefest-submissions-the-procrastinators">
+  <img style="position: fixed; bottom: 0; right: 0; border: 0;" src="https://media3.giphy.com/media/Y01wot3Bt9Bpdz8xvs/source.gif" width="100" height="100" alt="Fork me on GitHub" data-canonical-src="https://media3.giphy.com/media/Y01wot3Bt9Bpdz8xvs/source.gif">
+  </a>
+</div>
+
+
 
 <!--<html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">

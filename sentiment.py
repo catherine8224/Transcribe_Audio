@@ -1,75 +1,61 @@
-import nltk 
-import matplotlib.pyplot as plt
-from transcribe import transcribe_audio
+#Generating a summary of a text	
+#SumBasic (word-based) (do stop words and stemming before doing this)
+#Graph-based Methods: TextRank (relationship-based), 
+# Latent Semantic Analysis (semantic-based)
+# Lex-Rank: unsupervised approach to text summarization based on graph-based centrality scoring of sentences.
 
-from nltk.tokenize import sent_tokenize
-text = transcribe_audio('transcript.mp3')
-tokenized_text=sent_tokenize(text)
-#print("Tokenized text: ", tokenized_text)
-#print('\n')
+# Load Packages
+import sumy
+from sumy.parsers.plaintext import PlaintextParser
+from sumy.nlp.tokenizers import Tokenizer
+from sumy.summarizers.lex_rank import LexRankSummarizer
 
-from nltk.tokenize import word_tokenize
-tokenized_word=word_tokenize(text)
-#print('Tokenized word: ', tokenized_word)
+def summarizing(document):
+    #For Strings
+    parser = PlaintextParser.from_string(document,Tokenizer("english"))
+    #For files
+    #parser = PlaintextParser.from_file(file, Tokenizer("english"))
 
+    # Using LexRank
+    summarizer = LexRankSummarizer()
+    #Summarize the document with 2 sentences
+    summary = summarizer(parser.document, 2)
+    for sentence in summary:
+        return(sentence)
 
-from nltk.corpus import stopwords
-stop_words=set(stopwords.words("english"))
-#print('Stop words: ', stop_words)
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+sid = SentimentIntensityAnalyzer()
 
+def vader(document):
+    message_text = document
+    # Calling the polarity_scores method on sid and passing in the message_text outputs a dictionary with negative, neutral, positive, and compound scores for the input text
+    scores = sid.polarity_scores(message_text)
 
-#Removing Stopwords to make Filtered Sentence
-filtered_sent=[]
-for w in tokenized_word:
-    if w not in stop_words:
-        filtered_sent.append(w)
-#print("Tokenized Sentence:",tokenized_word)
-#print("Filterd Sentence:",filtered_sent)
-
-#Filtered Sentence: ['conscious', 'spiritual', 'moral', 'Heritage', 'union', 'founded', 
-#'indivisible', 'Universal', 'values', 'human', 'dignity', 'Freedom', 'equality', 'solidarity', 'based', 'principles', 'democracy', 
-#'rule', 'law', 'places', 'individual', 'heart', 'activities', 'establishing', 'citizenship', 'union', 'creating', 'area', 'Freedom', 
-#'security', 'justice']
-
-
-# Stemming
-from nltk.stem import PorterStemmer
-from nltk.tokenize import sent_tokenize, word_tokenize
-ps = PorterStemmer()
-
-stemmed_words=[]
-for w in filtered_sent:
-    stemmed_words.append(ps.stem(w))
-
-#pyprint("Filtered Sentence:",filtered_sent)
-#print("Stemmed Sentence:",stemmed_words)
-#Stemmed Sentence: ['consciou', 'spiritu', 'moral', 'heritag', 'union', 'found', 'indivis', 'univers', 'valu', 'human', 'digniti', 
-# 'freedom', 'equal', 'solidar', 'base', 'principl', 'democraci', 'rule', 'law', 'place', 'individu', 'heart', 'activ', 'establish', 
-# 'citizenship', 'union', 'creat', 'area', 'freedom', 'secur', 'justic']
+    # Here we loop through the keys contained in scores (pos, neu, neg, and compound scores) and print the key-value pairs on the screen
+    for key in sorted(scores):
+        result = '{0}: {1}, '.format(key, scores[key]), end=''
+    return result
 
 
-#Lexicon Normalization
-#performing stemming and Lemmatization
-
-from nltk.stem.wordnet import WordNetLemmatizer
-lem = WordNetLemmatizer()
-
-from nltk.stem.porter import PorterStemmer
-stem = PorterStemmer()
-
-#word = "flying"
-
-lemmatized_word=[]
-for w in filtered_sent: 
-    lemmatized_word.append(lem.lemmatize(w, "v"))
-
-##print("Lemmatized Word:", lemmatized_word)
 
 
-#print("Lemmatized Word:",lem.lemmatize(word,"v"))
-#print("Stemmed Word:",stem.stem(word))
 
-#Part-of-Speech(POS) tagging
-tokens=nltk.word_tokenize(text)
-#print(tokens)
-print(nltk.pos_tag(tokens))
+for file in uploaded_files:
+    			#if file and allowed_file(file.filename):
+			filename = secure_filename(file.filename)
+			filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+			#filenames.append(filename) 
+			name = '{}'.format(filename)
+			storage_client = storage.Client()
+			bucket = storage_client.get_bucket('awesome-bucketness')
+			blob = storage.Blob(name, bucket)
+			blob.upload_from_filename(filepath)
+			#with open(os.path.join(app.config['UPLOAD_FOLDER'], filename), 'rb') as f:
+			output = transcribe_audio(filename)
+			return render_template("uploads.html", output = output)
+		flash('File(s) successfully uploaded')
+		else:
+			flash('ERROR: Allowed filetypes are mp3, flac, wav')
+			return redirect(request.url)
+	return "Hello World"

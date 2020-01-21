@@ -5,12 +5,29 @@
     <title>About Flask</title>
     <link href="static/css/app.css" rel="stylesheet" type="text/css">
   </head>
-  <body>
+
+  <body style = "text-align:center;">
     {% extends "template.html" %}
     {% block content %}
-    <h1> About Speech Performance End Analyzer Kombucha (SPEAK) </h1>
-    <p> SPEAK is a micro web framework written in Python.</p>
-    <p> SPEAK is an application that can take in pre-recorded audio files (FLAC, mp3, etc)</p>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <div class="wrapper">
+    <h1> About Speech Performance Easy Analyzer for Kicks (SPEAK) </h1>
+    <p font-size: > SPEAK is a micro web framework written in Python.</p>
+    <p> SPEAK is an application that can take in pre-recorded audio files (wav, mp3, m4a, and FLAC)</p>
+    <p> You can either do two things: 1) upload one/multiple audio file(s) or 2) upload a Youtube music video with captions so that it can process the captioned words. 
+      <ol>
+      <li>
+      For the first option, it can take in audio files in different languages (French, Spanish, Chinese, and English). Once it is processed and saved in Google Cloud Storage, it will transcribe the audio, and create a Word Cloud and bar graph of the words said in the file. 
+      I have used Seaborn, matplotlib, and plot.ly to generate the bar graphs. We hope to continue editing this website so that it can process music. </li>
+      <li>
+      The second option uses the YouTube API to scrape the captions of the music videos on YouTube. It will then create a Word Cloud and bar graph of the words said in the file. </li>
+    </ol>
+
+    You can contact us in the "Contact Us" link if there are any issues. 
+    </p>
+  </div>
     {% endblock %}
 </body>
 </html>

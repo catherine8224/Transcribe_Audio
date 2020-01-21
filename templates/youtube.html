@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en-us" dir="ltr">
+{% extends "template.html" %}
+{% block content %}
+<head>
+    <meta charset="utf-8">
+    <title>Multiple Files Upload</title>
+    <link href="static/css/app.css" rel="stylesheet" type="text/css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+
+
+<body>
+  <div class="wrappers">
+<h2>Select YouTube video to upload or any Music file</h2>
+<p>
+	{% with messages = get_flashed_messages() %}
+	  {% if messages %}
+		<ul class=flashes>
+		{% for message in messages %}
+		  <li>{{ message }}</li>
+		{% endfor %}
+		</ul>
+	  {% endif %}
+	{% endwith %}
+</p>
+<form method="POST" action="/youtube" enctype="multipart/form-data">
+    <dl>
+      <p>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+        <div class="input-group-1" style="text-align: center;">
+          <span contenteditable="true">
+              <label>Text box</label>
+              <input type = "text"
+              name = "Text"
+              id = "myText"
+              value = "" />    
+            <a href="#" data-toggle="tooltip" title="Please upload your YouTube music video link (e.g. https://www.youtube.com/watch?v=mw5VIEIvuMI)">?</a>
+            </div>
+        </p>
+    </dl>
+    <p>
+        <div class="upload-btn-wrapper" style="text-align: center;">
+            <label class="btn btn-default btn-file">
+              Submit <input type="submit" value = "Youtube" id = "submit" name = "Analyze" style="display: none;">
+            </label>
+      </div> 
+    </p>
+    <br>
+</br>
+
+
+{% if text is defined %}
+<div class="header">
+	<h3 class="text-muted">Transcription</h3>
+  <textarea id="text-val" rows="10" cols="80">{{text}}</textarea><br/>
+  <input type="button" id="dwn-btn" value="Download file (.txt)"/>
+  <h3> Summary of Text: </h3>
+	<textarea id="text-val" rows="7" cols="30">{{lexyranky}}</textarea><br/>
+	
+	<h3>Sentiment Analysis </h3> 
+  <p>{{sent}}</p>
+</div>
+<div class = "maintainers">
+  <img src="data:image/png;base64,{{ cloud }}" class = "galimage" onerror="hideImage(this);" />
+</div>
+<div class="maintainer">
+  <img src="data:image/png;base64,{{ bar_graph }}" class = "galimage" onerror="hideImage(this);" />
+  <img src="data:image/png;base64,{{ bar_graph_mat }}" class = "galimage" onerror="hideImage(this);" />
+  </div>
+</form>
+{% endif %}
+
+
+<!-- This is for Uploading Music Files-->
+<form class="md-form" method="POST" action="/youtube" enctype="multipart/form-data">
+  <dl>
+    <p>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet"/>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+      <script src="js/vendor/jquery.ui.widget.js"></script>
+      <script src="js/jquery.iframe-transport.js"></script>
+      <script src="js/jquery.fileupload.js"></script>
+
+      <div class="input-group-1" style="text-align: center;">
+        <span contenteditable="true">
+          <!--<span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">Browse</span>
+            <input name="file[]" multiple="true"  multiple data-show-upload="true" data-show-caption="true" autocomplete="off" multiple accept=".jpg, .png, .pdf, .wav, .mp3" onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file" >
+          </span><a href="#" data-toggle="tooltip" title="Please upload an audio file">?</a>
+                  <span class="form-control">   </span>-->
+        <span class="btn btn-success fileinput-button">
+          <i class="glyphicon glyphicon-plus"></i>
+          <span>Add files...</span>
+          <input type="file" name="file" multiple>
+      </span>
+        <button type="submit" class="btn btn-primary start">
+          <i class="glyphicon glyphicon-upload"></i>
+          <span>Start upload</span>
+        </button>
+        <button type="reset" class="btn btn-warning cancel">
+          <i class="glyphicon glyphicon-ban-circle"></i>
+          <span>Cancel upload</span>
+      </button>
+      <button type="button" class="btn btn-danger delete">
+          <i class="glyphicon glyphicon-trash"></i>
+          <span>Delete</span>
+      </button>
+      </div>
+      <!-- The global progress state -->
+      <div class="col-lg-5 fileupload-progress fade">
+        <!-- The global progress bar -->
+        <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+        </div>
+        <!-- The extended global progress state -->
+        <div class="progress-extended">&nbsp;</div>
+    </div>
+      <!-- The blueimp Gallery widget -->
+      <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-filter=":even">
+        <div class="slides"></div>
+        <h3 class="title"></h3>
+        <a class="prev">‹</a>
+        <a class="next">›</a>
+        <a class="close">×</a>
+        <a class="play-pause"></a>
+        <ol class="indicator"></ol>
+      </div>
+
+      {% raw %}
+      <!-- The template to display files available for upload -->
+      <script id="template-upload" type="text/x-tmpl">
+      {% for (var i=0, file; file=o.files[i]; i++) { %}
+          <tr class="template-upload fade">
+              <td>
+                  <span class="preview"></span>
+              </td>
+              <td>
+                  <p class="name">{%=file.name%}</p>
+                  <strong class="error text-danger"></strong>
+              </td>
+              <td>
+                  <p class="size">Processing...</p>
+                  <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
+              </td>
+              <td>
+                  {% if (!i && !o.options.autoUpload) { %}
+                      <button class="btn btn-primary start" disabled>
+                          <i class="glyphicon glyphicon-upload"></i>
+                          <span>Start</span>
+                      </button>
+                  {% } %}
+                  {% if (!i) { %}
+                      <button class="btn btn-warning cancel">
+                          <i class="glyphicon glyphicon-ban-circle"></i>
+                          <span>Cancel</span>
+                      </button>
+                  {% } %}
+              </td>
+          </tr>
+      {% } %}
+      </script>
+      <!-- The template to display files available for download -->
+      <script id="template-download" type="text/x-tmpl">
+      {% for (var i=0, file; file=o.files[i]; i++) { %}
+          <tr class="template-download fade">
+              <td>
+                  <span class="preview">
+                      {% if (file.thumbnailUrl) { %}
+                          <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+                      {% } %}
+                  </span>
+              </td>
+              <td>
+                  <p class="name">
+                      {% if (file.url) { %}
+                          <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+                      {% } else { %}
+                          <span>{%=file.name%}</span>
+                      {% } %}
+                  </p>
+                  {% if (file.error) { %}
+                      <div><span class="label label-danger">Error</span> {%=file.error%}</div>
+                  {% } %}
+              </td>
+              <td>
+                  <span class="size">{%=o.formatFileSize(file.size)%}</span>
+              </td>
+              <td>
+                  {% if (file.deleteUrl) { %}
+                      <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+                          <i class="glyphicon glyphicon-trash"></i>
+                          <span>Delete</span>
+                      </button>
+                      <input type="checkbox" name="delete" value="1" class="toggle">
+                  {% } else { %}
+                      <button class="btn btn-warning cancel">
+                          <i class="glyphicon glyphicon-ban-circle"></i>
+                          <span>Cancel</span>
+                      </button>
+                  {% } %}
+              </td>
+          </tr>
+      {% } %}
+      </script>
+      {% endraw %}
+
+
+      </p>
+  </dl>
+  <p>
+      <div class="upload-btn-wrapper" style="text-align: center;">
+          <label class="btn btn-default btn-file">
+            Submit <input type="submit" value = "File" name = "Analyze" style="display: none;">
+          </label>
+    </div> 
+  </p>
+  <br>
+</br>
+
+<hr/>
+{% if len is defined %}
+{% for i in range(0, len) %}
+<audio  src="{{filepaths[i]}}" controls> </audio>
+<div class="header">
+	<h3 class="text-muted">Transcription</h3>
+  <textarea id="text-value" rows="2" cols="150">{{output[i]}}</textarea>
+  <textarea id="text-value" rows="2" cols="150">{{output_punct[i]}}</textarea>
+</div>
+
+<div class= "maintainers">
+<img src="data:image/png;base64,{{clouds[i]}}" class = "galimage" style="width:500px;height:500px;" onerror="hideImage(this);" />
+</div>
+
+<div class="maintainer">
+<img src="data:image/png;base64,{{graphs[i]}}" class = "galimage" onerror="hideImage(this);" />
+<img src="data:image/png;base64,{{graphs_mat[i]}}" class = "galimage" onerror="hideImage(this);" />
+</div>
+
+<br> </br>
+{% endfor %}
+{% endif %}
+
+</form>
+
+<div class="containersssss">
+  <div class="row">
+      <div class="col-xs-3">
+          <label> Choose the plot type....</label>
+          <select class="form-control" id ='first_cat'>
+              <option value="Bar">Bar</option>
+              <option value="Scatter">Scatter</option>
+          </select>
+      </div>
+      <div class="col-md-6">
+          <div class="chart" id="bargraph">
+              <script>
+                  var graphs = {{plot | safe}};
+                  Plotly.plot('bargraph',graphs,{});
+              </script>
+          </div>
+      </div>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/jquery-1.11.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/plots.js') }}"></script>
+
+
+
+
+{% endblock %}
+
+</div>
+</body>
+</html>

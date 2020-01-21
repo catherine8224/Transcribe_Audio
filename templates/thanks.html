@@ -1,64 +1,95 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en-us">
-  {% extends "template.html" %}
-  {% block content %}
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>Open Speech Recording</title>	
-    <link href="static/styles/app.css" rel="stylesheet" type="text/css">
-  </head>
-  <body>
+{% extends "template.html" %}
+{% block content %}
+<head>
+  <meta charset="utf-8">
+  <!--<meta name="viewport" content="width=device-width">-->
+  <title>Open Speech Recording</title>	
+  <link href="static/css/app.css" rel="stylesheet" type="text/css">
+  <script src="static/translate.js"></script>
+  <script src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+  type="text/javascript"></script>
+  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+</head>
 
-    <div class="wrapper">
-        <h1>Open Speech Recording</h1>
-      <section class="top-display">
-        <div class="welcome-display">
-          Thank you for contributing your audio file and recorded speech to this collection! Please share this
-          page widely amongst your peers so we can create as comprehensive an archive as possible.
-        </div>
-        <div id="tableview">
-          <br><br>Contributed by: </br></br>
-          <table style="width:100%" align="left">
-            <tr>
-              <th><font face="Trattatello">Catherine Ng</font></th>
-              <th><font face="Trattatello">Christopher Panlasigui</font> </th>
-              <th><font face="Trattatello">Justin Gbadamassi </font></th>
-              <th><font face="Trattatello">Jackson Lu </font></th>
-              <th><font face="Trattatello">Fardous Sabnur </font></th>
-            </tr>
-            <tr>
-              <th>
-                <img src= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO5WBdSf-FpcHriuH97ywTArkh2OEi6BskfjuL5PLUaNt7VRi4&s" alt="Me"style="display:block;"  >
-              </th>
-              <th>
-                <img src= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO5WBdSf-FpcHriuH97ywTArkh2OEi6BskfjuL5PLUaNt7VRi4&s" alt="Me" style="display:block;" >
-              </th>
-              <th>
-                <img src= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO5WBdSf-FpcHriuH97ywTArkh2OEi6BskfjuL5PLUaNt7VRi4&s" alt="Me"style="display:block;"  >
-              </th>
-              <th>
-                <img src= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO5WBdSf-FpcHriuH97ywTArkh2OEi6BskfjuL5PLUaNt7VRi4&s" alt="Me" style="display:block;" >
-              </th>
-              <th>
-                <img src= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO5WBdSf-FpcHriuH97ywTArkh2OEi6BskfjuL5PLUaNt7VRi4&s" alt="Me" style="display:block;" >
-              </th>
-            </tr>
-            </table>
+<body>
+  <div class="wrapper">
+      <h1>Open Speech Recording</h1>
+    <section class="top-display">
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+			<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet"/>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+      <div class="welcome-display">
+        Thank you for contributing your audio file and recorded speech to this collection! Please share this
+        page widely amongst your peers so we can create as comprehensive an archive as possible.
+      </div>
+      <div class="about-section">
+        <h1>About Us</h1>
+        <p>We are called <b>The Procrastinators</b> on GitHub, don't ask us why. But we are passionate about Computer Science, and making things work!</p>
+      </div>
+        <div class="row">
+          <div class="column">
+            <div class="card">
+              <img src="/static/IMG_0400.JPG" alt="Catherine" style="width:100%; height:100%">
+              <div class="cappa">
+                <h2>Catherine Ng</h2>
+                <p class="title">CEO & Founder</p>
+                <p>Hi! I am a super senior at Hunter College who is a major in Biology/Bioinformatics. I really love coding, and I hope to do Data Science in the near future.
+                  Currently, I am proficient in Python, and with this project, have experience in HTML, CSS, and Javascript. 
+                </p>
+                <p>cathygreat828@gmail.com</p>
+                <p><button class="button">Contact</button></p>
+              </div>
+            </div>
           </div>
-      </section>
 
-    </div>
+          <div class="column">
+            <div class="card">
+              <img src="static/chris.jpg" alt="Chris" style="width:100%; height:100%">
+              <div class="cappa">
+                <h2>Christopher Panlasigui</h2>
+                <p class="title">Art Director</p>
+                <p>Hello, I am a also a Biology/Bioinformatics student at Hunter College. Previously, I did business at Pace University but fell in love with programming.
+                  I currently work at MOSCOT as well as do research at the Belfer Research Building. I am proficient in R and Perl. 
+                </p>
+                <p>christopher.pan@gmail.com</p>
+                <p><button class="button">Contact</button></p>
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="card">
+              <img src="static/fardous.jpg" alt="Chris" style="width:100%; height:100%">
+              <div class="cappa">
+                <h2>Fardous Sabnur</h2>
+                <p class="title">Art Director</p>
+                <p>My name is Fardous  Sabnur. I am an undergraduate student in CUNY Hunter College majoring in Financial Mathematics. I love dancing and watching anime. I am proficient in Python and C++, and have taken complex math and computer courses in Computer Theory and Linear Algebra. 
+                </p>
+                <p>christopher.pan@gmail.com</p>
+                <p><button class="button">Contact</button></p>
+              </div>
+            </div>
+          </div>
+        <!--<br><br>Contributed by: </br></br>
+        <table>
+          <tr>
+            <th style="text-align:center;"><font face="Trattatello">Catherine Ng</font></thstyle="text-align:center;">
+            <th style="text-align:center;"><font face="Trattatello">Christopher Panlasigui</font> </th>
+          </tr>
+          <tr>
+            <th>
+              <img align = "center" src= "static/IMG_0400.JPG" alt="Me"style="display:block;"  height="180" width="180" >
+            </th>
+            <th>
+              <img src= "static/chris.jpg" alt="Me" style="display:block;" height="180" width="180" >
+            </th>
+          </tr>
+          </table>-->
+    </section>
 
-    <a href="https://github.com/hunter-classes/winter-2020-codefest-submissions-the-procrastinators">
-      <img style="position: absolute; bottom: 0; right: 0; border: 0;" src="https://media3.giphy.com/media/Y01wot3Bt9Bpdz8xvs/source.gif" width="200" height="200" alt="Fork me on GitHub" data-canonical-src="https://media3.giphy.com/media/Y01wot3Bt9Bpdz8xvs/source.gif">
-    </a>
+  </div>
 
-    <footer>
-      <a href="https://www.google.com/intl/en/policies/privacy/">Privacy</a>
-      <a href="https://www.google.com/intl/en/policies/terms/">Terms</a>
-      <a href="/legal">Participant Agreement</a>
-    </footer>
     {% endblock %}
-  </body>
+  <body>
 </html>
