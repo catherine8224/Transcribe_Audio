@@ -1,7 +1,30 @@
+{% extends "bootstrap/base.html" %}
+
+<!--{% block title %}File Uploader{% endblock %}-->
+
+{% block head %}
+{{ super() }}
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+
+<!-- Generic page styles -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<!-- blueimp Gallery styles -->
+<link rel="stylesheet" href="http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
+
+<!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.fileupload.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.fileupload-ui.css') }}">
+{% endblock %}
+
+{% block navbar %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
  <head>
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
 
    <meta charset="utf-8">
    <title>SPEAK</title>
@@ -10,6 +33,16 @@
    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/template.css') }}"> -->
    <!--<link rel="stylesheet" href='/static/css/style.css'/>-->
    <link href="static/css/app.css" rel="stylesheet" type="text/css">
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+
+   <!-- Latest compiled and minified CSS -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+ 
+   <!-- Optional theme -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+ 
+   <!-- Latest compiled and minified JavaScript -->
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
  </head>
  <body>
 
@@ -55,23 +88,23 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
                   <div class="dropdown-menu-col">
-                  <a href="javascript:;" id="English" onclick="translateLanguage(this.id);"><span><img src="static/american_flag.png" alt="" style="width:15px;height:10px;"/>English </span></a>
-                    <a href="javascript:;" id="German" onclick="translateLanguage(this.id);"><img src="static/germany_flag.png" alt="" style="width:15px;height:10px;"/><span>Deutsch </span></a>
-                    <a href="javascript:;" id="Italian" onclick="translateLanguage(this.id);"><span><img src="static/italy_flag.png" alt="" style="width:15px;height:10px;"/>Italiano </span></a>
-                      <a href="javascript:;" id="Hindi" onclick="translateLanguage(this.id);"><span><img src="static/india_flag.png" alt="" style="width:15px;height:10px;"/></a>
+                  <a href="javascript:;" id="English" onclick="translateLanguage(this.id);"><span id = "bimp"><img src="static/img/american_flag.png" alt="" style="width:15px;height:10px;"/>English </span></a>
+                    <a href="javascript:;" id="German" onclick="translateLanguage(this.id);"><img src="static/img/germany_flag.png" alt="" style="width:15px;height:10px;"/><span id = "bimp">Deutsch </span></a>
+                    <a href="javascript:;" id="Italian" onclick="translateLanguage(this.id);"><span id = "bimp"><img src="static/img/italy_flag.png" alt="" style="width:15px;height:10px;"/>Italiano </span></a>
+                      <a href="javascript:;" id="Hindi" onclick="translateLanguage(this.id);"><span id = "bimp"><img src="static/img/india_flag.png" alt="" style="width:15px;height:10px;"/></a>
                       हिंदी </span>
                       <a href="javascript:;" id="French" onclick="translateLanguage(this.id);"><span>Français </span>
-                        <img src="static/french_flag.png" alt="" style="width:15px;height:10px;"/></a>
+                        <img src="static/img/french_flag.png" alt="" style="width:15px;height:10px;"/></a>
                       </div>
                       <div class="dropdown-menu-col">
-                <a href="javascript:;" id="Spanish" onclick="translateLanguage(this.id);"><span>Español</span>
-                <img src="static/spain_flag.png" alt="" style="width:15px;height:10px;"/></a>
-                <a href="javascript:;" id="Russian" onclick="translateLanguage(this.id);"><span>Русский</span>
-                <img src="static/russia_flag.png" alt="" style="width:15px;height:10px;"/></a>
-                <a href="javascript:;" id="Filipino" onclick="translateLanguage(this.id);"><span>Tagalog</span>
-                <img src="static/philippines_flag.png" alt="" style="width:15px;height:10px;"/></a>
-                <a href="javascript:;" id="Bengali" onclick="translateLanguage(this.id);"><span>বাংলা</span>
-                <img src="static/bangladesh_flag.png" alt="" style="width:15px;height:10px;"/></a>
+                <a href="javascript:;" id="Spanish" onclick="translateLanguage(this.id);"><span id = "bimp">Español</span>
+                <img src="static/img/spain_flag.png" alt="" style="width:15px;height:10px;"/></a>
+                <a href="javascript:;" id="Russian" onclick="translateLanguage(this.id);"><span id = "bimp">Русский</span>
+                <img src="static/img/russia_flag.png" alt="" style="width:15px;height:10px;"/></a>
+                <a href="javascript:;" id="Filipino" onclick="translateLanguage(this.id);"><span id = "bimp">Tagalog</span>
+                <img src="static/img/philippines_flag.png" alt="" style="width:15px;height:10px;"/></a>
+                <a href="javascript:;" id="Bengali" onclick="translateLanguage(this.id);"><span id = "bimp">বাংলা</span>
+                <img src="static/img/bangladesh_flag.png" alt="" style="width:15px;height:10px;"/></a>
               </div>
             </div>
             </div>
@@ -112,11 +145,6 @@ function closeForm() {
   <a href="https://www.google.com/intl/en/policies/terms/">Terms</a>
 </footer>'
 </head>
-<!--</body>
-</html>
-</head>-->
-{% block content %}
-{% endblock %}
  </body>
 
 </html>
@@ -126,11 +154,14 @@ function closeForm() {
   <img style="position: fixed; bottom: 0; right: 0; border: 0;" src="https://media3.giphy.com/media/Y01wot3Bt9Bpdz8xvs/source.gif" width="100" height="100" alt="Fork me on GitHub" data-canonical-src="https://media3.giphy.com/media/Y01wot3Bt9Bpdz8xvs/source.gif">
   </a>
 </div>
+{% endblock %}
 
 
+{% block content %}
+    {% block page_content %}{% endblock %}
+{% endblock %}
 
-<!--<html xmlns="http://www.w3.org/1999/xhtml">
-<head id="Head1" runat="server">
-    <title>Google Translation</title>
-</head>
-<body>-->
+{% block scripts %}
+{{ super() }}
+
+{% endblock %}

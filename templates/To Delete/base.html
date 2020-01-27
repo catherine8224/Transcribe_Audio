@@ -1,0 +1,166 @@
+<!--{% extends "template.html" %}
+
+<head>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+
+
+{% block page_content %}
+
+
+<div class="wrappers">
+
+  <div class="containersssss">
+    <div class="row">
+      <div class="col-xs-3">
+        <label> Choose the plot type....</label>
+        <select class="form-control" id='first_cat'>
+          <option value="Bar">Bar</option>
+          <option value="Scatter">Double barplot</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <div class="chart" id="bargraph">
+          <script>
+            var graphs = {{ plot | safe}};
+            Plotly.plot('bargraph', graphs, {});
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br> </br>
+  <script src="{{ url_for('static', filename='js/jquery-1.11.1.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/plots.js') }}"></script>
+
+  {% if text is defined %}
+  <div class="header">
+    <audio src="{{filepath}}" controls> </audio>
+    <h3 class="text-muted">Transcription</h3>
+    <textarea id="text-val" rows="10" cols="80">{{text}}</textarea><br />
+    <input type="button" id="dwn-btn" value="Download file (.txt)" />
+    <h3> Summary of Text: </h3>
+    <textarea id="text-val" rows="7" cols="30">{{lexyranky}}</textarea><br />
+
+    <h3>Sentiment Analysis </h3>
+    <p>{{sent}}</p>
+  </div>
+  <div class="maintainers">
+    <img src="data:image/png;base64,{{ cloud }}" class="galimage" onerror="hideImage(this);" />
+  </div>
+  <button onclick="toggle_display()">Toggle display</button>
+  <div class="maintainer">
+    <img src="data:image/png;base64,{{ bar_graph }}" class="galimage" onerror="hideImage(this);" />
+  </div>
+  </form>
+
+
+  <div class="containersssss">
+    <div class="row">
+      <div class="col-xs-3">
+        <label> Choose the plot type....</label>
+        <select class="form-control" id='first_cat'>
+          <option value="Bar">Bar</option>
+          <option value="Scatter">Double barplot</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <div class="chart" id="bargraph">
+          <script>
+            var graphs = {{ plot | safe}};
+            Plotly.plot('bargraph', graphs, {});
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/jquery-1.11.1.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/plots.js') }}"></script>
+  {% endif %}
+
+
+  <!--<button onclick="topFunction()" id="myBtn" title="Go to top">Top<button>
+<script>
+  //Get the button
+  var mybutton = document.getElementById("myBtn");
+  
+  // When the user scrolls down 20px from the top of the document, show the button
+  window.onscroll = function() {scrollFunction()};
+  
+  function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      mybutton.style.display = "block";
+    } else {
+      mybutton.style.display = "none";
+    }
+  }
+  
+  // When the user clicks on the button, scroll to the top of the document
+  function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
+  </script>-->
+
+  <!--{% endblock %}-->
+
+  <div id="filedrag">or drop files here</div>
+          <script>
+          // getElementById
+          function $id(id) {
+          return document.getElementById(id);
+          }
+          //
+          // output information
+          function Output(msg) {
+            var m = $id("messages");
+            m.innerHTML = msg + m.innerHTML;
+          }
+
+          // call initialization file
+          if (window.File && window.FileList && window.FileReader) {
+	        Init();
+          }
+
+          //
+          // initialize
+          function Init() {
+
+            var fileselect = $id("fileselect"),
+              filedrag = $id("filedrag"),
+              submitbutton = $id("submitbutton");
+
+            // file select
+            fileselect.addEventListener("change", FileSelectHandler, false);
+
+            // is XHR2 available?
+            var xhr = new XMLHttpRequest();
+            if (xhr.upload) {
+            
+              // file drop
+              filedrag.addEventListener("dragover", FileDragHover, false);
+              filedrag.addEventListener("dragleave", FileDragHover, false);
+              filedrag.addEventListener("drop", FileSelectHandler, false);
+              filedrag.style.display = "block";
+              
+              // remove submit button
+              submitbutton.style.display = "none";
+            }
+
+          }
+
+          // file drag hover
+          function FileDragHover(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            e.target.className = (e.type == "dragover" ? "hover" : "");
+          }
+
+          // file drag hover
+          function FileDragHover(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            e.target.className = (e.type == "dragover" ? "hover" : "");
+          }
+          </script>

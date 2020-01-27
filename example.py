@@ -48,7 +48,7 @@ def make_bargraph(data):
 
 
 
-''' @app.route('/uploads_form')
+ @app.route('/uploads_form')
 def uploads_form():
 		return render_template('youtube.html')
 

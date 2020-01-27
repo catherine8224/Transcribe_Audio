@@ -5,6 +5,7 @@ import sounddevice as sd
 from scipy.io.wavfile import write
 import soundfile as sf 
 import os
+import pdb
 
 #f = "/Users/catherineng/Desktop/Python_Projects/huntercodefest/app/static/uploaded_files/peacocks.wav"
 
@@ -14,7 +15,7 @@ def transcribe_audio(f):
 	#root = Tk()
 	#root.withdraw()
 	#file =  filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("Audio files",".mp3"),("all files","*.*")))
-	if ".mp3" in f: 
+	if f.endswith(".mp3") or f.endswith(".MP3"): 
 		sound = AudioSegment.from_mp3(f)
 		#root.destroy()
 		#filenm = input("What file would you like to export as(wav)? ")
@@ -23,69 +24,53 @@ def transcribe_audio(f):
 		r = sr.Recognizer()
 		with sr.AudioFile(AUDIO_FILE) as source:
 				audio = r.record(source)
-		#print("Transcription: " + r.recognize_google(audio))
 		transcription = r.recognize_google(audio) #class 'str'
 		return transcription
-
-	elif ".wav" in f: 
+	elif f.endswith(".wav") or f.endswith(".WAV"): 
 		AUDIO_FILE = f
 		r = sr.Recognizer()
 		with sr.AudioFile(AUDIO_FILE) as source:
 				audio = r.record(source)
 		transcription = r.recognize_google(audio) #class 'str'
 		return transcription
-	elif ".m4a" in f:
-		for (dirpath, dirnames, filenames) in os.walk("/Users/catherineng/Desktop/Python_Projects/huntercodefest/app/static/uploaded_files", topdown= True):
-			for filename in filenames: 
-				if filename.endswith('.m4a'):
-					filepath = dirpath  + '/' + filename
-					(path, file_extension) = os.path.splitext(filepath)
-					print((path, file_extension)) #('/Users/catherineng/Desktop/Python_Projects/huntercodefest/app/static/uploaded_files/Rewrite', '.m4a')
-					file_extension_final = file_extension.replace('.', '')
-					print(file_extension_final) #m4a
-					try:
-						track = AudioSegment.from_file(filepath, file_extension_final)
-						#print(track)
-						wav_filename = filename.replace(file_extension_final, 'wav')
-						print(wav_filename) #Rewrite.wav
-						wav_path = dirpath + '/' + wav_filename
-						print('CONVERTING: ' + str(filepath))
-						file_handle = track.export(wav_path, format='wav')
-						os.remove(filepath)
-					except:
-						print("ERROR CONVERTING " + str(filepath))
-		AUDIO_FILE = f
+	elif f.endswith('.flac'):
+		sound = AudioSegment.from_file(f, "flac")
+		sound.export("transcript.wav", format="wav")
+		AUDIO_FILE = "transcript.wav"
+		r = sr.Recognizer()
+		with sr.AudioFile(AUDIO_FILE) as source:
+			audio = r.record(source)
+		transcription = r.recognize_google(audio) #class 'str'
+		return transcription
+	elif f.endswith('.ogg'):
+		pdb.set_trace()
+		sound = AudioSegment.from_ogg(f)
+		pdb.set_trace()
+		sound.export("transcript.wav", format="wav")
+		AUDIO_FILE = "transcript.wav"
+		r = sr.Recognizer()
+		with sr.AudioFile(AUDIO_FILE) as source:
+			audio = r.record(source)
+		transcription = r.recognize_google(audio) #class 'str'
+		return transcription
+	elif f.endswith('.m4a'):
+		sound = AudioSegment.from_file(f, "m4a")
+		sound.export("transcript.wav", format="wav")
+		AUDIO_FILE = "transcript.wav"
 		r = sr.Recognizer()
 		with sr.AudioFile(AUDIO_FILE) as source:
 				audio = r.record(source)
 		transcription = r.recognize_google(audio) #class 'str'
 		return transcription
-"""     elif ".m4a" in f: 
-			os.system("ffmpeg -i -codec:v copy -codec:a libmp3lame -q:a 2 peacocks.m4a peacocks.mp3")
-			sound = AudioSegment.from_mp3(f)
-			#root.destroy()
-			#filenm = input("What file would you like to export as(wav)? ")
-			sound.export("transcript.wav", format="wav")
-			AUDIO_FILE = "transcript.wav"
-			r = sr.Recognizer()
-			with sr.AudioFile(AUDIO_FILE) as source:
-					audio = r.record(source)
-			#print("Transcription: " + r.recognize_google(audio))
-			transcription = r.recognize_google(audio) #class 'str'
-			return transcription """
-	
-#print(transcribe_audio(f))
 
 def transcribe_audio_french(f):
 	if f.endswith(".mp3"):
 		sound = AudioSegment.from_mp3(f)
 		sound.export("moo.wav", format="wav")
-
 		AUDIO_FILE = "moo.wav"
-
 		r = sr.Recognizer()
 		with sr.AudioFile(AUDIO_FILE) as source:
-				audio = r.record(source)
+			audio = r.record(source)
 		#print("Transcription: " + r.recognize_google(audio))
 		transcription = r.recognize_google(audio, language="fr-FR") #class 'str'
 		return transcription
@@ -93,10 +78,39 @@ def transcribe_audio_french(f):
 		AUDIO_FILE = f
 		r = sr.Recognizer()
 		with sr.AudioFile(AUDIO_FILE) as source:
+			audio = r.record(source)
+		transcription = r.recognize_google(audio, language="fr-FR") #class 'str'
+		return transcription
+	elif f.endswith('.flac'):
+		sound = AudioSegment.from_file(f, "flac")
+		sound.export("transcript.wav", format="wav")
+		AUDIO_FILE = "transcript.wav"
+		r = sr.Recognizer()
+		with sr.AudioFile(AUDIO_FILE) as source:
+			audio = r.record(source)
+		transcription = r.recognize_google(audio, language="fr-FR") #class 'str'
+		return transcription
+	elif f.endswith('.ogg'):
+		pdb.set_trace()
+		sound = AudioSegment.from_ogg(f)
+		pdb.set_trace()
+		sound.export("transcript.wav", format="wav")
+		AUDIO_FILE = "transcript.wav"
+		r = sr.Recognizer()
+		with sr.AudioFile(AUDIO_FILE) as source:
+			audio = r.record(source)
+		transcription = r.recognize_google(audio, language="fr-FR") #class 'str'
+		return transcription
+	elif f.endswith('.m4a'):
+		sound = AudioSegment.from_file(f, "m4a")
+		sound.export("transcript.wav", format="wav")
+		AUDIO_FILE = "transcript.wav"
+		r = sr.Recognizer()
+		with sr.AudioFile(AUDIO_FILE) as source:
 				audio = r.record(source)
 		transcription = r.recognize_google(audio, language="fr-FR") #class 'str'
 		return transcription
-#print(transcribe_audio_french('/Users/catherineng/Desktop/Python_Projects/huntercodefest/app/static/uploaded_files/transcript-fr.mp3'))
+#print(transcribe_audio('/Users/catherineng/Downloads/Example.ogg'))
 
 def transcribe_audio_chinese(f):
 	if ".mp3" in f: 
@@ -122,6 +136,33 @@ def transcribe_audio_chinese(f):
 				audio = r.record(source)
 		transcription = r.recognize_google(audio, language="zh-CN") #class 'str'
 		return transcription
+	elif f.endswith('.flac'):
+		sound = AudioSegment.from_file(f, "flac")
+		sound.export("transcript.wav", format="wav")
+		AUDIO_FILE = "transcript.wav"
+		r = sr.Recognizer()
+		with sr.AudioFile(AUDIO_FILE) as source:
+				audio = r.record(source)
+		transcription = r.recognize_google(audio, language="zh-CN") #class 'str'
+		return transcription
+	elif f.endswith('.ogg'):
+		sound = AudioSegment.from_ogg(f, "ogg")
+		sound.export("transcript.wav", format="wav")
+		AUDIO_FILE = "transcript.wav"
+		r = sr.Recognizer()
+		with sr.AudioFile(AUDIO_FILE) as source:
+				audio = r.record(source)
+		transcription = r.recognize_google(audio, language="zh-CN") #class 'str'
+		return transcription
+	elif f.endswith('.m4a'):
+		sound = AudioSegment.from_file(f, "m4a")
+		sound.export("transcript.wav", format="wav")
+		AUDIO_FILE = "transcript.wav"
+		r = sr.Recognizer()
+		with sr.AudioFile(AUDIO_FILE) as source:
+				audio = r.record(source)
+		transcription = r.recognize_google(audio, language="zh-CN") #class 'str'
+		return transcription
 
 def transcribe_audio_naspanish(f):
 	if ".mp3" in f: 
@@ -136,7 +177,33 @@ def transcribe_audio_naspanish(f):
 		return transcription
 	elif ".wav" in f: 
 		AUDIO_FILE = f
-
+		r = sr.Recognizer()
+		with sr.AudioFile(AUDIO_FILE) as source:
+				audio = r.record(source)
+		transcription = r.recognize_google(audio, language="es-MX") #class 'str'
+		return transcription
+	elif f.endswith('.flac'):
+		sound = AudioSegment.from_file(f, "flac")
+		sound.export("transcript.wav", format="wav")
+		AUDIO_FILE = "transcript.wav"
+		r = sr.Recognizer()
+		with sr.AudioFile(AUDIO_FILE) as source:
+				audio = r.record(source)
+		transcription = r.recognize_google(audio, language="es-MX") #class 'str'
+		return transcription
+	elif f.endswith('.ogg'):
+		sound = AudioSegment.from_ogg(f)
+		sound.export("transcript.wav", format="wav")
+		AUDIO_FILE = "transcript.wav"
+		r = sr.Recognizer()
+		with sr.AudioFile(AUDIO_FILE) as source:
+				audio = r.record(source)
+		transcription = r.recognize_google(audio, language="es-MX") #class 'str'
+		return transcription
+	elif f.endswith('.m4a'):
+		sound = AudioSegment.from_file(f, "m4a")
+		sound.export("transcript.wav", format="wav")
+		AUDIO_FILE = "transcript.wav"
 		r = sr.Recognizer()
 		with sr.AudioFile(AUDIO_FILE) as source:
 				audio = r.record(source)
@@ -144,6 +211,37 @@ def transcribe_audio_naspanish(f):
 		return transcription
 			
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="/Users/catherineng/Downloads/My Project 52130-da00a565db68.json"
+import pdb
+
+
+import subprocess
+import shlex
+import json
+
+def get_duration_channels(filename):
+	#cmd = 'ffprobe -show_entries format=duration -v quiet -of csv="p=0"'
+	cmd = 'ffprobe -show_entries stream=channels -select_streams a:0 -of compact=p=0:nk=1 -v 0'
+	args = shlex.split(cmd)
+	args.append(filename)
+	# run the ffprobe process, decode stdout into utf-8 & convert to JSON
+	ffprobe_output = subprocess.check_output(args).decode('utf-8')
+
+	ffprobe_output = json.loads(ffprobe_output)
+
+	return ffprobe_output
+
+def get_duration(filename):
+	#cmd = 'ffprobe -show_entries format=duration -v quiet -of csv="p=0"'
+	#cmd = 'ffprobe -show_entries stream=channels -select_streams a:0 -of compact=p=0:nk=1 -v 0'
+	cmd = 'ffprobe -select_streams a -show_entries stream=sample_rate -of compact=p=0:nk=1 -v 0' #static/uploaded_files/output7.wav
+	args = shlex.split(cmd)
+	args.append(filename)
+	# run the ffprobe process, decode stdout into utf-8 & convert to JSON
+	ffprobe_output = subprocess.check_output(args).decode('utf-8')
+
+	ffprobe_output = json.loads(ffprobe_output)
+
+	return ffprobe_output
 
 def transcribe_google_punct(path): 
 	from google.cloud import speech
@@ -154,13 +252,14 @@ def transcribe_google_punct(path):
 	with io.open(path, 'rb') as audio_file:
 		content = audio_file.read()
 	#audio = {"uri": storage_uri}
-
-
+	
 	audio = speech.types.RecognitionAudio(content=content)
 	config = speech.types.RecognitionConfig(
-		encoding=speech.enums.RecognitionConfig.AudioEncoding.LINEAR16,
+		encoding=speech.enums.RecognitionConfig.AudioEncoding.ENCODING_UNSPECIFIED,
 		#sample_rate_hertz=8000,
-		sample_rate_hertz=22050,
+		#sample_rate_hertz=22050,
+		sample_rate_hertz= get_duration(path), 
+		audio_channel_count = get_duration_channels(path), 
 		language_code='en-US',
 		# Enable automatic punctuation
 		enable_automatic_punctuation=True)
@@ -169,10 +268,39 @@ def transcribe_google_punct(path):
 
 	for i, result in enumerate(response.results):
 		alternative = result.alternatives[0]
-		tuple = (i, alternative.transcript)
+		tuple = alternative.transcript
 		#print('-' * 20)
 		#print('First alternative of result {}'.format(i))
 		#print('Transcript: {}'.format(alternative.transcript))
 		return tuple
 
 #transcribe_google_punct(path)
+
+
+# from chatterbot import ChatBot
+# from chatterbot.trainers import ListTrainer
+# from chatterbot.trainers import ChatterBotCorpusTrainer
+# #create chatbot
+
+# anylanuageBot = ChatBot("Chatterbot", storage_adapter="chatterbot.storage.SQLStorageAdapter")
+# trainer = ChatterBotCorpusTrainer(anylanuageBot)
+# trainer.train("chatterbot.corpus.english", "chatterbot.corpus.spanish", "chatterbot.corpus.custom.website") #train the chatter bot for english
+
+# @app.route("/maiden")
+# def maiden():
+# 	return render_template("chatbot.html")
+
+# @app.route("/get")
+# #function for the bot response
+# def get_bot_response():
+# 	userText = request.args.get('msg')
+# 	reg_ex = re.search('tell me about (.*)', userText)
+# 	try:
+# 		if reg_ex:
+# 			topic = reg_ex.group(1)
+# 			wiki = wk.summary(topic, sentences = 3)
+# 			return wiki
+# 		else: 
+# 			return str(anylanuageBot.get_response(userText))
+# 	except Exception as e:
+# 			print("No content has been found")

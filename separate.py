@@ -40,7 +40,7 @@ def music_transcription(myAudioFile):
     scipy.io.wavfile.write('mono.wav', rate, (data[:,0]+data[:, 1])/2)
     rate2, mono = scipy.io.wavfile.read("mono.wav")
     scipy.io.wavfile.write('final.wav',rate, mono+background)  #Write a numpy array as a WAV file. 
-music_transcription("/Users/catherineng/Downloads/s1.wav")
+#music_transcription("/Users/catherineng/Downloads/s1.wav")
 
 #music_transcription("/Users/catherineng/Desktop/Music/s2.wav")
     # ica = FastICA(n_components=2)

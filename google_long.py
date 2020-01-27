@@ -4,6 +4,8 @@ from google.cloud.speech_v1 import enums
 import io
 import os
 from google.cloud import speech
+import main
+
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="/Users/catherineng/Downloads/My Project 52130-da00a565db68.json"
 
@@ -21,9 +23,16 @@ def sample_long_running_recognize(storage_uri):
     client = speech_v1p1beta1.SpeechClient()
 
     # storage_uri = 'gs://cloud-samples-data/speech/brooklyn_bridge.raw'
+    storage_uri = storage_uri.split("bucketness/", 1)[1]
 
     # The number of channels in the input audio file (optional)
-    audio_channel_count = 1
+    for i in range(len(main.filepaths)):
+        if os.system('ffprobe -i' + main.filepaths[i]  + '-show_entries stream=channels -select_streams a:0 -of compact=p=0:nk=1 -v 0') == 1: 
+            audio_channel_count = 1
+        elif os.system('ffprobe -i' + main.filepaths[i]  + '-show_entries stream=channels -select_streams a:0 -of compact=p=0:nk=1 -v 0') == 2: 
+            audio_channel_count = 2
+
+    print("OH MY GOODNESS")
 
     # When set to true, each audio channel will be recognized separately.
     # The recognition result will contain a channel_tag field to state which

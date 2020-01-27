@@ -1,4 +1,4 @@
-// set up basic variables for app
+2// set up basic variables for app
 
 const record = document.querySelector('.record');
 //const pause = document.querySelector('.pause');

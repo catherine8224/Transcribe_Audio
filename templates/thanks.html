@@ -2,75 +2,81 @@
 <html lang="en-us">
 {% extends "template.html" %}
 {% block content %}
+
 <head>
   <meta charset="utf-8">
   <!--<meta name="viewport" content="width=device-width">-->
-  <title>Open Speech Recording</title>	
+  <title>Open Speech Recording</title>
   <link href="static/css/app.css" rel="stylesheet" type="text/css">
   <script src="static/translate.js"></script>
-  <script src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-  type="text/javascript"></script>
-  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
 </head>
 
 <body>
   <div class="wrapper">
-      <h1>Open Speech Recording</h1>
+    <h1>Open Speech Recording</h1>
     <section class="top-display">
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-			<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet"/>
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" />
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
       <div class="welcome-display">
         Thank you for contributing your audio file and recorded speech to this collection! Please share this
         page widely amongst your peers so we can create as comprehensive an archive as possible.
       </div>
       <div class="about-section">
         <h1>About Us</h1>
-        <p>We are called <b>The Procrastinators</b> on GitHub, don't ask us why. But we are passionate about Computer Science, and making things work!</p>
+        <p>We are called <b>The Procrastinators</b> on GitHub, don't ask us why. But we are passionate about Computer
+          Science, and making things work!</p>
       </div>
-        <div class="row">
-          <div class="column">
-            <div class="card">
-              <img src="/static/IMG_0400.JPG" alt="Catherine" style="width:100%; height:100%">
-              <div class="cappa">
-                <h2>Catherine Ng</h2>
-                <p class="title">CEO & Founder</p>
-                <p>Hi! I am a super senior at Hunter College who is a major in Biology/Bioinformatics. I really love coding, and I hope to do Data Science in the near future.
-                  Currently, I am proficient in Python, and with this project, have experience in HTML, CSS, and Javascript. 
-                </p>
-                <p>cathygreat828@gmail.com</p>
-                <p><button class="button">Contact</button></p>
-              </div>
+      <div class="row">
+        <div class="column">
+          <div class="card">
+            <img src="/static/img/IMG_0400.JPG" alt="Catherine" style="width:100%; height:100%">
+            <div class="cappa">
+              <h2>Catherine Ng</h2>
+              <p class="title">CEO & Founder</p>
+              <p>Hi! I am a super senior at Hunter College who is a major in Biology/Bioinformatics. I really love
+                coding, and I hope to do Data Science in the near future.
+                Currently, I am proficient in Python, and with this project, have experience in HTML, CSS, and
+                Javascript.
+              </p>
+              <p>cathygreat828@gmail.com</p>
+              <p><button class="button"><a href="http://127.0.0.1:5000/contact">Contact</a></button></p>
             </div>
           </div>
+        </div>
 
-          <div class="column">
-            <div class="card">
-              <img src="static/chris.jpg" alt="Chris" style="width:100%; height:100%">
-              <div class="cappa">
-                <h2>Christopher Panlasigui</h2>
-                <p class="title">Art Director</p>
-                <p>Hello, I am a also a Biology/Bioinformatics student at Hunter College. Previously, I did business at Pace University but fell in love with programming.
-                  I currently work at MOSCOT as well as do research at the Belfer Research Building. I am proficient in R and Perl. 
-                </p>
-                <p>christopher.pan@gmail.com</p>
-                <p><button class="button">Contact</button></p>
-              </div>
+        <div class="column">
+          <div class="card">
+            <img src="static/img/chris.jpg" alt="Chris" style="width:100%; height:100%">
+            <div class="cappa">
+              <h2>Christopher Panlasigui</h2>
+              <p class="title">Art Director</p>
+              <p>Hello, I am a also a Biology/Bioinformatics student at Hunter College. Previously, I did business at
+                Pace University but fell in love with programming.
+                I currently work at MOSCOT as well as do research at the Belfer Research Building. I am proficient in R
+                and Perl.
+              </p>
+              <p>christopher.pan@gmail.com</p>
+              <p><button class="button"><a href="http://127.0.0.1:5000/contact">Contact</a></button></p>
             </div>
           </div>
-          <div class="column">
-            <div class="card">
-              <img src="static/fardous.jpg" alt="Chris" style="width:100%; height:100%">
-              <div class="cappa">
-                <h2>Fardous Sabnur</h2>
-                <p class="title">Art Director</p>
-                <p>My name is Fardous  Sabnur. I am an undergraduate student in CUNY Hunter College majoring in Financial Mathematics. I love dancing and watching anime. I am proficient in Python and C++, and have taken complex math and computer courses in Computer Theory and Linear Algebra. 
-                </p>
-                <p>christopher.pan@gmail.com</p>
-                <p><button class="button">Contact</button></p>
-              </div>
+        </div>
+        <div class="column">
+          <div class="card">
+            <img src="static/img/fardous.jpg" alt="Chris" style="width:100%; height:100%">
+            <div class="cappa">
+              <h2>Fardous Sabnur</h2>
+              <p class="title">Art Director</p>
+              <p>My name is Fardous  Sabnur. I am an undergraduate student in CUNY Hunter College majoring in Financial
+                Mathematics. I love dancing and watching anime. I am proficient in Python and C++, and have taken
+                complex math and computer courses in Computer Theory and Linear Algebra.
+              </p>
+              <p>christopher.pan@gmail.com</p>
+              <p><button class="button"><a href="http://127.0.0.1:5000/contact">Contact</a></button></p>
             </div>
           </div>
+        </div>
         <!--<br><br>Contributed by: </br></br>
         <table>
           <tr>
@@ -90,6 +96,8 @@
 
   </div>
 
-    {% endblock %}
+  {% endblock %}
+
   <body>
+
 </html>
