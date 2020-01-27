@@ -5,10 +5,8 @@
 ### Team members (format: GitHub username, last name, first name):
 - Panlasigui, Christopher
 - Sabnur, Fardous
-- Lu, Jackson
 - Gbadamassi, Justin
 - catherine 8224 (Ng, Catherine)
-- 
 
 ### Group info (check all that apply - add an X in the [ ])
 - [X] We are a CUNY2X bootcamp cohort team
