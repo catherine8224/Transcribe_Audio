@@ -4,18 +4,14 @@
 ### Team name: The Procrastinators 
 ### Team members (format: GitHub username, last name, first name):
 - Panlasigui, Christopher
-- Sabnur, Fardous
-- Lu, Jackson
-- Gbadamassi, Justin
 - catherine 8224 (Ng, Catherine)
-- 
 
 ### Group info (check all that apply - add an X in the [ ])
-- [X] We are a CUNY2X bootcamp cohort team
+- [ ] We are a CUNY2X bootcamp cohort team
 - [ ] We are a Daedalus / Google Mentored group
 - [X] We are a beginner group (only completed CSCI 12700)
 - [X] We plan to attend the final event on 1/31 at Google (time TBD)
-- As attendance is highly important, if you checked the above box but only some members will be attending, please indicate the number here: 5
+- As attendance is highly important, if you checked the above box but only some members will be attending, please indicate the number here: 2
 
 # General Info
 ## Theme: Create a Passion Project - Make something you've always wanted to build!
