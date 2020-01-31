@@ -1,0 +1,180 @@
+{% extends "template.html" %}
+{% block title %}File Uploader{% endblock %}
+
+{% block page_content %}
+
+<head>
+  <meta charset="utf-8">
+  <title>Multiple Files Upload</title>
+  <link href="static/css/app.css" rel="stylesheet" type="text/css">
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.fileupload.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.fileupload-ui.css') }}">
+  <link rel="stylesheet" href="http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
+  <link rel="stylesheet" type="text/css" media="all" href="static/css/app.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+
+<div class="containerz">
+  <h2>Select YouTube video</h2>
+  <form method="POST" action="/result_yt" enctype="multipart/form-data">
+    <dl>
+      <p>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+        <div class="input-group-1" style="text-align: center;">
+          <span contenteditable="true">
+            <label>Text box</label>
+            <input type="text" name="Text" id="myText" value="" />
+            <a href="#" data-toggle="tooltip"
+              title="Please upload your YouTube music video link (e.g. https://www.youtube.com/watch?v=mw5VIEIvuMI)">?</a>
+        </div>
+      </p>
+    </dl>
+    <div class="upload-btn-wrapper" style="text-align: center;">
+      <label class="btn btn-default btn-file">
+        Submit <input type="submit" value="Youtube" id="submit" name="Analyze" style="display: none;">
+      </label>
+    </div>
+    </p>
+    <p>
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <ul class=flashes>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% endwith %}
+    </p>
+  </form>
+  </hr>
+
+  <body>
+
+    <form id="upload" action="/result" method="POST" enctype="multipart/form-data">
+      <fieldset>
+        <legend> File Upload</legend>
+
+        <input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000" />
+
+        <div>
+          <label for="fileselect">Files to upload:</label>
+          <div align="center" id="mainselection">
+            <select name="site" class="form-control">
+              <option selected>Select a language</option>
+              {% for site in sites %}
+              <option value="{{site}}">{{site}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <!--<div align="center" id="mainselection">
+            <select name="site">
+              <option selected>Estimated number of speakers in audio</option>
+              {% for num in number %}
+              <option value="{{num}}">{{num}}</option>
+              {% endfor %}
+            </select>
+          </div>-->
+          <div class="input-group">
+            <span class="input-group-btn">
+              <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">Add
+                files...</span>
+              <input type="file" id="example-file" name="file[]" multiple="multiple" style="display: none;" autocomplete="off" onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());"/>
+              <a href="#" data-toggle="tooltip" title="Please upload an audio file">?</a>
+            </span>
+            <span id="form-control" class="form-control"></span>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+            <script>
+              var input_file = $("#example-file");
+              input_file.on("change", function () {
+                var files = input_file.prop("files")
+                var names = $.map(files, function (val) { return val.name; });
+                $('#form-control').show().text(names);
+              });
+              </script>
+          </div>
+          <div id="filedrag">or drop files here</div>
+        </div>
+
+        <div class="upload-btn-wrapper">
+          <label class="btn btn-default btn-file"> <i class="glyphicon glyphicon-upload"></i>
+            Start Upload <input type="submit" value="File" name="Analyze" style="display: none;" />
+          </label>
+          <label class="btn btn-default btn-file">
+            <div id="delete">
+              <i class="glyphicon glyphicon-ban-circle"></i>Delete
+              <input type="button" value="Delete" style="display: none;" />
+            </div>
+          </label>
+        </div>
+        <div id="submitbutton">
+          <button type="submit">Upload Files</button>
+        </div>
+      </fieldset>
+    </form>
+    <p>
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <ul class=flashes>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% endwith %}
+    </p>
+
+    <div id="messages">
+      <p id="noRemove">Status Messages</p>
+    </div>
+
+    <div class="progress progress-striped active">
+      <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+        style="width: 0%">
+        <span class="sr-only"></span>
+      </div>
+    </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script>
+          function check_progress(task_id, progress_bar) {
+            function worker() {
+              $.get('progress/' + task_id, function (data) {
+                if (progress < 100) {
+                  progress_bar.set_progress(progress)
+                  setTimeout(worker, 1000)
+                }
+              })
+            }
+          }
+        </script>
+
+    <script src="static/js/uploading.js"></script>
+    <script src="static/js/upload.js"></script>
+
+          <br></br>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Notes</h3>
+            </div>
+            <div class="panel-body">
+              <ul>
+                <li>The maximum file size for uploads in this demo is <strong>50 MB</strong> (default file size is
+                  unlimited).</li>
+                <li>Only audio files (<strong>WAV, MP3, FLAC, OGG, and M4A</strong>) are allowed in this website.</li>
+
+                <li>You can <strong>drag &amp; drop</strong> files from your desktop on this webpage.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+</body>
+
+        {% endblock %}

@@ -1,8 +1,9 @@
-2// set up basic variables for app
+// set up basic variables for app
 
 const record = document.querySelector('.record');
 //const pause = document.querySelector('.pause');
-const pauseButton = document.getElementById("pauseButton")
+//const pauseButton = document.getElementById("pauseButton")
+const pauseButton = document.querySelector(".pause")
 const stop = document.querySelector('.stop');
 const soundClips = document.querySelector('.sound-clips');
 const canvas = document.querySelector('.visualizer');
@@ -283,6 +284,19 @@ function promptToSave() {
 var allClips;
 var clipIndex;
 
+/*var encodingTypeSelect = document.getElementById("encodingTypeSelect");*/
+
+/* LOOK AT THIS TOMORROW 
+recorder.setOptions({
+  timeLimit: 120,
+  encodeAfterRecord: encodeAfterRecord,
+  ogg: {
+      quality: 0.5
+  },
+  mp3: {
+      bitRate: 160
+  }
+}); */
 
 function saveRecordings() {
   mediaStreamSource.disconnect();
@@ -344,14 +358,15 @@ function revealMessage() {
   var $start_button = document.getElementById("recordButton");
   var $stop_button = document.getElementById("stopButton");
   var $pause_button = document.getElementById("pauseButton");
-  //var $reset_button = document.getElementById("reset-button");
   var $timer = document.getElementById("timer");
   var second = 0;
   function zf(x) { return (x > 9 ? "" : "0") + x; }
+
   function updateSecond(x) {
     second = x;
     $timer.textContent = zf(second / 60 | 0) + ":" + zf(second % 60);
   }
+
   function nextSecond() {
     updateSecond(second + 1);
   }
@@ -366,17 +381,13 @@ function revealMessage() {
       updateSecond(0);
     }
   }, false);
-  $pause_button.addEventListener("click",function(ev) {
-    if(mediaRecorder.state === "recording"){
-      (timer_handle != -1) 
-      clearInterval(timer_handle);
-      timer_handle = -1;x
-    }
-    else {
-      timer_handle = setInterval(nextSecond, 1000);
-    }
+  $pause_button.addEventListener("click", function(ev) {
+    if (timer_handle != -1) {
+    clearInterval(timer_handle);
+    timer_handle = -1;
+  }
+  else {
+    timer_handle = setInterval(nextSecond, 1000);
+  }
 }, false);
-  //$reset_button.addEventListener("click", function(ev) {
-    //updateSecond(0);
-  //}, false);
 })();

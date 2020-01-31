@@ -13,8 +13,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.fileupload-ui.css') }}">
   <link rel="stylesheet" href="http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
   <script src="static/js/upload.js"></script>
-
-</head>
+  <link rel="stylesheet" type="text/css" media="all" href="/Users/catherineng/Downloads/filedrag1/styles.css" /></head>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
@@ -63,21 +62,54 @@
 </form>
 </hr>
 
-
   <!--</div> 
 </p> -->
 
-  <br>
-  <!--<blockquote>
+  <!--<br>
+  <blockquote>
       <p>File Upload widget with multiple file selection, drag&amp;drop support, progress bars, validation and preview images, audio and video for jQuery.<br>
       Supports cross-domain, chunked and resumable file uploads and client-side image resizing.<br>
 
-  </blockquote>-->
-  </br>
+  </blockquote>
+  </br>-->
 
-  <h2>File Uploader</h2>
-  <!--class="md-form"-->
-  <!-- <form  id = "fileupload" method="POST" action="/youtube" enctype="multipart/form-data"> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" type="text/css" media="all" href="/Users/catherineng/Downloads/filedrag1/styles.css" /></head>
+</head>
+<body>
+
+<form id="upload" action="index.html" method="POST" enctype="multipart/form-data">
+
+    <fieldset>
+    <legend>HTML File Upload</legend>
+    
+    <input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000" />
+    
+    <div>
+      <label for="fileselect">Files to upload:</label>
+      <input type="file" id="fileselect" name="fileselect[]" multiple="multiple" />
+      <div id="filedrag">or drop files here</div>
+    </div>
+    
+    <div id="submitbutton">
+      <button type="submit">Upload Files</button>
+    </div>
+    
+    </fieldset>
+    
+    </form>
+
+
+    
+    <div id="messages">
+    <p>Status Messages</p>
+    </div>
+    <script src="/Users/catherineng/Downloads/filedrag1/filedrag.js"></script>
+    <h2>File Uploader</h2>
+      <form  id = "fileupload" method="POST" action="/youtube" enctype="multipart/form-data"> 
   <form method="POST" action="/youtube" enctype="multipart/form-data">
     <dl>
       <p class="big">
@@ -100,7 +132,6 @@
               $('#form-control').show().text('Filenames: ' + names);
               });
           </script> 
-          <div id="filedrag">or drop files here</div>
 
         </div>
         <div class="upload-btn-wrapper" style="text-align: center;">
@@ -122,6 +153,7 @@
             <option value="3">Chinese</option>
             <option value="4">Spanish</option>
           </select>
+          </label>
         </div>
 
         <div id="messages">
@@ -206,21 +238,6 @@
     </dl>
     </form>
     <hr />
-
-  <div class="containerxx">
-    {% if len is defined %}
-      <form method="POST" action="/result">
-        <input type="submit"  name="subject" value="Results" style="text-align: center;" class = "bagels"></input>
-      </form>
-    {% endif %}
-
-    {% if text is defined %}
-    <!--<div class="contain">-->
-      <form method="POST" action="/result_yt">
-        <input name="subjectss" type="submit" value="Results" style="text-align: center;" class = "bagels"></input>
-      </form>
-    {% endif %}
-  </div>
   
 
   <br>

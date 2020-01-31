@@ -43,14 +43,12 @@ def transcribe_audio(f):
 		transcription = r.recognize_google(audio) #class 'str'
 		return transcription
 	elif f.endswith('.ogg'):
-		pdb.set_trace()
-		sound = AudioSegment.from_ogg(f)
-		pdb.set_trace()
-		sound.export("transcript.wav", format="wav")
-		AUDIO_FILE = "transcript.wav"
+		os.system("ffmpeg -i " + f + " output.wav")
+		f= "output.wav"
+		AUDIO_FILE = f
 		r = sr.Recognizer()
 		with sr.AudioFile(AUDIO_FILE) as source:
-			audio = r.record(source)
+				audio = r.record(source)
 		transcription = r.recognize_google(audio) #class 'str'
 		return transcription
 	elif f.endswith('.m4a'):
@@ -66,12 +64,11 @@ def transcribe_audio(f):
 def transcribe_audio_french(f):
 	if f.endswith(".mp3"):
 		sound = AudioSegment.from_mp3(f)
-		sound.export("moo.wav", format="wav")
-		AUDIO_FILE = "moo.wav"
+		sound.export("transcript.wav", format="wav")
+		AUDIO_FILE = "transcript.wav"
 		r = sr.Recognizer()
 		with sr.AudioFile(AUDIO_FILE) as source:
 			audio = r.record(source)
-		#print("Transcription: " + r.recognize_google(audio))
 		transcription = r.recognize_google(audio, language="fr-FR") #class 'str'
 		return transcription
 	elif f.endswith(".wav"): 
@@ -91,15 +88,13 @@ def transcribe_audio_french(f):
 		transcription = r.recognize_google(audio, language="fr-FR") #class 'str'
 		return transcription
 	elif f.endswith('.ogg'):
-		pdb.set_trace()
-		sound = AudioSegment.from_ogg(f)
-		pdb.set_trace()
-		sound.export("transcript.wav", format="wav")
-		AUDIO_FILE = "transcript.wav"
+		os.system("ffmpeg -i " + f + " output.wav")
+		f= "output.wav"
+		AUDIO_FILE = f
 		r = sr.Recognizer()
 		with sr.AudioFile(AUDIO_FILE) as source:
-			audio = r.record(source)
-		transcription = r.recognize_google(audio, language="fr-FR") #class 'str'
+				audio = r.record(source)
+		transcription = r.recognize_google(audio) #class 'str'
 		return transcription
 	elif f.endswith('.m4a'):
 		sound = AudioSegment.from_file(f, "m4a")
@@ -110,7 +105,6 @@ def transcribe_audio_french(f):
 				audio = r.record(source)
 		transcription = r.recognize_google(audio, language="fr-FR") #class 'str'
 		return transcription
-#print(transcribe_audio('/Users/catherineng/Downloads/Example.ogg'))
 
 def transcribe_audio_chinese(f):
 	if ".mp3" in f: 
@@ -146,13 +140,13 @@ def transcribe_audio_chinese(f):
 		transcription = r.recognize_google(audio, language="zh-CN") #class 'str'
 		return transcription
 	elif f.endswith('.ogg'):
-		sound = AudioSegment.from_ogg(f, "ogg")
-		sound.export("transcript.wav", format="wav")
-		AUDIO_FILE = "transcript.wav"
+		os.system("ffmpeg -i " + f + " output.wav")
+		f= "output.wav"
+		AUDIO_FILE = f
 		r = sr.Recognizer()
 		with sr.AudioFile(AUDIO_FILE) as source:
 				audio = r.record(source)
-		transcription = r.recognize_google(audio, language="zh-CN") #class 'str'
+		transcription = r.recognize_google(audio) #class 'str'
 		return transcription
 	elif f.endswith('.m4a'):
 		sound = AudioSegment.from_file(f, "m4a")
@@ -192,13 +186,13 @@ def transcribe_audio_naspanish(f):
 		transcription = r.recognize_google(audio, language="es-MX") #class 'str'
 		return transcription
 	elif f.endswith('.ogg'):
-		sound = AudioSegment.from_ogg(f)
-		sound.export("transcript.wav", format="wav")
-		AUDIO_FILE = "transcript.wav"
+		os.system("ffmpeg -i " + f + " output.wav")
+		f= "output.wav"
+		AUDIO_FILE = f
 		r = sr.Recognizer()
 		with sr.AudioFile(AUDIO_FILE) as source:
 				audio = r.record(source)
-		transcription = r.recognize_google(audio, language="es-MX") #class 'str'
+		transcription = r.recognize_google(audio) #class 'str'
 		return transcription
 	elif f.endswith('.m4a'):
 		sound = AudioSegment.from_file(f, "m4a")

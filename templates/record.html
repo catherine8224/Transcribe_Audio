@@ -1,20 +1,18 @@
-<!DOCTYPE html>
-<html lang="en-us" dir='ltr'>
-  {% extends "template.html" %}
-  {% block content %}
+{% extends "template.html" %}
+{% block content %}
   <head>
     
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>Speech Recording</title>	
-    <link href="static/styles/app.css" rel="stylesheet" type="text/css">
+    <link href="static/css/app.css" rel="stylesheet" type="text/css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
   </head>
   <script type="text/javascript">
     var csrf_token = "{{ csrf_token }}";
   </script>
   <body>
-    <center><p id="timer" style="display: block;"><font size ="20">00:00</font></p></center>
+    <!--<center><p id="timer" style="display: block;"><font size ="20">00:00</font></p></center>-->
     <div class="wrapper">
       <h1>Speech Recording</h1>
       <section class="top-display">
@@ -22,6 +20,9 @@
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <div class="welcome-display">
+
+        <h2 id="timer" style="font-size: 20pt;">00:00</h2>
+  
         <div class="directions">
           Press Record to start.
           <br/>
@@ -72,7 +73,7 @@
       </p>
       <p>Icon courtesy of <a href="http://findicons.com/search/microphone">Find Icons</a>. Thanks to <a href="http://soledadpenades.com/">Sole</a> for the Oscilloscope code!</p>
     </aside>
-    <script src="scripts/mediaDevices-getUserMedia-polyfill.js"></script>
+    <script src="static/scripts/mediaDevices-getUserMedia-polyfill.js"></script>
     <script src="static/scripts/app.js"></script>
     {% endblock %}
   </body>

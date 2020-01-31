@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+
+<body>
+  <div id="timer-wrapper">
+    <h1 id="timer" style="font-size: 74pt;">00:00</h1>
+  </div>
+  <div id="button-wrapper">
+    <button id="start-button">Start</button>
+    <button id="stop-button">Stop</button>
+    <button id="reset-button">Reset</button>
+    <button id="pause-button">Pause</button>
+  </div>
+  <script>
+    (function () {
+      "use strict";
+      var $start_button = document.getElementById("start-button");
+      var $stop_button = document.getElementById("stop-button");
+      var $reset_button = document.getElementById("reset-button");
+      var $pause_button = document.getElementById("pause-button");
+      var $timer = document.getElementById("timer");
+
+      var second = 0;
+      function zf(x) { return (x > 9 ? "" : "0") + x; }
+
+      function updateSecond(x) {
+        second = x;
+        $timer.textContent = zf(second / 60 | 0) + ":" + zf(second % 60);
+      }
+      function nextSecond() {
+        updateSecond(second + 1);
+      }
+
+      var timer_handle = -1;
+      $start_button.addEventListener("click", function (ev) {
+        timer_handle = setInterval(nextSecond, 1000);
+      }, false);
+      $stop_button.addEventListener("click", function (ev) {
+        if (timer_handle != -1) {
+          clearInterval(timer_handle);
+          timer_handle = -1;
+        }
+      }, false);
+      $reset_button.addEventListener("click", function (ev) {
+        updateSecond(0);
+      }, false);
+      $pause_button.addEventListener("click", function(ev) {
+      if (timer_handle != -1) {
+      clearInterval(timer_handle);
+      timer_handle = -1;
+    }
+    else {
+      timer_handle = setInterval(nextSecond, 1000);
+    }
+}, false);
+    })();
+  </script>
+</body>
+
+</html>

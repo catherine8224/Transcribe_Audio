@@ -63,3 +63,24 @@ document.getElementById("dwn-btn").addEventListener("click", function(){
     
     download(filename, text);
 }, false);
+
+
+// Start file download.
+document.getElementById("dwn-btns").addEventListener("click", function(){
+    // Generate download of hello.txt file with some content
+    var text = document.getElementById("text-val").value;
+    var filename = "Transcription.txt";
+    
+    download(filename, text);
+}, false);
+
+var imagesArray = [
+  "data:image/png;base64,{{clouds[i]}}",
+  "data:image/png;base64,{{clouds1[i]}}", // represents val 0,
+  "data:image/png;base64,{{clouds2[i]}}", // 1,
+  "data:image/png;base64,{{clouds3[i]}}"  // 2 ...
+];
+
+$('#picDD1').change(function () {
+  $('#image')[0].src = imagesArray[this.value];
+});
