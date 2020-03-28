@@ -31,4 +31,6 @@ __pycache__/.DS_Store
 ./.ipynb_checkpoints
 /.ipynb_checkpoints/
 /.ipynb_checkpoints/*
+./.git/objects/pack/pack-bcdbf2fd0e0900e88cd581f2d0d80a0abf67d8ba.pack
+
 
