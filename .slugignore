@@ -9,4 +9,8 @@
 /INSTALL.md
 .DS_Store
 .env
-./.git
+./.git*
+*.log
+.git
+*/.git*
+/.git
