@@ -147,7 +147,6 @@ sphinxcontrib-htmlhelp==1.0.3
 sphinxcontrib-jsmath==1.0.1
 sphinxcontrib-qthelp==1.0.3
 sphinxcontrib-serializinghtml==1.1.4
-SQLAlchemy==1.2.19
 srsly==1.0.1
 sumy==0.8.1
 terminado==0.8.3
