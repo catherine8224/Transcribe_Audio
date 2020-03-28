@@ -107,7 +107,6 @@ protobuf==3.11.2
 ptyprocess==0.6.0
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
-PyAudio==0.2.11
 pycountry==19.8.18
 pycparser==2.19
 pydub==0.23.1
