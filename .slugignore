@@ -3,6 +3,10 @@
 *.pdf
 /test
 /spec
+/log
+/tmp
 /README.md
 /INSTALL.md
-
+.DS_Store
+.env
+./.git
