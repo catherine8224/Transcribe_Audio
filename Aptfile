@@ -1,4 +1,4 @@
 #you can list packages
 portaudio19-dev
 python-all-dev
-ffmpeg
+ffmpeg==1.0.3
