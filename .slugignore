@@ -9,8 +9,17 @@
 /INSTALL.md
 .DS_Store
 .env
+/DS_Store
 ./.git*
 *.log
 .git
+./.git
 */.git*
 /.git
+!/.slugignore
+./.slugignore
+/.slugignore
+./.ipynb_checkpoints
+/.ipynb_checkpoints/
+/.ipynb_checkpoints/*
+
