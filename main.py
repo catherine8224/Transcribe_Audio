@@ -20,7 +20,7 @@ from google.cloud import storage
 import uuid
 from googletrans import Translator
 
-import nltk
+#import nltk
 from os import path
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
