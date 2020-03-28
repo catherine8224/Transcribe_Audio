@@ -3,3 +3,6 @@
 *.pdf
 /test
 /spec
+/README.md
+/INSTALL.md
+
