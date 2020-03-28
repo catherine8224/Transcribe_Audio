@@ -16,6 +16,9 @@ __pycache__/.DS_Store
 ./.git*
 *.log
 .git
+/static/img
+/Users/catherineng/Desktop/Python_Projects/huntercodefest/app/static/img
+/Users/catherineng/Desktop/Python_Projects/huntercodefest/app/audiotrans/.git
 ./.git
 */.git/*
 /.git
