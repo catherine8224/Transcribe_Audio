@@ -26,3 +26,6 @@ __pycache__/.DS_Store
 /.ipynb_checkpoints/*
 /Users/catherineng/Desktop/Python_Projects/huntercodefest/app/static/img
 /Users/catherineng/Desktop/Python_Projects/huntercodefest/app/audiotrans/.git
+venv/
+.venv
+__pycache__/
