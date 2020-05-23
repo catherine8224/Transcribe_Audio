@@ -46,6 +46,9 @@ import pdb
 import lxml
 from lxml import etree
 import urllib.request
+#Youtube Captions 
+import re
+import html2text
 #from two_speakers import sample_long_running_recognize_diarization
 
 font_path = 'fonts/STFangSong.ttf'
@@ -353,9 +356,7 @@ def make_bargraph(keys, values):
 	#img_64 = base64.b64encode(buf.getbuffer()).decode('ascii')
 	return result
 
-#Youtube Captions 
-import re
-import html2text
+
 
 def cleanhtml(raw_html):
   cleanr = re.compile('<.*?>')

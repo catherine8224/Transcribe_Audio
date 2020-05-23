@@ -1,0 +1,3 @@
+#!/Users/catherineng/Desktop/Python_Projects/huntercodefest/cryptic-eyrie-46012/venv/bin/python3
+from numba.pycc import main
+main()
