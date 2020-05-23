@@ -1,1 +1,1 @@
-web: gunicorn --pythonpath flask main:app
+web: gunicorn --workers=5 --pythonpath flask main:app
