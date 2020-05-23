@@ -59,7 +59,6 @@ plotly==4.5.0
 protobuf==3.12.1
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
-PyAudio==0.2.11
 pycparser==2.20
 pydub==0.24.0
 pyparsing==2.4.7
