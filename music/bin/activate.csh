@@ -8,7 +8,7 @@ alias deactivate 'test $?_OLD_VIRTUAL_PATH != 0 && setenv PATH "$_OLD_VIRTUAL_PA
 # Unset irrelevant variables.
 deactivate nondestructive
 
-setenv VIRTUAL_ENV "/Users/catherineng/Desktop/Python_Projects/huntercodefest/app/music"
+setenv VIRTUAL_ENV "/Users/catherineng/Desktop/Python_Projects/huntercodefest/Transcribe_Audio/music"
 
 set _OLD_VIRTUAL_PATH="$PATH"
 setenv PATH "$VIRTUAL_ENV/bin:$PATH"

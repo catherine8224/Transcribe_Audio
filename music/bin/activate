@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/catherineng/Desktop/Python_Projects/huntercodefest/app/music"
+VIRTUAL_ENV="/Users/catherineng/Desktop/Python_Projects/huntercodefest/Transcribe_Audio/music"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
