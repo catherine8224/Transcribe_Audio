@@ -28,3 +28,5 @@ venv/
 .venv
 __pycache__/
 lib/
+scipyfile.sh/
+Dockerfile/
