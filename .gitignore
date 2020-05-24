@@ -26,6 +26,7 @@ __pycache__/.DS_Store
 /.ipynb_checkpoints/*
 venv/
 .venv
+/venv
 __pycache__/
 lib/
 scipyfile.sh/
