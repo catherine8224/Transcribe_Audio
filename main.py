@@ -74,7 +74,7 @@ font_path = 'fonts/STFangSong.ttf'
 #UPLOADS_PATH = join(dirname(realpath(__file__)), 'static/uploads/..')
 
 #app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
-mail = Mail()
+""" mail = Mail()
 
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 465
@@ -82,7 +82,7 @@ app.config["MAIL_USE_SSL"] = True
 app.config["MAIL_USERNAME"] = 'cathygreat828@gmail.com'
 app.config["MAIL_PASSWORD"] = 'WenTiDoc456'
  
-mail.init_app(app)
+mail.init_app(app) """
 
 ALLOWED_EXTENSIONS = set(['wav', 'flac', 'mp3', 'm4a', 'ogg', '.3gp', '3g'])
 
