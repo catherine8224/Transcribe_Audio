@@ -93,6 +93,10 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="/Users/catherineng/Downloads/My Pr
 def home():
 	return render_template("home.html")
 
+@app.errorhandler(CSRFError)
+def handle_csrf_error(e):
+    return render_template('csrf_error.html', reason=e.description), 400
+
 '''@app.route('/favicon.ico')
 def favicon():
 	return send_from_directory(os.path.join(app.root_path, 'static'),
@@ -130,16 +134,12 @@ def contact():
 	elif request.method == 'GET':
 		return render_template('contact.html', form=form)'''
 
-@app.route('/youtube', methods=['GET', 'POST'])
+'''@app.route('/youtube', methods=['GET', 'POST'])
 @csrf.exempt
 def indexes():
 	sites = ['English', 'French', 'Spanish', 'Chinese']
 	number = ['1', '2', '3', '4', '5']
 	return render_template('uploading.html', sites=sites, number= number)
-
-@app.errorhandler(CSRFError)
-def handle_csrf_error(e):
-    return render_template('csrf_error.html', reason=e.description), 400
 
 @app.route('/result', methods=['POST'])
 def resultltss():
@@ -666,7 +666,7 @@ def upload():
 	bucket = gcs.get_bucket('awesome-bucketness')
 	blob = storage.Blob(secure_name, bucket)
 	blob.upload_from_string(audio_data, content_type='audio/ogg')
-	return make_response('All good')
+	return make_response('All good')'''
 
 
 if __name__ == "__main__":
