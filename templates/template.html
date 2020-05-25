@@ -48,16 +48,8 @@
         <strong><nav>
           <ul class="menu">
             <li><a href="{{ url_for('home') }}">Home</a></li>
-            <li><div class="dropdown">
-              <span class="dropbtn">Learn More</span>
-              <div class="dropdown-content">
-                <a href="{{ url_for('about') }}"> About </a>
-                <a href="{{ url_for('thanks') }}">Thanks</a>
-              </div>
-            </div></li>
-            <li><a href="{{ url_for('youtube_form') }}">Upload</a></li>
-            <li><a href="{{ url_for('record_form') }}">Record</a></li>
-            <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+            </div>
+          
             <li><form id="form1" runat="server">
               <div id="google_translate_element" style="display: none"></div>
               <script type="text/javascript">

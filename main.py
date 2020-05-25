@@ -4,25 +4,25 @@ import urllib.request
 from flask import (Blueprint, g, session, Flask, flash, make_response, render_template, redirect, request, url_for, send_file, send_from_directory, session, abort)
 from werkzeug.utils import secure_filename
 from werkzeug.security import check_password_hash, generate_password_hash
-from forms import ContactForm
+#from forms import ContactForm
 import pdb 
-from transcribe import transcribe_audio, transcribe_audio_french, transcribe_audio_naspanish, transcribe_audio_chinese, transcribe_google_punct, get_duration, get_duration_channels
+#from transcribe import transcribe_audio, transcribe_audio_french, transcribe_audio_naspanish, transcribe_audio_chinese, transcribe_google_punct, get_duration, get_duration_channels
 #imports the Google Cloud Client library
-from google.cloud import storage
+#from google.cloud import storage
 import uuid
-from googletrans import Translator
+#from googletrans import Translator
 import simplejson
 import requests
 import sys
-import plotly
-import plotly.graph_objs as go
+#import plotly
+#import plotly.graph_objs as go
 #import pandas as pd
-import numpy as np
-from matplotlib.font_manager import FontProperties 
+#import numpy as np
+#from matplotlib.font_manager import FontProperties 
 
-import seaborn as sns
+#import seaborn as sns
 import io
-import wave
+#import wave
 import contextlib	
 
 #Youtube Captions 
@@ -36,7 +36,7 @@ import base64
 
 from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 from PIL import Image
-import jieba
+#import jieba
 
 import matplotlib
 matplotlib.use('agg')
