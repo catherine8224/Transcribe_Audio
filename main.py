@@ -5,7 +5,6 @@ from flask import (Blueprint, g, session, Flask, flash, make_response, render_te
 from werkzeug.utils import secure_filename
 from werkzeug.security import check_password_hash, generate_password_hash
 #from forms import ContactForm
-import pdb 
 #from transcribe import transcribe_audio, transcribe_audio_french, transcribe_audio_naspanish, transcribe_audio_chinese, transcribe_google_punct, get_duration, get_duration_channels
 #imports the Google Cloud Client library
 #from google.cloud import storage
@@ -38,7 +37,7 @@ import base64
 #from PIL import Image
 #import jieba
 
-import matplotlib
+#import matplotlib
 matplotlib.use('agg')
 from flask_mail import Message, Mail
 #import random
@@ -46,14 +45,14 @@ from flask_mail import Message, Mail
 import re, string, unicodedata
 from flask_bootstrap import Bootstrap
 import subprocess
-import shlex
-import json
+#import shlex
+#import json
 import pdb
 #import lxml
 #from lxml import etree
 import urllib.request
 
-from io import BytesIO
+#from io import BytesIO
 import io
 from flask_wtf.csrf import CSRFProtect
 from flask_wtf.csrf import CSRFError 
