@@ -1,61 +1,16 @@
-/*$(document).ready(function() {
-
-	$('form').on('submit', function(event) {
-
-		event.preventDefault();
-
-		var formData = new FormData($('form')[0]);
-
-		$.ajax({
-			xhr : function() {
-				var xhr = new window.XMLHttpRequest();
-
-				xhr.upload.addEventListener('progress', function(e) {
-
-					if (e.lengthComputable) {
-
-						console.log('Bytes Loaded: ' + e.loaded);
-						console.log('Total Size: ' + e.total);
-						console.log('Percentage Uploaded: ' + (e.loaded / e.total))
-
-						var percent = Math.round((e.loaded / e.total) * 100);
-
-						$('#progressBar').attr('aria-valuenow', percent).css('width', percent + '%').text(percent + '%');
-
-					}
-
-				});
-
-				return xhr;
-			},
-			type : 'POST',
-			url : '/upload_form',
-			data : formData,
-			processData : false,
-			contentType : false,
-			success : function() {
-				alert('File uploaded!');
-			}
-		});
-
-	});
-
-});
-*/
-
-
+//UPLOADING AND DELETING FILES TO BE TRANSCRIBED IN FRENCH CHINESE ENGLISH 
 $(document).ready(function() {
   de();
 
   $("#example-file").on("change", function() {
     if ($("#example-file").val() != "") {
      // $("label[class=btn btn-default btn-file]").attr("style", "display:block");
-      $("input[type=button]").attr("style", "display:block");
+      $("button[type=button]");//.attr("style", "display:block");
     } else {
       de();
     }
   });
-  $("input[type=button]").click(function() {
+  $("button[type=button]").click(function() {
 	$("#example-file").val('');
 	$('#form-control').empty();
 	//$('#messages').empty();

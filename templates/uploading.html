@@ -18,11 +18,11 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 
-
 <div class="containerz">
   <h2>Select YouTube video</h2>
   <form method="POST" action="/result_yt" enctype="multipart/form-data">
     <dl>
+      <input type ="hidden" name="csrf_token" value="{{csrf_token() }}" />
       <p>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" />
@@ -75,14 +75,6 @@
               {% endfor %}
             </select>
           </div>
-          <!--<div align="center" id="mainselection">
-            <select name="site">
-              <option selected>Estimated number of speakers in audio</option>
-              {% for num in number %}
-              <option value="{{num}}">{{num}}</option>
-              {% endfor %}
-            </select>
-          </div>-->
           <div class="input-group">
             <span class="input-group-btn">
               <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">Add
@@ -105,19 +97,22 @@
         </div>
 
         <div class="upload-btn-wrapper">
-          <label class="btn btn-default btn-file"> <i class="glyphicon glyphicon-upload"></i>
+          <!--<label class="btn btn-default btn-file"> <i class="glyphicon glyphicon-upload"></i>
             Start Upload <input type="submit" value="File" name="Analyze" style="display: none;" />
-          </label>
-          <label class="btn btn-default btn-file">
-            <div id="delete">
-              <i class="glyphicon glyphicon-ban-circle"></i>Delete
-              <input type="button" value="Delete" style="display: none;" />
-            </div>
-          </label>
+          </label>-->
+          <button type="submit" class="btn btn-primary start">
+            <i class="glyphicon glyphicon-upload"></i>
+            <span>Start upload</span>
+          </button>
+          <button type="button" class="btn btn-danger cancel" style=" display:inline;">
+            <i class="glyphicon glyphicon-ban-circle"></i>
+            <span>Delete selected</span>
+          </button>
         </div>
         <div id="submitbutton">
           <button type="submit">Upload Files</button>
         </div>
+
       </fieldset>
     </form>
     <p>

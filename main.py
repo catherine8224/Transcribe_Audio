@@ -5,57 +5,72 @@ from flask import (Blueprint, g, session, Flask, flash, make_response, render_te
 from werkzeug.utils import secure_filename
 from werkzeug.security import check_password_hash, generate_password_hash
 from forms import ContactForm
-
-from io import BytesIO
-import io
-from flask_wtf.csrf import CSRFProtect
-app = Flask(__name__)
-app.secret_key = 'very secret'
-CSRFProtect(app)
 import pdb 
 from transcribe import transcribe_audio, transcribe_audio_french, transcribe_audio_naspanish, transcribe_audio_chinese, transcribe_google_punct, get_duration, get_duration_channels
-#from shortaudio import sample_recognize
 #imports the Google Cloud Client library
 from google.cloud import storage
 import uuid
 from googletrans import Translator
+import simplejson
+import requests
+import sys
+import plotly
+import plotly.graph_objs as go
+#import pandas as pd
+import numpy as np
+from matplotlib.font_manager import FontProperties 
 
-#import nltk
+import seaborn as sns
+import io
+import wave
+import contextlib	
+
+#Youtube Captions 
+import html2text
+
+import nltk
 from os import path
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 import base64
 
-import numpy as np
 from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 from PIL import Image
+import jieba
 
 import matplotlib
 matplotlib.use('agg')
 from flask_mail import Message, Mail
-import random
-import string
+#import random
+#import string
 import re, string, unicodedata
-#from collections import defaultdict
-#from collections import Counter
 from flask_bootstrap import Bootstrap
 import subprocess
 import shlex
 import json
 import pdb
-import lxml
+#import lxml
 from lxml import etree
 import urllib.request
-#from two_speakers import sample_long_running_recognize_diarization
 
-font_path = 'fonts/STFangSong.ttf'
-font_paths = ''
+from io import BytesIO
+import io
+from flask_wtf.csrf import CSRFProtect
+from flask_wtf.csrf import CSRFError 
+
 app = Flask(__name__)
-app.secret_key = "secret key" #used by Flask and extension to keep data safe. Set as a convient value during development, but should be overriden with a random value when deploying.
+app.secret_key = "very secret" #used by Flask and extension to keep data safe. Set as a convient value during development, but should be overriden with a random value when deploying.
+csrf = CSRFProtect(app)
+
 app.config['UPLOAD_FOLDER'] = 'static/uploaded_files' #where we will store the uploaded files
 #app.config['TEMPLATES_AUTO_RELOAD'] = True
+#app = Flask(__name__)
+#app.secret_key = 'very secret'
+#from two_speakers import sample_long_running_recognize_diarization
+#font_paths = ''
 
 bootstrap = Bootstrap(app)
+font_path = 'fonts/STFangSong.ttf'
 
 #UPLOADS_PATH = join(dirname(realpath(__file__)), 'static/uploads/..')
 
@@ -88,10 +103,15 @@ def thanks():
 
 
 @app.route('/youtube', methods=['GET', 'POST'])
+@csrf.exempt
 def indexes():
 	sites = ['English', 'French', 'Spanish', 'Chinese']
 	number = ['1', '2', '3', '4', '5']
 	return render_template('uploading.html', sites=sites, number= number)
+
+@app.errorhandler(CSRFError)
+def handle_csrf_error(e):
+    return render_template('csrf_error.html', reason=e.description), 400
 
 @app.route('/result', methods=['POST'])
 def resultltss():
@@ -154,7 +174,6 @@ def resultltss():
 						elif gather == "Chinese":
 							output.append(transcribe_audio_chinese(filepath))
 						elif gather == "English":
-							pdb.set_trace()
 							output.append(sample_long_running_recognize("gs://awesome-bucketness/" + filename))
 					print("OUTPUT:", output)
 					#	output.append(transcribe_audio(filepath)) #output.append(transcribe_google_punct(filepath)) 	#print(filename) <FileStorage: 'transcript-sp.mp3' ('audio/mp3')>   <FileStorage: 'transcript.mp3' ('audio/mp3')>
@@ -194,13 +213,6 @@ def resultltss():
 		flash('File(s) successfully uploaded')
 		return render_template('result.html', masks= masks, length_mask = len(masks), clouds = clouds, clouds1 = clouds1 , clouds2= clouds2 , clouds3=clouds3, filepaths = filepaths, len = len(uploaded_files), output=output, graphs = graphs)  #lens = len(filepaths),
 	return ''
-			
-# @app.route("/result_yt", methods=['GET', 'POST'])
-# def result_yt():
-# 	if request.method == 'POST':
-# 		if "subjectss" in request.form:
-# 			return render_template("result_yt.html", ebu = youtube_id, textsent = sent, lexyranky = lexyranky, cloud = cloud, bar_graph = bar_graph, sentence= sentence)
-
 
 #Contact Us Form
 @app.route("/contact", methods= ['GET', 'POST'])
@@ -241,7 +253,6 @@ def allowed_file(filename):
 userdict_list = ['阿Ｑ', '孔乙己', '单四嫂子']
 
 def jieba_processing_txt(text):
-	import jieba
 	#jieba.enable_parallel(4)
 	# Setting up parallel processes :4 ,but unable to run on Windows
 	for word in userdict_list:
@@ -295,7 +306,6 @@ def word_counts(str):
 			counts[word] = 1
 	return counts
 
-from matplotlib.font_manager import FontProperties 
 chinese = FontProperties(fname=r'/Library/Fonts/Microsoft/SimHei.ttf', size=20) 
 font_name= FontProperties('Heiti TC')
 def make_bar_ch(keys, values):
@@ -322,29 +332,13 @@ def make_bar_ch(keys, values):
 	return img_64
 
 def make_bargraph(keys, values):
-	import seaborn as sns
-	import matplotlib.pylab as plt
-	import io
 	#fig= Figure()
 	#ax = fig.subplots()
 	sns.set_style("white")
-	#width = 0.75
-	#ax.plot([1,2])
-	#fig, ax = plt.subplots()
-	#ax.barh(keys, values, width, color = "blue")
 	f, ax = plt.subplots(figsize=(11, 9)) # this creates a figure 11 inch wide, 9 inch high
 	ax = sns.barplot(values, keys)
 	ax.set(xlabel="Number of times", ylabel='Words')
-	# Set common labels
-	#ax.set_title('Audio-Number of times words were said')
-	#ax.set_xlabel('Number of times')
-	#ax.set_ylabel('Words')
 	fig = ax.get_figure()
-	#fig.savefig('bargraph.png')
-	#fig = plt.bar(*zip(*data.items()), label = "Word counts")
-	#plt.xticks(rotation='vertical')
-	#plt.xlabel('Words')
-	#plt.tight_layout() 
 	bytes_image = io.BytesIO()
 	plt.savefig(bytes_image, format="png")
 	bytes_image.seek(0)
@@ -352,10 +346,6 @@ def make_bargraph(keys, values):
 	result = str(figdata_png)[2:-1]
 	#img_64 = base64.b64encode(buf.getbuffer()).decode('ascii')
 	return result
-
-#Youtube Captions 
-import re
-import html2text
 
 def cleanhtml(raw_html):
   cleanr = re.compile('<.*?>')
@@ -372,8 +362,6 @@ def youtube_form():
 #Where I Upload Multiple Audio Files--only for wav files
 def length(fname): #finding the length of audio file
 	if fname.endswith(".wav") or fname.endswith(".WAV"):
-		import wave
-		import contextlib	
 		with contextlib.closing(wave.open(fname,'r')) as f:
 			frames = f.getnframes()
 			rate = f.getframerate()
@@ -415,11 +403,6 @@ def length(fname): #finding the length of audio file
 
 #CREATE DOUBLE BARPLOT AND REGULAR BAR PLOT
 def create_plot(feature):
-	import plotly
-	import plotly.graph_objs as go
-	import pandas as pd
-	import numpy as np
-	import json
 	if feature == 'Double barplot':
 		datas = word_counts(output[0].lower()) 
 		datass = word_counts(output[1].lower()) 
@@ -471,16 +454,13 @@ def index():
 	feature = 'Scatter'
 	bar = create_plot(feature)
 	return render_template("") 
-import simplejson
 
-import requests
 def sample_long_running_recognize(storage_uri):
 	from google.cloud import speech_v1
 	#from google.cloud import speech_v1p1beta1
 	from google.cloud.speech_v1 import enums
-	import io
-	import os
-	from google.cloud import speech
+	#from google.cloud import speech
+
 	client = speech_v1.SpeechClient()
 	#client = speech_v1p1beta1.SpeechClient()
 	#storage_uri = 'gs://cloud-samples-data/speech/brooklyn_bridge.raw'
@@ -601,8 +581,6 @@ def youtube():
 	clouds3 = []
 	graphs= []
 	video_title = []
-	import sys
-	import os 
 	masks = ['American Flag', 'French Flag', 'Spanish Flag', 'Chinese Flag']
 	if request.form.get("Analyze") == 'Youtube':
 		counter = 0 

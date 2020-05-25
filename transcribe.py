@@ -7,14 +7,7 @@ import soundfile as sf
 import os
 import pdb
 
-#f = "/Users/catherineng/Desktop/Python_Projects/huntercodefest/app/static/uploaded_files/peacocks.wav"
-
 def transcribe_audio(f):
-	#for (dirpath, dirnames, filenames) in os.walk("M4a_files/"):
-	#filepath = dirpath + '/' + filename
-	#root = Tk()
-	#root.withdraw()
-	#file =  filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("Audio files",".mp3"),("all files","*.*")))
 	if f.endswith(".mp3") or f.endswith(".MP3"): 
 		sound = AudioSegment.from_mp3(f)
 		#root.destroy()
@@ -267,34 +260,3 @@ def transcribe_google_punct(path):
 		#print('First alternative of result {}'.format(i))
 		#print('Transcript: {}'.format(alternative.transcript))
 		return tuple
-
-#transcribe_google_punct(path)
-
-
-# from chatterbot import ChatBot
-# from chatterbot.trainers import ListTrainer
-# from chatterbot.trainers import ChatterBotCorpusTrainer
-# #create chatbot
-
-# anylanuageBot = ChatBot("Chatterbot", storage_adapter="chatterbot.storage.SQLStorageAdapter")
-# trainer = ChatterBotCorpusTrainer(anylanuageBot)
-# trainer.train("chatterbot.corpus.english", "chatterbot.corpus.spanish", "chatterbot.corpus.custom.website") #train the chatter bot for english
-
-# @app.route("/maiden")
-# def maiden():
-# 	return render_template("chatbot.html")
-
-# @app.route("/get")
-# #function for the bot response
-# def get_bot_response():
-# 	userText = request.args.get('msg')
-# 	reg_ex = re.search('tell me about (.*)', userText)
-# 	try:
-# 		if reg_ex:
-# 			topic = reg_ex.group(1)
-# 			wiki = wk.summary(topic, sentences = 3)
-# 			return wiki
-# 		else: 
-# 			return str(anylanuageBot.get_response(userText))
-# 	except Exception as e:
-# 			print("No content has been found")

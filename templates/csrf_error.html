@@ -1,0 +1,25 @@
+{% extends "template.html" %}
+
+{% block content %}
+<div class="block prose">
+  <h2>{% block page_title %}{{ _('CSRF Protection Error') }}{% endblock %}</h2>
+  {% block body %}
+  <p>
+    There was an error verifying your CSRF token. Your request could not be
+    processed. We apologize for the inconvenience!
+  </p>
+
+  <p>
+    The most likely cause of this error is that your browser is set up
+    <strong>not to accept cookies</strong> from us. Please follow
+    <a href="{{ cookies_url }}">these instructions</a> to enable cookies in
+    Firefox, then try again.
+  </p>
+
+  <p>
+    If the problem persists, please <a href="{{ bug_url }}">file a bug.</a> Thanks!
+  </p>
+  {% endblock %}
+
+</div>
+{% endblock %}

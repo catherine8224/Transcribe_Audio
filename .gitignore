@@ -8,8 +8,6 @@
 /INSTALL.md
 .DS_Store
 .env
-./.DS_Store
-/.DS_Store
 __pycache__/.DS_Store
 */.git
 ./.git*
