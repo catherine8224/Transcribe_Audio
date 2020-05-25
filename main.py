@@ -28,14 +28,14 @@ import contextlib
 #Youtube Captions 
 import html2text
 
-import nltk
+#import nltk
 from os import path
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 import base64
 
-from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
-from PIL import Image
+#from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
+#from PIL import Image
 #import jieba
 
 import matplotlib
@@ -50,7 +50,7 @@ import shlex
 import json
 import pdb
 #import lxml
-from lxml import etree
+#from lxml import etree
 import urllib.request
 
 from io import BytesIO
