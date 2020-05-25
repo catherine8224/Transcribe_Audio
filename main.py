@@ -29,8 +29,8 @@ import html2text
 
 #import nltk
 from os import path
-import matplotlib.pyplot as plt
-from matplotlib.figure import Figure
+#import matplotlib.pyplot as plt
+#from matplotlib.figure import Figure
 import base64
 
 #from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
@@ -38,8 +38,8 @@ import base64
 #import jieba
 
 #import matplotlib
-matplotlib.use('agg')
-from flask_mail import Message, Mail
+#matplotlib.use('agg')
+#from flask_mail import Message, Mail
 #import random
 #import string
 import re, string, unicodedata
