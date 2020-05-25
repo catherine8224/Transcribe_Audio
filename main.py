@@ -93,6 +93,10 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="/Users/catherineng/Downloads/My Pr
 def home():
 	return render_template("home.html")
 
+'''@app.route('/favicon.ico')
+def favicon():
+	return send_from_directory(os.path.join(app.root_path, 'static'),
+							   'favicon.ico', mimetype='image/vnd.microsoft.icon') 
 @app.route("/about")
 def about():
 	return render_template("about.html")
@@ -101,6 +105,30 @@ def about():
 def thanks():
 	return render_template("thanks.html")
 
+#Contact Us Form
+@app.route("/contact", methods= ['GET', 'POST'])
+def contact():
+	form = ContactForm()
+	if request.method == 'POST':
+		if form.validate_on_submit() == False:
+			flash('All fields are required.')
+			return render_template('contact.html', form=form)
+		else:
+			msg = Message(form.subject.data, sender='contact@example.com', recipients=['cathygreat828@gmail.com'])
+			msg.body = """
+			From: %s %s <%s>
+			%s
+			""" % (form.firstname.data, form.lastname.data, form.email.data, form.message.data)
+			msg.attach(
+			form.audiofile.data.filename,
+			'application/octect-stream',
+			form.audiofile.data.read())
+			mail.send(msg)
+
+			return render_template("contact.html", success=True)
+ 
+	elif request.method == 'GET':
+		return render_template('contact.html', form=form)'''
 
 @app.route('/youtube', methods=['GET', 'POST'])
 @csrf.exempt
@@ -213,31 +241,6 @@ def resultltss():
 		flash('File(s) successfully uploaded')
 		return render_template('result.html', masks= masks, length_mask = len(masks), clouds = clouds, clouds1 = clouds1 , clouds2= clouds2 , clouds3=clouds3, filepaths = filepaths, len = len(uploaded_files), output=output, graphs = graphs)  #lens = len(filepaths),
 	return ''
-
-#Contact Us Form
-@app.route("/contact", methods= ['GET', 'POST'])
-def contact():
-	form = ContactForm()
-	if request.method == 'POST':
-		if form.validate_on_submit() == False:
-			flash('All fields are required.')
-			return render_template('contact.html', form=form)
-		else:
-			msg = Message(form.subject.data, sender='contact@example.com', recipients=['cathygreat828@gmail.com'])
-			msg.body = """
-			From: %s %s <%s>
-			%s
-			""" % (form.firstname.data, form.lastname.data, form.email.data, form.message.data)
-			msg.attach(
-			form.audiofile.data.filename,
-			'application/octect-stream',
-			form.audiofile.data.read())
-			mail.send(msg)
-
-			return render_template("contact.html", success=True)
- 
-	elif request.method == 'GET':
-		return render_template('contact.html', form=form)
 
 @app.route("/start")
 def start():
@@ -665,10 +668,6 @@ def upload():
 	blob.upload_from_string(audio_data, content_type='audio/ogg')
 	return make_response('All good')
 
-''' @app.route('/favicon.ico')
-def favicon():
-	return send_from_directory(os.path.join(app.root_path, 'static'),
-							   'favicon.ico', mimetype='image/vnd.microsoft.icon') '''
 
 if __name__ == "__main__":
 	app.run(debug=True)
