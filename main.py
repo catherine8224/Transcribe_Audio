@@ -71,7 +71,7 @@ app.config['UPLOAD_FOLDER'] = 'static/uploaded_files' #where we will store the u
 
 bootstrap = Bootstrap(app)
 font_path = 'fonts/STFangSong.ttf'
-chinese = FontProperties(fname=r'/Library/Fonts/Microsoft/SimHei.ttf', size=20) 
+#chinese = FontProperties(fname=r'/Library/Fonts/Microsoft/SimHei.ttf', size=20) 
 font_name= FontProperties('Heiti TC')
 
 #UPLOADS_PATH = join(dirname(realpath(__file__)), 'static/uploads/..')
@@ -255,7 +255,7 @@ def allowed_file(filename):
 	return '.' in filename and \
 		   filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-userdict_list = ['阿Ｑ', '孔乙己', '单四嫂子']
+"""userdict_list = ['阿Ｑ', '孔乙己', '单四嫂子']
 
 def jieba_processing_txt(text):
 	#jieba.enable_parallel(4)
@@ -281,6 +281,7 @@ def get_wordcloud_ch(text):
 	img_64 = base64.b64encode(img.getvalue()).decode('utf-8')
 	#data = base64.b64encode(img.getbuffer()).decode("ascii")
 	return img_64
+"""
 
 def get_wordcloud(text, mask = "static/img/american_flag.png"):
  	#text = text.decode("utf-8")
@@ -309,7 +310,7 @@ def word_counts(str):
 		else:
 			counts[word] = 1
 	return counts
-
+"""
 def make_bar_ch(keys, values):
 	fig= Figure()
 	ax = fig.subplots()
@@ -332,6 +333,7 @@ def make_bar_ch(keys, values):
 	img_64 = base64.b64encode(buf.getbuffer()).decode('utf-8')
 	#data = base64.b64encode(img.getbuffer()).decode("ascii")
 	return img_64
+"""
 
 def make_bargraph(keys, values):
 	#fig= Figure()
@@ -361,7 +363,7 @@ def deEmojify(inputString):
 def youtube_form():
 	return render_template('uploading.html')
 
-#Where I Upload Multiple Audio Files--only for wav files
+##Where I Upload Multiple Audio Files--only for wav files
 def length(fname): #finding the length of audio file
 	if fname.endswith(".wav") or fname.endswith(".WAV"):
 		with contextlib.closing(wave.open(fname,'r')) as f:
@@ -402,7 +404,7 @@ def length(fname): #finding the length of audio file
 			return var
 		else: 
 			return audio.info.length
-
+"""
 #CREATE DOUBLE BARPLOT AND REGULAR BAR PLOT
 def create_plot(feature):
 	if feature == 'Double barplot':
@@ -456,7 +458,7 @@ def index():
 	feature = 'Scatter'
 	bar = create_plot(feature)
 	return render_template("") 
-
+"""
 def sample_long_running_recognize(storage_uri):
 	from google.cloud import speech_v1
 	#from google.cloud import speech_v1p1beta1
