@@ -143,6 +143,7 @@ def indexes():
 	number = ['1', '2', '3', '4', '5']
 	return render_template('uploading.html', sites=sites, number= number)
 
+"""
 @app.route('/result', methods=['POST'])
 def resultltss():
 	global filepath
@@ -243,7 +244,7 @@ def resultltss():
 		flash('File(s) successfully uploaded')
 		return render_template('result.html', masks= masks, length_mask = len(masks), clouds = clouds, clouds1 = clouds1 , clouds2= clouds2 , clouds3=clouds3, filepaths = filepaths, len = len(uploaded_files), output=output, graphs = graphs)  #lens = len(filepaths),
 	return ''
-
+"""
 @app.route("/start")
 def start():
 	response = make_response(redirect('/'))
@@ -333,7 +334,7 @@ def make_bar_ch(keys, values):
 	img_64 = base64.b64encode(buf.getbuffer()).decode('utf-8')
 	#data = base64.b64encode(img.getbuffer()).decode("ascii")
 	return img_64
-"""
+
 
 def make_bargraph(keys, values):
 	#fig= Figure()
@@ -405,6 +406,8 @@ def length(fname): #finding the length of audio file
 		else: 
 			return audio.info.length
 """
+
+"""
 #CREATE DOUBLE BARPLOT AND REGULAR BAR PLOT
 def create_plot(feature):
 	if feature == 'Double barplot':
@@ -459,6 +462,8 @@ def index():
 	bar = create_plot(feature)
 	return render_template("") 
 """
+
+"""
 def sample_long_running_recognize(storage_uri):
 	from google.cloud import speech_v1
 	#from google.cloud import speech_v1p1beta1
@@ -505,6 +510,7 @@ def sample_long_running_recognize(storage_uri):
 		stored_data.append(alternatives)
 		data = ' '.join(stored_data[::2])
 	return data
+"""
 
 
 def cleaning_lyrics(youtube_id):
@@ -563,7 +569,7 @@ def cleaning_lyrics(youtube_id):
 		sentences = [sent.capitalize() for sent in sentences]
 		sentence = ' '.join(sentences)
 		return sentence
-	
+"""
 @app.route("/result_yt", methods=['GET', 'POST'])
 def youtube():
 	global youtube_id  
@@ -663,6 +669,7 @@ def upload():
 	blob = storage.Blob(secure_name, bucket)
 	blob.upload_from_string(audio_data, content_type='audio/ogg')
 	return make_response('All good')
+"""
 
 
 if __name__ == "__main__":
