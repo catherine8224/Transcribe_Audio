@@ -5,54 +5,54 @@ from flask import (Blueprint, g, session, Flask, flash, make_response, render_te
 from werkzeug.utils import secure_filename
 from werkzeug.security import check_password_hash, generate_password_hash
 #from forms import ContactForm
-#from transcribe import transcribe_audio, transcribe_audio_french, transcribe_audio_naspanish, transcribe_audio_chinese, transcribe_google_punct, get_duration, get_duration_channels
+from transcribe import transcribe_audio, transcribe_audio_french, transcribe_audio_naspanish, transcribe_audio_chinese, transcribe_google_punct, get_duration, get_duration_channels
 #imports the Google Cloud Client library
-#from google.cloud import storage
+from google.cloud import storage
 import uuid
-#from googletrans import Translator
+from googletrans import Translator
 import simplejson
 import requests
 import sys
-#import plotly
-#import plotly.graph_objs as go
-#import pandas as pd
-#import numpy as np
-#from matplotlib.font_manager import FontProperties 
+import plotly
+import plotly.graph_objs as go
+import pandas as pd
+import numpy as np
+from matplotlib.font_manager import FontProperties 
 
-#import seaborn as sns
+import seaborn as sns
 import io
-#import wave
+import wave
 import contextlib	
 
 #Youtube Captions 
 import html2text
 
-#import nltk
+import nltk
 from os import path
-#import matplotlib.pyplot as plt
-#from matplotlib.figure import Figure
+import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
 import base64
 
-#from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
-#from PIL import Image
-#import jieba
+from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
+from PIL import Image
+import jieba
 
-#import matplotlib
-#matplotlib.use('agg')
+import matplotlib
+matplotlib.use('agg')
 #from flask_mail import Message, Mail
-#import random
+import random
 #import string
 import re, string, unicodedata
 from flask_bootstrap import Bootstrap
 import subprocess
-#import shlex
-#import json
+import shlex
+import json
 import pdb
 #import lxml
-#from lxml import etree
+from lxml import etree
 import urllib.request
 
-#from io import BytesIO
+from io import BytesIO
 import io
 from flask_wtf.csrf import CSRFProtect
 from flask_wtf.csrf import CSRFError 
@@ -67,9 +67,12 @@ app.config['UPLOAD_FOLDER'] = 'static/uploaded_files' #where we will store the u
 #app.secret_key = 'very secret'
 #from two_speakers import sample_long_running_recognize_diarization
 #font_paths = ''
+#os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="/Users/catherineng/Downloads/My Project 52130-da00a565db68.json"
 
 bootstrap = Bootstrap(app)
 font_path = 'fonts/STFangSong.ttf'
+chinese = FontProperties(fname=r'/Library/Fonts/Microsoft/SimHei.ttf', size=20) 
+font_name= FontProperties('Heiti TC')
 
 #UPLOADS_PATH = join(dirname(realpath(__file__)), 'static/uploads/..')
 
@@ -94,7 +97,7 @@ def home():
 
 @app.errorhandler(CSRFError)
 def handle_csrf_error(e):
-    return render_template('csrf_error.html', reason=e.description), 400
+	return render_template('csrf_error.html', reason=e.description), 400
 
 '''@app.route('/favicon.ico')
 def favicon():
@@ -133,7 +136,7 @@ def contact():
 	elif request.method == 'GET':
 		return render_template('contact.html', form=form)'''
 
-'''@app.route('/youtube', methods=['GET', 'POST'])
+@app.route('/youtube', methods=['GET', 'POST'])
 @csrf.exempt
 def indexes():
 	sites = ['English', 'French', 'Spanish', 'Chinese']
@@ -300,7 +303,6 @@ def get_wordcloud(text, mask = "static/img/american_flag.png"):
 def word_counts(str): 
 	counts = dict()
 	words = str.split()
-
 	for word in words:
 		if word in counts:
 			counts[word] += 1
@@ -308,8 +310,6 @@ def word_counts(str):
 			counts[word] = 1
 	return counts
 
-chinese = FontProperties(fname=r'/Library/Fonts/Microsoft/SimHei.ttf', size=20) 
-font_name= FontProperties('Heiti TC')
 def make_bar_ch(keys, values):
 	fig= Figure()
 	ax = fig.subplots()
@@ -498,15 +498,10 @@ def sample_long_running_recognize(storage_uri):
 	for result in response.results:
 		# First alternative is the most probable result
 		alternative = result.alternatives[0]
-		#print(type(alternative)) #<class 'google.cloud.speech_v1.types.SpeechRecognitionAlternative'> #None   #<class 'google.cloud.speech_v1.types.SpeechRecognitionAlternative'>
 		alternatives = alternative.transcript
 		#print(type(alternatives))
 		stored_data.append(alternatives)
 		data = ' '.join(stored_data[::2])
-		#alternative = alternative.transcript
-		#print("RESULT: " , result)
-		#print("Alternative: ", alternative)
-		#print(u"Transcript: {}".format(alternative.transcript))
 	return data
 
 
@@ -665,13 +660,10 @@ def upload():
 	bucket = gcs.get_bucket('awesome-bucketness')
 	blob = storage.Blob(secure_name, bucket)
 	blob.upload_from_string(audio_data, content_type='audio/ogg')
-	return make_response('All good')'''
+	return make_response('All good')
 
 
 if __name__ == "__main__":
 	app.run(debug=True)
-
-
-#os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="/Users/catherineng/Downloads/My Project 52130-da00a565db68.json"
 
 

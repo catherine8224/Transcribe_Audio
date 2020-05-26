@@ -19,119 +19,145 @@
 {% block navbar %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
- <head>
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<head>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 
-   <meta charset="utf-8">
-   <title>SPEAK</title>
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-   <script src="static/js/translate.js"></script>
-   <link href="static/css/app.css" rel="stylesheet" type="text/css">
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+  <meta charset="utf-8">
+  <title>SPEAK</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <script src="static/js/translate.js"></script>
+  <link href="static/css/app.css" rel="stylesheet" type="text/css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
 
-   <!-- Latest compiled and minified CSS -->
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
- 
-   <!-- Optional theme -->
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
- 
-   <!-- Latest compiled and minified JavaScript -->
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
- </head>
- <body>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-    <header>
-      <h1 class="logo">SPEAK</h1>
-      <div class="container">
-        <strong><nav>
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+  <header>
+    <h1 class="logo">SPEAK</h1>
+    <div class="container">
+      <strong>
+        <nav>
           <ul class="menu">
             <li><a href="{{ url_for('home') }}">Home</a></li>
-            </div>
-          
-            <li><form id="form1" runat="server">
-              <div id="google_translate_element" style="display: none"></div>
-              <script type="text/javascript">
-              function googleTranslateElementInit() {
-                  new google.translate.TranslateElement({ pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false }, 'google_translate_element');
-              }
-              </script>
-              <script src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" type="text/javascript"></script>
-              <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-              <script>
-              function translateLanguage(lang) {
-                  var $frame = $('.goog-te-menu-frame:first');
-                  if (!$frame.size()) {
+            <li><a href="{{ url_for('youtube_form') }}">Upload</a></li>
+
+            <li>
+              <form id="form1" runat="server">
+                <div id="google_translate_element" style="display: none"></div>
+                <script type="text/javascript">
+                  function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({ pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false }, 'google_translate_element');
+                  }
+                </script>
+                <script src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+                  type="text/javascript"></script>
+                <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+                <script>
+                  function translateLanguage(lang) {
+                    var $frame = $('.goog-te-menu-frame:first');
+                    if (!$frame.size()) {
                       alert("Error: Could not find Google translate frame.");
                       return false;
+                    }
+                    $frame.contents().find('.goog-te-menu2-item span.text:contains(' + lang + ')').get(0).click();
+                    return false;
                   }
-                  $frame.contents().find('.goog-te-menu2-item span.text:contains(' + lang + ')').get(0).click();
-                  return false;
-              }
-              </script>
-              <div style="float:right;" class="dropdown dropdown-lang">
-                <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <span class="flag-icon flag-icon-us">Select Language</span>
-                </button>
-                <div class="dropdown-menu dropdown-menu-right">
-                  <div class="dropdown-menu-col">
-                  <a href="javascript:;" id="English" onclick="translateLanguage(this.id);"><span id = "bimp"><img src="static/img/american_flag.png" alt="" style="width:15px;height:10px;"/>English </span></a>
-                    <a href="javascript:;" id="German" onclick="translateLanguage(this.id);"><img src="static/img/germany_flag.png" alt="" style="width:15px;height:10px;"/><span id = "bimp">Deutsch </span></a>
-                    <a href="javascript:;" id="Italian" onclick="translateLanguage(this.id);"><span id = "bimp"><img src="static/img/italy_flag.png" alt="" style="width:15px;height:10px;"/>Italiano </span></a>
-                      <a href="javascript:;" id="Hindi" onclick="translateLanguage(this.id);"><span id = "bimp"><img src="static/img/india_flag.png" alt="" style="width:15px;height:10px;"/></a>
+                </script>
+                <div style="float:right;" class="dropdown dropdown-lang">
+                  <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    <span class="flag-icon flag-icon-us">Select Language</span>
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <div class="dropdown-menu-col">
+                      <a href="javascript:;" id="English" onclick="translateLanguage(this.id);"><span id="bimp"><img
+                            src="static/img/american_flag.png" alt="" style="width:15px;height:10px;" />English
+                        </span></a>
+                      <a href="javascript:;" id="German" onclick="translateLanguage(this.id);"><img
+                          src="static/img/germany_flag.png" alt="" style="width:15px;height:10px;" /><span
+                          id="bimp">Deutsch
+                        </span></a>
+                      <a href="javascript:;" id="Italian" onclick="translateLanguage(this.id);"><span id="bimp"><img
+                            src="static/img/italy_flag.png" alt="" style="width:15px;height:10px;" />Italiano
+                        </span></a>
+                      <a href="javascript:;" id="Hindi" onclick="translateLanguage(this.id);"><span id="bimp"><img
+                            src="static/img/india_flag.png" alt="" style="width:15px;height:10px;" /></a>
                       हिंदी </span>
                       <a href="javascript:;" id="French" onclick="translateLanguage(this.id);"><span>Français </span>
-                        <img src="static/img/french_flag.png" alt="" style="width:15px;height:10px;"/></a>
-                      </div>
-                      <div class="dropdown-menu-col">
-                <a href="javascript:;" id="Spanish" onclick="translateLanguage(this.id);"><span id = "bimp">Español</span>
-                <img src="static/img/spain_flag.png" alt="" style="width:15px;height:10px;"/></a>
-                <a href="javascript:;" id="Russian" onclick="translateLanguage(this.id);"><span id = "bimp">Русский</span>
-                <img src="static/img/russia_flag.png" alt="" style="width:15px;height:10px;"/></a>
-                <a href="javascript:;" id="Filipino" onclick="translateLanguage(this.id);"><span id = "bimp">Tagalog</span>
-                <img src="static/img/philippines_flag.png" alt="" style="width:15px;height:10px;"/></a>
-                <a href="javascript:;" id="Bengali" onclick="translateLanguage(this.id);"><span id = "bimp">বাংলা</span>
-                <img src="static/img/bangladesh_flag.png" alt="" style="width:15px;height:10px;"/></a>
-              </div>
-            </div>
-            </div>
-            </form></li>
+                        <img src="static/img/french_flag.png" alt="" style="width:15px;height:10px;" /></a>
+                    </div>
+                    <div class="dropdown-menu-col">
+                      <a href="javascript:;" id="Spanish" onclick="translateLanguage(this.id);"><span
+                          id="bimp">Español</span>
+                        <img src="static/img/spain_flag.png" alt="" style="width:15px;height:10px;" /></a>
+                      <a href="javascript:;" id="Russian" onclick="translateLanguage(this.id);"><span
+                          id="bimp">Русский</span>
+                        <img src="static/img/russia_flag.png" alt="" style="width:15px;height:10px;" /></a>
+                      <a href="javascript:;" id="Filipino" onclick="translateLanguage(this.id);"><span
+                          id="bimp">Tagalog</span>
+                        <img src="static/img/philippines_flag.png" alt="" style="width:15px;height:10px;" /></a>
+                      <a href="javascript:;" id="Bengali" onclick="translateLanguage(this.id);"><span
+                          id="bimp">বাংলা</span>
+                        <img src="static/img/bangladesh_flag.png" alt="" style="width:15px;height:10px;" /></a>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </li>
           </ul>
-    </nav></strong>
-</header>
+        </nav>
+      </strong>
+  </header>
 
 
-<script>
-function openForm() {
-  document.getElementById("myForm").style.display = "block";
-}
+  <script>
+    function openForm() {
+      document.getElementById("myForm").style.display = "block";
+    }
 
-function closeForm() {
-  document.getElementById("myForm").style.display = "none";
-}
-</script>
+    function closeForm() {
+      document.getElementById("myForm").style.display = "none";
+    }
+  </script>
 
-  
-<footer>
-  <a href="https://www.google.com/intl/en/policies/privacy/">Privacy</a>
-  <a href="https://www.google.com/intl/en/policies/terms/">Terms</a>
-</footer>
-</head>
- </body>
+
+  <footer>
+    <a href="https://www.google.com/intl/en/policies/privacy/">Privacy</a>
+    <a href="https://www.google.com/intl/en/policies/terms/">Terms</a>
+  </footer>
+  </head>
+</body>
 
 </html>
 
-<div id = "footer"></div>
-<a href="https://github.com/hunter-classes/winter-2020-codefest-submissions-the-procrastinators">
-  <img style="position: fixed; bottom: 0; right: 0; border: 0;" src="https://media3.giphy.com/media/Y01wot3Bt9Bpdz8xvs/source.gif" width="100" height="100" alt="Fork me on GitHub" data-canonical-src="https://media3.giphy.com/media/Y01wot3Bt9Bpdz8xvs/source.gif">
-  </a>
+<div id="footer"></div>
+<a href="https://github.com/catherine8224/Transcribe_Audio">
+  <img style="position: fixed; bottom: 0; right: 0; border: 0;"
+    src="https://media3.giphy.com/media/Y01wot3Bt9Bpdz8xvs/source.gif" width="100" height="100" alt="Fork me on GitHub"
+    data-canonical-src="https://media3.giphy.com/media/Y01wot3Bt9Bpdz8xvs/source.gif">
+</a>
 </div>
 {% endblock %}
 
 
 {% block content %}
-    {% block page_content %}{% endblock %}
+{% block page_content %}{% endblock %}
 {% endblock %}
 
 {% block scripts %}
