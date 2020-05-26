@@ -516,7 +516,7 @@ def sample_long_running_recognize(storage_uri):
 	return data
 """
 
-
+"""
 def cleaning_lyrics(youtube_id):
 	global sentence
 	Lyrics_URL = "http://video.google.com/timedtext?type=list&v=" + youtube_id 
@@ -573,6 +573,8 @@ def cleaning_lyrics(youtube_id):
 		sentences = [sent.capitalize() for sent in sentences]
 		sentence = ' '.join(sentences)
 		return sentence
+"""
+
 """
 @app.route("/result_yt", methods=['GET', 'POST'])
 def youtube():
