@@ -70,9 +70,9 @@ app.config['UPLOAD_FOLDER'] = 'static/uploaded_files' #where we will store the u
 #os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="/Users/catherineng/Downloads/My Project 52130-da00a565db68.json"
 
 bootstrap = Bootstrap(app)
-font_path = 'fonts/STFangSong.ttf'
+#font_path = 'fonts/STFangSong.ttf'
 #chinese = FontProperties(fname=r'/Library/Fonts/Microsoft/SimHei.ttf', size=20) 
-font_name= FontProperties('Heiti TC')
+#font_name= FontProperties('Heiti TC')
 
 #UPLOADS_PATH = join(dirname(realpath(__file__)), 'static/uploads/..')
 
