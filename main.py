@@ -7,19 +7,19 @@ from werkzeug.security import check_password_hash, generate_password_hash
 #from forms import ContactForm
 #from transcribe import transcribe_audio, transcribe_audio_french, transcribe_audio_naspanish, transcribe_audio_chinese, transcribe_google_punct, get_duration, get_duration_channels
 #imports the Google Cloud Client library
-from google.cloud import storage
+#from google.cloud import storage
 import uuid
-from googletrans import Translator
+#from googletrans import Translator
 import simplejson
 import requests
 import sys
-import plotly
-import plotly.graph_objs as go
-import pandas as pd
-import numpy as np
-from matplotlib.font_manager import FontProperties 
+#import plotly
+#import plotly.graph_objs as go
+#import pandas as pd
+#import numpy as np
+#from matplotlib.font_manager import FontProperties 
 
-import seaborn as sns
+#import seaborn as sns
 import io
 import wave
 import contextlib	
@@ -27,18 +27,18 @@ import contextlib
 #Youtube Captions 
 import html2text
 
-import nltk
+#import nltk
 from os import path
-import matplotlib.pyplot as plt
-from matplotlib.figure import Figure
+#import matplotlib.pyplot as plt
+#from matplotlib.figure import Figure
 import base64
 
-from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
-from PIL import Image
-import jieba
+#from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
+#from PIL import Image
+#import jieba
 
-import matplotlib
-matplotlib.use('agg')
+#import matplotlib
+#matplotlib.use('agg')
 #from flask_mail import Message, Mail
 import random
 #import string
@@ -49,7 +49,7 @@ import shlex
 import json
 import pdb
 #import lxml
-from lxml import etree
+#from lxml import etree
 import urllib.request
 
 from io import BytesIO
