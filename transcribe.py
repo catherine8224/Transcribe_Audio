@@ -4,7 +4,7 @@ from pydub import AudioSegment
 import sounddevice as sd
 from scipy.io.wavfile import write
 import soundfile as sf 
-import os
+import os 
 import pdb
 
 def transcribe_audio(f):
