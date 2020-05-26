@@ -1,4 +1,4 @@
-import speech_recognition as sr
+'''import speech_recognition as sr
 from os import path
 from pydub import AudioSegment
 import sounddevice as sd
@@ -260,3 +260,5 @@ def transcribe_google_punct(path):
 		#print('First alternative of result {}'.format(i))
 		#print('Transcript: {}'.format(alternative.transcript))
 		return tuple
+
+'''

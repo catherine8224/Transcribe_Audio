@@ -5,7 +5,7 @@ from flask import (Blueprint, g, session, Flask, flash, make_response, render_te
 from werkzeug.utils import secure_filename
 from werkzeug.security import check_password_hash, generate_password_hash
 #from forms import ContactForm
-from transcribe import transcribe_audio, transcribe_audio_french, transcribe_audio_naspanish, transcribe_audio_chinese, transcribe_google_punct, get_duration, get_duration_channels
+#from transcribe import transcribe_audio, transcribe_audio_french, transcribe_audio_naspanish, transcribe_audio_chinese, transcribe_google_punct, get_duration, get_duration_channels
 #imports the Google Cloud Client library
 from google.cloud import storage
 import uuid
