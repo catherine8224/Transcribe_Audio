@@ -95,6 +95,10 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="/Users/catherineng/Downloads/My Pr
 def home():
 	return render_template("home.html")
 
+@app.route('/youtube')
+def uploading():
+	return render_template('uploading.html')
+
 @app.errorhandler(CSRFError)
 def handle_csrf_error(e):
 	return render_template('csrf_error.html', reason=e.description), 400
@@ -245,12 +249,12 @@ def resultltss():
 		return render_template('result.html', masks= masks, length_mask = len(masks), clouds = clouds, clouds1 = clouds1 , clouds2= clouds2 , clouds3=clouds3, filepaths = filepaths, len = len(uploaded_files), output=output, graphs = graphs)  #lens = len(filepaths),
 	return ''
 """
-@app.route("/start")
-def start():
-	response = make_response(redirect('/'))
-	session_id = uuid.uuid4().hex
-	response.set_cookie('session_id', session_id)
-	return response
+# @app.route("/start")
+# def start():
+# 	response = make_response(redirect('/'))
+# 	session_id = uuid.uuid4().hex
+# 	response.set_cookie('session_id', session_id)
+# 	return response
 
 def allowed_file(filename):
 	return '.' in filename and \
@@ -283,7 +287,7 @@ def get_wordcloud_ch(text):
 	#data = base64.b64encode(img.getbuffer()).decode("ascii")
 	return img_64
 """
-
+"""
 def get_wordcloud(text, mask = "static/img/american_flag.png"):
  	#text = text.decode("utf-8")
 	mask = np.array(Image.open(mask).convert('RGB'))
@@ -302,6 +306,7 @@ def get_wordcloud(text, mask = "static/img/american_flag.png"):
 	img_64 = base64.b64encode(img.getvalue()).decode('utf-8')
 	return img_64
 
+
 def word_counts(str): 
 	counts = dict()
 	words = str.split()
@@ -311,6 +316,7 @@ def word_counts(str):
 		else:
 			counts[word] = 1
 	return counts
+"""
 """
 def make_bar_ch(keys, values):
 	fig= Figure()
@@ -360,9 +366,7 @@ def cleanhtml(raw_html):
 def deEmojify(inputString):
 	return inputString.encode('ascii', 'ignore').decode('ascii')
 
-@app.route('/youtube')
-def youtube_form():
-	return render_template('uploading.html')
+
 
 ##Where I Upload Multiple Audio Files--only for wav files
 def length(fname): #finding the length of audio file
