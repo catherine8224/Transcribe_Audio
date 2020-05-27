@@ -38,6 +38,7 @@ nose==1.3.7
 nltk==3.4.5 
 numba==0.49.1
 pandocfilters==1.4.2
+Pillow==7.0.0
 Pint==0.10.1
 pipenv==2018.11.26
 protobuf==3.6.1
@@ -62,6 +63,7 @@ urllib3==1.25.7
 uWSGI==2.0.18
 webencodings==0.5.1
 Werkzeug==0.16.0
+wordcloud==1.6.0
 WTForms==2.2.1
 zipp==3.1.0
 SpeechRecognition==3.8.1
