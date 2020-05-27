@@ -16,29 +16,28 @@ import sys
 #import plotly
 #import plotly.graph_objs as go
 #import pandas as pd
-#import numpy as np
+import numpy as np
 #from matplotlib.font_manager import FontProperties 
 
-#import seaborn as sns
-import io
+import seaborn as sns; import io
 import wave
 import contextlib	
 
 #Youtube Captions 
 import html2text
 
-#import nltk
+import nltk
 from os import path
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 #from matplotlib.figure import Figure
 import base64
 
-#from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
-#from PIL import Image
+from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
+from PIL import Image
 #import jieba
 
-#import matplotlib
-#matplotlib.use('agg')
+import matplotlib
+matplotlib.use('agg')
 #from flask_mail import Message, Mail
 import random
 #import string
@@ -49,7 +48,7 @@ import shlex
 import json
 import pdb
 #import lxml
-#from lxml import etree
+from lxml import etree
 import urllib.request
 
 from io import BytesIO
@@ -58,7 +57,8 @@ from flask_wtf.csrf import CSRFProtect
 from flask_wtf.csrf import CSRFError 
 
 app = Flask(__name__)
-app.secret_key = "very secret" #used by Flask and extension to keep data safe. Set as a convient value during development, but should be overriden with a random value when deploying.
+app.secret_key = "dzt+QGupE5lVkNrPl5cPu6ICErr9pnPzV0wMCKBTcvA=" 
+#used by Flask and extension to keep data safe. Set as a convient value during development, but should be overriden with a random value when deploying.
 csrf = CSRFProtect(app)
 
 app.config['UPLOAD_FOLDER'] = 'static/uploaded_files' #where we will store the uploaded files
@@ -276,7 +276,7 @@ def jieba_processing_txt(text):
 		if len(myword.strip()) > 1:
 			mywordlist.append(myword)
 	return ' '.join(mywordlist)
-
+"""
 def get_wordcloud_ch(text):
 	wc = WordCloud(font_path=font_path, background_color="white", max_words=2000, #mask=back_coloring,
 	max_font_size=100, random_state=42, width=1000, height=860, margin=2,).generate(jieba_processing_txt(text)).to_image()
@@ -286,8 +286,8 @@ def get_wordcloud_ch(text):
 	img_64 = base64.b64encode(img.getvalue()).decode('utf-8')
 	#data = base64.b64encode(img.getbuffer()).decode("ascii")
 	return img_64
-"""
-"""
+
+
 def get_wordcloud(text, mask = "static/img/american_flag.png"):
  	#text = text.decode("utf-8")
 	mask = np.array(Image.open(mask).convert('RGB'))
@@ -306,6 +306,21 @@ def get_wordcloud(text, mask = "static/img/american_flag.png"):
 	img_64 = base64.b64encode(img.getvalue()).decode('utf-8')
 	return img_64
 
+def make_bargraph(keys, values):
+    #fig= Figure()
+	#ax = fig.subplots()
+	sns.set_style("white")
+	f, ax = plt.subplots(figsize=(11, 9)) # this creates a figure 11 inch wide, 9 inch high
+	ax = sns.barplot(values, keys)
+	ax.set(xlabel="Number of times", ylabel='Words')
+	fig = ax.get_figure()
+	bytes_image = io.BytesIO()
+	plt.savefig(bytes_image, format="png")
+	bytes_image.seek(0)
+	figdata_png = base64.b64encode(bytes_image.getvalue())
+	result = str(figdata_png)[2:-1]
+	#img_64 = base64.b64encode(buf.getbuffer()).decode('ascii')
+	return result
 
 def word_counts(str): 
 	counts = dict()
@@ -316,7 +331,7 @@ def word_counts(str):
 		else:
 			counts[word] = 1
 	return counts
-"""
+
 """
 def make_bar_ch(keys, values):
 	fig= Figure()
@@ -340,32 +355,6 @@ def make_bar_ch(keys, values):
 	img_64 = base64.b64encode(buf.getbuffer()).decode('utf-8')
 	#data = base64.b64encode(img.getbuffer()).decode("ascii")
 	return img_64
-
-
-def make_bargraph(keys, values):
-	#fig= Figure()
-	#ax = fig.subplots()
-	sns.set_style("white")
-	f, ax = plt.subplots(figsize=(11, 9)) # this creates a figure 11 inch wide, 9 inch high
-	ax = sns.barplot(values, keys)
-	ax.set(xlabel="Number of times", ylabel='Words')
-	fig = ax.get_figure()
-	bytes_image = io.BytesIO()
-	plt.savefig(bytes_image, format="png")
-	bytes_image.seek(0)
-	figdata_png = base64.b64encode(bytes_image.getvalue())
-	result = str(figdata_png)[2:-1]
-	#img_64 = base64.b64encode(buf.getbuffer()).decode('ascii')
-	return result
-
-def cleanhtml(raw_html):
-  cleanr = re.compile('<.*?>')
-  cleantext = re.sub(cleanr, '', raw_html)
-  return cleantext
-
-def deEmojify(inputString):
-	return inputString.encode('ascii', 'ignore').decode('ascii')
-
 
 
 ##Where I Upload Multiple Audio Files--only for wav files
@@ -515,67 +504,31 @@ def sample_long_running_recognize(storage_uri):
 		data = ' '.join(stored_data[::2])
 	return data
 """
+def cleanhtml(raw_html):
+	cleanr = re.compile('<.*?>')
+	cleantext = re.sub(cleanr, '', raw_html)
+	return cleantext    	
 
-"""
 def cleaning_lyrics(youtube_id):
 	global sentence
-	Lyrics_URL = "http://video.google.com/timedtext?type=list&v=" + youtube_id 
-	Lyrics = requests.get(Lyrics_URL)
-	Lyrics = Lyrics.text
-	if 'name=""' in Lyrics:
-		lyrics_url = "http://video.google.com/timedtext?lang=en&v=" + youtube_id
-		lyrics = requests.get(lyrics_url)
-		texts= lyrics.text
-		texts = cleanhtml(texts)
-		texts = deEmojify(texts)
-		texts = texts.replace('&lt;font color=&quot;#FFFFFF&quot;&gt;&lt;i&gt;', " ")
-		texts = texts.replace('&lt;/i&gt;&lt;/font&gt;', " ")
-		texts = texts.replace('&amp;#39;', "'")
-		texts = texts.replace('&amp;quot;', '"')
-		texts = texts.replace('\n', ' ')
-		marscapone = re.sub("(?!^)(?=\s\s)", ".", texts).lower()
-		sent_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
-		sentences = sent_tokenizer.tokenize(marscapone)
-		sentences = [sent.capitalize() for sent in sentences]
-		sentence = ' '.join(sentences)
-		return sentence
-	elif 'name="en"' in Lyrics: 
-		lyrics_url = "http://video.google.com/timedtext?name=en&lang=en&v=" + youtube_id
-		lyrics = requests.get(lyrics_url)
-		texts= lyrics.text
-		texts = cleanhtml(texts)
-		texts = deEmojify(texts)
-		texts = texts.replace('&lt;font color=&quot;#FFFFFF&quot;&gt;&lt;i&gt;', " ")
-		texts = texts.replace('&lt;/i&gt;&lt;/font&gt;', " ")
-		texts = texts.replace('&amp;#39;', "'")
-		texts = texts.replace('&amp;quot;', '"')
-		texts = texts.replace('\n', ' ')
-		marscapone = re.sub("(?!^)(?=\s\s)", ".", texts).lower()
-		sent_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
-		sentences = sent_tokenizer.tokenize(marscapone)
-		sentences = [sent.capitalize() for sent in sentences]
-		sentence = ' '.join(sentences)
-		return sentence
-	elif 'name="English"' in Lyrics: 
-		lyrics_url = "http://video.google.com/timedtext?name=English&lang=en&v=" + youtube_id
-		lyrics = requests.get(lyrics_url)
-		texts= lyrics.text
-		texts = cleanhtml(texts)
-		texts = deEmojify(texts)
-		texts = texts.replace('&lt;font color=&quot;#FFFFFF&quot;&gt;&lt;i&gt;', " ")
-		texts = texts.replace('&lt;/i&gt;&lt;/font&gt;', " ")
-		texts = texts.replace('&amp;#39;', "'")
-		texts = texts.replace('&amp;quot;', '"')
-		texts = texts.replace('\n', ' ')
-		marscapone = re.sub("(?!^)(?=\s\s)", ".", texts).lower()
-		sent_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
-		sentences = sent_tokenizer.tokenize(marscapone)
-		sentences = [sent.capitalize() for sent in sentences]
-		sentence = ' '.join(sentences)
-		return sentence
-"""
+	Lyrics = requests.get("http://video.google.com/timedtext?type=list&v=" + youtube_id).text
+	result = re.findall(r'name="[A-Z|a-z]+"', Lyrics) #name="en"
+	if not result:
+		lyrics_url = "http://video.google.com/timedtext?" + "&lang=en&v=" + youtube_id #only get first language from result
+	else:
+		lyrics_url = "http://video.google.com/timedtext?" + result[0].replace('"', '') + "&lang=en&v=" + youtube_id #only get first language from result
+	lyrics = requests.get(lyrics_url).text
+	html = html2text.HTML2Text()
+	unicodeparser = lyrics.encode('ascii', 'ignore').decode('utf-8') #deemojify the music notes
+	texts = html.handle(unicodeparser).replace('\n', ' ')
+	texts = cleanhtml(texts)
+	marscapone = re.sub("(?!^)(?=\s\s)", ".", texts).lower()
+	sent_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+	sentences = sent_tokenizer.tokenize(marscapone)
+	sentences = [sent.capitalize() for sent in sentences]
+	sentence = ' '.join(sentences)
+	return sentence
 
-"""
 @app.route("/result_yt", methods=['GET', 'POST'])
 def youtube():
 	global youtube_id  
@@ -583,82 +536,35 @@ def youtube():
 	global video_title
 	global filepath
 	global bar_graph
-	#global sentence
 	global cloud
-	sentences = []
-	clouds = []
-	clouds1 = []
-	clouds2 = []
-	clouds3 = []
-	graphs= []
 	video_title = []
-	masks = ['American Flag', 'French Flag', 'Spanish Flag', 'Chinese Flag']
+	#clouds = []; clouds1 = []; clouds2 = []; clouds3 = []; graphs= []; 
+	#masks = ['American Flag', 'French Flag', 'Spanish Flag', 'Chinese Flag']
 	if request.form.get("Analyze") == 'Youtube':
-		counter = 0 
 		text = request.form['Text']
-		if ',' in text:
-			bloggy= text.split(",", 1)
-			for i in range(len(bloggy)):
-				if 'https://www.youtube.com/watch?v=' not in bloggy[i]:
-					flash('Not a YouTube link. Please upload a YouTube link')
-					return redirect(request.url)
-				elif text == '':
-					flash('No selected YouTube link inputted ')
-					return redirect(request.url)
-				else: 
-					youtube_id= bloggy[i].split("=", 1)[1]
-					video_url = "https://www.youtube.com/watch?v=" + youtube_id
-					youtube = etree.HTML(urllib.request.urlopen(video_url).read()) #enter your youtube url here
-					video_title.append(youtube.xpath("//span[@id='eow-title']/@title"))#get xpath using firepath firefox addon
-					print("VIDEO TITLE: ", video_title)
-					sentences.append(cleaning_lyrics(youtube_id))
-					print("SENTENCE: ", sentences)
-					cloud = get_wordcloud(sentences[i])
-					clouds.append(cloud)
-					clouds1.append(get_wordcloud(sentences[i], mask="static/img/russia_flag.png"))
-					clouds2.append(get_wordcloud(sentences[i], mask = "static/img/spain_flag.png"))
-					clouds3.append(get_wordcloud(sentences[i], mask = "static/img/china_flag.jpg"))
-					data = word_counts(sentences[i].lower()) 
-					keys = list(data)
-					values= list(data.values())
-					#Make Bar Graph 
-					bar_graph= make_bargraph(keys, values)
-					graphs.append(bar_graph)
-			return render_template("result_yt.html", length_mask = len(masks), masks = masks, sentences = sentences, video_title = video_title, len = len(bloggy), clouds = clouds, clouds1 = clouds1, clouds2 = clouds2, clouds3=clouds3, graphs=graphs)
-		elif ',' not in text:
-			youtube_id= text.split("=", 1)[1]
-			bloggy = ["1"]
-			video_url = "https://www.youtube.com/watch?v=" + youtube_id
-			youtube = etree.HTML(urllib.request.urlopen(video_url).read()) #enter your youtube url here
-			video_title = youtube.xpath("//span[@id='eow-title']/@title") #get xpath using firepath firefox addon
-			#''.join(video_title)
-			Lyrics_URL = "http://video.google.com/timedtext?type=list&v=" + youtube_id 
-			Lyrics = requests.get(Lyrics_URL)
-			Lyrics = Lyrics.text
-			if 'name=""' in Lyrics or 'name="en"' in Lyrics:
-				blah = cleaning_lyrics(youtube_id)
-				sentences.append(blah)
-				clouds.append(get_wordcloud(sentences))
-				clouds1.append(get_wordcloud(sentences, mask="static/img/russia_flag.png"))
-				clouds2.append(get_wordcloud(sentences, mask = "static/img/spain_flag.png"))
-				clouds3.append(get_wordcloud(sentences, mask = "static/img/china_flag.jpg"))
-				data = word_counts(sentences.lower()) 
-				keys = list(data)
-				values= list(data.values())
-				#Make Bar Graph 
-				bar_graph= make_bargraph(keys, values)
-				graphs.append(bar_graph)
-			return render_template("result_yt.html", length_mask = len(masks), masks = masks, sentences = sentences, video_title = video_title, len = len(bloggy), clouds = clouds, clouds1 = clouds1, clouds2 = clouds2, clouds3=clouds3, graphs=graphs) #bar_graph = bar_graph,
-		else:
-			sounds_dir_path = "/music/sounds/"
-			sound_path = sounds_dir_path + str(counter).zfill(4)
-			os.system('youtube-dl --extract-audio --audio-format mp3 --prefer-ffmpeg -o' + os.getcwd() + sound_path + ".m4a " + video_url)
-			sentence = "Could not transcribe! I have downloaded the YouTube link as an mp3 file in the /music/sounds folder. Please go to the 'Upload' link to upload the mp3 file and try to transcribe the audio there."
-			counter += 1
-			filepath = os.getcwd() + sound_path + ".m4a " + video_url
-			return render_template("result_yt.html", filepath= filepath, sentence=sentence)
-		return ''
-
+		youtube_id= text.split("=", 1)[1]
+		video_url = "https://www.youtube.com/watch?v=" + youtube_id
+		youtube = etree.HTML(urllib.request.urlopen(video_url).read()) #enter your youtube url here
+		video_title = youtube.xpath("//span[@id='eow-title']/@title") #get xpath using firepath firefox addon and gets NAME OF SONG
+		#''.join(video_title) #Lyrics_URL = 
+		Lyrics = requests.get("http://video.google.com/timedtext?type=list&v=" + youtube_id).text
+		if 'name=""' in Lyrics or 'name="en"' in Lyrics:
+			sentences = cleaning_lyrics(youtube_id)
+			#sentences.append(cleaned)
+			#clouds.append(get_wordcloud(sentences))
+			clouds = get_wordcloud(sentences)
+			data = word_counts(sentences.lower()) 
+			keys = list(data)
+			values= list(data.values())
+			#Make Bar Graph 
+			graphs= make_bargraph(keys, values)
+			#graphs.append(bar_graph)
+		return render_template("result_yt.html", sentences = sentences, video_title = video_title, clouds = clouds, graphs=graphs) #bar_graph = bar_graph, len = len(bloggy), length_mask = len(masks), masks = masks,
+	else:
+		sentence = "Could not transcribe! Please download the YouTube link as an mp3 file. Please go to the 'Upload' link to upload the mp3 file and try to transcribe the audio there."
+		return render_template("result_yt.html", sentence=sentence) #filepath= filepath,
+	#return ''
+"""
 @app.route('/record_form')
 def record_form():
 	return render_template('record.html')
@@ -682,3 +588,54 @@ if __name__ == "__main__":
 	app.run(debug=True)
 
 
+	# if 'name=""' in Lyrics:
+	# 	lyrics_url = "http://video.google.com/timedtext?lang=en&v=" + youtube_id
+	# 	lyrics = requests.get(lyrics_url)
+	# 	texts= lyrics.text
+	# 	texts = cleanhtml(texts)
+	# 	texts = deEmojify(texts)
+		#texts = texts.replace('&lt;font color=&quot;#FFFFFF&quot;&gt;&lt;i&gt;', " ")
+		#texts = texts.replace('&lt;/i&gt;&lt;/font&gt;', " ")
+		#texts = texts.replace('&amp;#39;', "'")
+		#texts = texts.replace('&amp;quot;', '"')
+		#texts = texts.replace('\n', ' ')
+		# marscapone = re.sub("(?!^)(?=\s\s)", ".", texts).lower()
+		# sent_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+		# sentences = sent_tokenizer.tokenize(marscapone)
+		# sentences = [sent.capitalize() for sent in sentences]
+		# sentence = ' '.join(sentences)
+		# return sentence
+	# elif 'name=""' not in Lyrics: 
+	# 	lyrics_url = "http://video.google.com/timedtext?name=en&lang=en&v=" + youtube_id
+	# 	lyrics = requests.get(lyrics_url)
+	# 	texts= lyrics.text
+	# 	texts = cleanhtml(texts)
+	# 	texts = deEmojify(texts)
+		# texts = texts.replace('&lt;font color=&quot;#FFFFFF&quot;&gt;&lt;i&gt;', " ")
+		# texts = texts.replace('&lt;/i&gt;&lt;/font&gt;', " ")
+		# texts = texts.replace('&amp;#39;', "'")
+		# texts = texts.replace('&amp;quot;', '"')
+		# texts = texts.replace('\n', ' ')
+		# marscapone = re.sub("(?!^)(?=\s\s)", ".", texts).lower()
+		# sent_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+		# sentences = sent_tokenizer.tokenize(marscapone)
+		# sentences = [sent.capitalize() for sent in sentences]
+		# sentence = ' '.join(sentences)
+		# return sentence
+	# elif 'name="English"' in Lyrics: 
+	# 	lyrics_url = "http://video.google.com/timedtext?name=English&lang=en&v=" + youtube_id
+	# 	lyrics = requests.get(lyrics_url)
+	# 	texts= lyrics.text
+	# 	texts = cleanhtml(texts)
+	# 	texts = deEmojify(texts)
+		# texts = texts.replace('&lt;font color=&quot;#FFFFFF&quot;&gt;&lt;i&gt;', " ")
+		# texts = texts.replace('&lt;/i&gt;&lt;/font&gt;', " ")
+		# texts = texts.replace('&amp;#39;', "'")
+		# texts = texts.replace('&amp;quot;', '"')
+		#texts = texts.replace('\n', ' ')
+		# marscapone = re.sub("(?!^)(?=\s\s)", ".", texts).lower()
+		# sent_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+		# sentences = sent_tokenizer.tokenize(marscapone)
+		# sentences = [sent.capitalize() for sent in sentences]
+		# sentence = ' '.join(sentences)
+		# return sentence

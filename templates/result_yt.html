@@ -6,12 +6,9 @@
 {% block page_content %}
   
 <div class="wrappers">
-
-{% if len is defined %}
-{% for i in range(0, len) %}
   <div class="header">
-    <h2> Transcription {{i+1}}: {{video_title[i]}}</h2>
-    <center><textarea id="text-vals" rows="10" cols="80">{{sentences[i]}}</textarea></center>
+    <h2> Transcription: {{video_title}}</h2>
+    <center><textarea id="text-vals" rows="10" cols="80">{{sentences}}</textarea></center>
     <center><input type="button" id="dwn-btns" value="Download file (.txt)"/></center>
   </br>
 </div>
@@ -26,39 +23,16 @@
       download(filename, text);
     }, false);
     </script>
-<form method="GET" action="/result_yt">
-  <div align="center" id="mainselection">
-    <select name="mask" class="form-control" id="picDD1">
-      <option selected>Select the image to represent the wordcloud</option>
-      {% for j in range(0, length_mask) %}
-      <option value="{{j}}">{{masks[j]}}</option>
-      {% endfor %}
-    </select>
-  </div>
 
-  <script>
-    var imagesArray = [
-      "data:image/png;base64,{{clouds[i]}}",
-      "data:image/png;base64,{{clouds1[i]}}", // represents val 0,
-      "data:image/png;base64,{{clouds2[i]}}", // 1,
-      "data:image/png;base64,{{clouds3[i]}}"  // 2 ...
-    ];
-
-    $('#picDD1').change(function () {
-      $('#image')[0].src = imagesArray[this.value];
-    });
-    </script>
   <center>
   <div class="maintainers">
-    <img id="image" img src="data:image/png;base64,{{ clouds[i] }}" class="galimage" onerror="hideImage(this);" style="text-align: center;" style="width:500px;height:500px;"/>
+    <img id="image" img src="data:image/png;base64,{{ clouds }}" class="galimage" onerror="hideImage(this);" style="text-align: center;" style="width:500px;height:500px;"/>
   </div>
   </center>
 
   <center><div class="maintainer">
-    <img src="data:image/png;base64,{{ graphs[i] }}" class="galimage" onerror="hideImage(this);" style="text-align: center;"/>
+    <img src="data:image/png;base64,{{ graphs }}" class="galimage" onerror="hideImage(this);" style="text-align: center;"/>
   </div></center>
-{% endfor %}
-{% endif %}
 </div>
 
 </div>
