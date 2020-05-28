@@ -42,7 +42,6 @@ app.secret_key = "dzt+QGupE5lVkNrPl5cPu6ICErr9pnPzV0wMCKBTcvA="
 app.config['UPLOAD_FOLDER'] = 'static/uploaded_files' #where we will store the uploaded files
 #app.config['TEMPLATES_AUTO_RELOAD'] = True
 #from two_speakers import sample_long_running_recognize_diarization
-#os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="/Users/catherineng/Downloads/My Project 52130-da00a565db68.json"
 
 bootstrap = Bootstrap(app)
 
@@ -63,7 +62,7 @@ app.config["MAIL_PASSWORD"] = 'WenTiDoc456'
  
 mail.init_app(app) """
 
-ALLOWED_EXTENSIONS = set(['wav', 'flac', 'mp3', 'm4a', 'ogg', '.3gp', '3g'])
+ALLOWED_EXTENSIONS = set(['wav', 'flac', 'mp3', 'm4a', 'ogg'])
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="/Users/catherineng/Downloads/My Project 52130-da00a565db68.json"
 
@@ -75,18 +74,7 @@ def home():
 def handle_csrf_error(e):
 	return render_template('csrf_error.html', reason=e.description), 400
 
-'''@app.route('/favicon.ico')
-def favicon():
-	return send_from_directory(os.path.join(app.root_path, 'static'),
-							   'favicon.ico', mimetype='image/vnd.microsoft.icon') 
-@app.route("/about")
-def about():
-	return render_template("about.html")
-
-@app.route("/thanks")
-def thanks():
-	return render_template("thanks.html")
-
+'''
 #Contact Us Form
 @app.route("/contact", methods= ['GET', 'POST'])
 def contact():
@@ -141,7 +129,7 @@ def start():
 @app.route('/youtube', methods=['GET', 'POST'])
 def uploading():
 	global sites
-	sites = {'English': 'en-US', 'French': 'fr-FR', 'Spanish': 'es-MX', 'Chinese':'zh-CN'}
+	sites = {'English': 'en-US', 'French': 'fr-FR', 'Spanish': 'es-MX'}
 	return render_template('uploading.html', sites=sites) 
 
 @app.route('/result', methods=['POST'])
@@ -180,25 +168,14 @@ def resultss():
 					print("OUTPUT:", output)
 		for i in range(0, len(uploaded_files)):
 			filename = secure_filename(file.filename)
-			if 'ch' in filename:
-				words = jieba_processing_txt(output[i])
-				cloud = get_wordcloud_ch(words)
-				clouds.append(cloud)
-				data = Counter(output[i])
-				keys = list(data)
-				values= list(data.values())
-				#Make Bar Graph 
-				bar_graph= make_bar_ch(keys, values) 
-				graphs.append(bar_graph)	
-			else:
-				cloud = get_wordcloud(output[i])
-				clouds.append(cloud) #clouds1.append(get_wordcloud(output[i], mask = "static/img/french_flag.png")) #clouds2.append(get_wordcloud(output[i], mask = "static/img/spain_flag.png")) #clouds3.append(get_wordcloud(output[i], mask = "static/img/china_flag.jpg"))
-				data = word_counts(output[i].lower()) 
-				keys = list(data)
-				values= list(data.values())
-				#Make Bar Graph 
-				bar_graph= make_bargraph(keys, values)
-				graphs.append(bar_graph)  
+			cloud = get_wordcloud(output[i])
+			clouds.append(cloud) #clouds1.append(get_wordcloud(output[i], mask = "static/img/french_flag.png")) #clouds2.append(get_wordcloud(output[i], mask = "static/img/spain_flag.png")) #clouds3.append(get_wordcloud(output[i], mask = "static/img/china_flag.jpg"))
+			data = word_counts(output[i].lower()) 
+			keys = list(data)
+			values= list(data.values())
+			#Make Bar Graph 
+			bar_graph= make_bargraph(keys, values)
+			graphs.append(bar_graph)  
 		flash('File(s) successfully uploaded')
 		return render_template('result.html', clouds = clouds, filepaths = filepaths, graphs = graphs, len = len(uploaded_files), output=output)  #lens = len(filepaths), clouds1 = clouds1 , clouds2= clouds2 , clouds3=clouds3, masks= masks, length_mask = len(masks), 
 	#return ''
@@ -246,34 +223,6 @@ def allowed_file(filename):
 	return '.' in filename and \
 		   filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-"""userdict_list = ['阿Ｑ', '孔乙己', '单四嫂子']
-
-def jieba_processing_txt(text):
-	#jieba.enable_parallel(4)
-	# Setting up parallel processes :4 ,but unable to run on Windows
-	for word in userdict_list:
-		jieba.add_word(word)
-
-	mywordlist = []
-	seg_list = jieba.cut(text, cut_all=False)
-	liststr = "/ ".join(seg_list)
-
-	for myword in liststr.split('/'):
-		if len(myword.strip()) > 1:
-			mywordlist.append(myword)
-	return ' '.join(mywordlist)
-"""
-def get_wordcloud_ch(text):
-	wc = WordCloud(font_path=font_path, background_color="white", max_words=2000, #mask=back_coloring,
-	max_font_size=100, random_state=42, width=1000, height=860, margin=2,).generate(jieba_processing_txt(text)).to_image()
-	img = io.BytesIO()
-	wc.save(img, "PNG")
-	img.seek(0)
-	img_64 = base64.b64encode(img.getvalue()).decode('utf-8')
-	#data = base64.b64encode(img.getbuffer()).decode("ascii")
-	return img_64
-
-
 def get_wordcloud(text, mask = "static/img/american_flag.png"):
  	#text = text.decode("utf-8")
 	mask = np.array(Image.open(mask).convert('RGB'))
@@ -318,6 +267,108 @@ def word_counts(str):
 			counts[word] = 1
 	return counts
 
+def cleanhtml(raw_html):
+	cleanr = re.compile('<.*?>')
+	cleantext = re.sub(cleanr, '', raw_html)
+	return cleantext    	
+
+def cleaning_lyrics(youtube_id):
+	global sentence
+	Lyrics = requests.get("http://video.google.com/timedtext?type=list&v=" + youtube_id).text
+	result = re.findall(r'name="[A-Z|a-z]+"', Lyrics) #name="en"
+	if not result:
+		lyrics_url = "http://video.google.com/timedtext?" + "&lang=en&v=" + youtube_id #only get first language from result
+	else:
+		lyrics_url = "http://video.google.com/timedtext?" + result[0].replace('"', '') + "&lang=en&v=" + youtube_id #only get first language from result
+	lyrics = requests.get(lyrics_url).text
+	html = html2text.HTML2Text()
+	unicodeparser = lyrics.encode('ascii', 'ignore').decode('utf-8') #deemojify the music notes
+	texts = html.handle(unicodeparser).replace('\n', ' ')
+	texts = cleanhtml(texts)
+	marscapone = re.sub("(?!^)(?=\s\s)", ".", texts).lower()
+	sent_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+	sentences = sent_tokenizer.tokenize(marscapone)
+	sentences = [sent.capitalize() for sent in sentences]
+	sentence = ' '.join(sentences)
+	return sentence
+
+@app.route("/result_yt", methods=['GET', 'POST'])
+def youtube():
+	global youtube_id  
+	global output
+	global video_title
+	global filepath
+	global bar_graph
+	global cloud
+	video_title = []
+	#clouds = []; clouds1 = []; clouds2 = []; clouds3 = []; graphs= []; #masks = ['American Flag', 'French Flag', 'Spanish Flag', 'Chinese Flag']
+	if request.form.get("Analyze") == 'Youtube':
+		text = request.form['Text']
+		youtube_id= text.split("=", 1)[1]
+		video_url = "https://www.youtube.com/watch?v=" + youtube_id
+		youtube = etree.HTML(urllib.request.urlopen(video_url).read()) #enter your youtube url here
+		video_title = youtube.xpath("//span[@id='eow-title']/@title") #get xpath using firepath firefox addon and gets NAME OF SONG
+		#''.join(video_title) #Lyrics_URL = 
+		#Lyrics = requests.get("http://video.google.com/timedtext?type=list&v=" + youtube_id).text
+		#if 'name=""' in Lyrics or 'name="en"' in Lyrics:
+		sentences = cleaning_lyrics(youtube_id)
+		#sentences.append(cleaned)
+		#clouds.append(get_wordcloud(sentences))
+		clouds = get_wordcloud(sentences)
+		data = word_counts(sentences.lower()) 
+		keys = list(data)
+		values= list(data.values())
+		#Make Bar Graph 
+		graphs= make_bargraph(keys, values)
+		#graphs.append(bar_graph)
+		return render_template("result_yt.html", sentences = sentences, video_title = video_title, clouds = clouds, graphs=graphs) #bar_graph = bar_graph, len = len(bloggy), length_mask = len(masks), masks = masks,
+	else:
+		sentence = "Could not transcribe! Please download the YouTube link as an mp3 file. Please go to the 'Upload' link to upload the mp3 file and try to transcribe the audio there."
+		return render_template("result_yt.html", sentence=sentence) #filepath= filepath,
+	#return ''
+
+
+if __name__ == "__main__":
+	app.run(debug=True)
+
+# if 'ch' in filename:
+# 	words = jieba_processing_txt(output[i])
+# 	cloud = get_wordcloud_ch(words)
+# 	clouds.append(cloud)
+# 	data = Counter(output[i])
+# 	keys = list(data)
+# 	values= list(data.values())
+# 	#Make Bar Graph 
+# 	bar_graph= make_bar_ch(keys, values) 
+# 	graphs.append(bar_graph)	
+#else:
+"""userdict_list = ['阿Ｑ', '孔乙己', '单四嫂子']
+
+def jieba_processing_txt(text):
+	#jieba.enable_parallel(4)
+	# Setting up parallel processes :4 ,but unable to run on Windows
+	for word in userdict_list:
+		jieba.add_word(word)
+
+	mywordlist = []
+	seg_list = jieba.cut(text, cut_all=False)
+	liststr = "/ ".join(seg_list)
+
+	for myword in liststr.split('/'):
+		if len(myword.strip()) > 1:
+			mywordlist.append(myword)
+	return ' '.join(mywordlist)
+
+def get_wordcloud_ch(text):
+	wc = WordCloud(font_path=font_path, background_color="white", max_words=2000, #mask=back_coloring,
+	max_font_size=100, random_state=42, width=1000, height=860, margin=2,).generate(jieba_processing_txt(text)).to_image()
+	img = io.BytesIO()
+	wc.save(img, "PNG")
+	img.seek(0)
+	img_64 = base64.b64encode(img.getvalue()).decode('utf-8')
+	#data = base64.b64encode(img.getbuffer()).decode("ascii")
+	return img_64
+"""
 """
 def make_bar_ch(keys, values):
 	fig= Figure()
@@ -447,66 +498,15 @@ def sample_long_running_recognize(storage_uri):
 		data = ' '.join(stored_data[::2])
 	return data
 """
-def cleanhtml(raw_html):
-	cleanr = re.compile('<.*?>')
-	cleantext = re.sub(cleanr, '', raw_html)
-	return cleantext    	
+'''@app.route('/favicon.ico')
+def favicon():
+	return send_from_directory(os.path.join(app.root_path, 'static'),
+							   'favicon.ico', mimetype='image/vnd.microsoft.icon') 
+@app.route("/about")
+def about():
+	return render_template("about.html")
 
-def cleaning_lyrics(youtube_id):
-	global sentence
-	Lyrics = requests.get("http://video.google.com/timedtext?type=list&v=" + youtube_id).text
-	result = re.findall(r'name="[A-Z|a-z]+"', Lyrics) #name="en"
-	if not result:
-		lyrics_url = "http://video.google.com/timedtext?" + "&lang=en&v=" + youtube_id #only get first language from result
-	else:
-		lyrics_url = "http://video.google.com/timedtext?" + result[0].replace('"', '') + "&lang=en&v=" + youtube_id #only get first language from result
-	lyrics = requests.get(lyrics_url).text
-	html = html2text.HTML2Text()
-	unicodeparser = lyrics.encode('ascii', 'ignore').decode('utf-8') #deemojify the music notes
-	texts = html.handle(unicodeparser).replace('\n', ' ')
-	texts = cleanhtml(texts)
-	marscapone = re.sub("(?!^)(?=\s\s)", ".", texts).lower()
-	sent_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
-	sentences = sent_tokenizer.tokenize(marscapone)
-	sentences = [sent.capitalize() for sent in sentences]
-	sentence = ' '.join(sentences)
-	return sentence
-
-@app.route("/result_yt", methods=['GET', 'POST'])
-def youtube():
-	global youtube_id  
-	global output
-	global video_title
-	global filepath
-	global bar_graph
-	global cloud
-	video_title = []
-	#clouds = []; clouds1 = []; clouds2 = []; clouds3 = []; graphs= []; #masks = ['American Flag', 'French Flag', 'Spanish Flag', 'Chinese Flag']
-	if request.form.get("Analyze") == 'Youtube':
-		text = request.form['Text']
-		youtube_id= text.split("=", 1)[1]
-		video_url = "https://www.youtube.com/watch?v=" + youtube_id
-		youtube = etree.HTML(urllib.request.urlopen(video_url).read()) #enter your youtube url here
-		video_title = youtube.xpath("//span[@id='eow-title']/@title") #get xpath using firepath firefox addon and gets NAME OF SONG
-		#''.join(video_title) #Lyrics_URL = 
-		#Lyrics = requests.get("http://video.google.com/timedtext?type=list&v=" + youtube_id).text
-		#if 'name=""' in Lyrics or 'name="en"' in Lyrics:
-		sentences = cleaning_lyrics(youtube_id)
-		#sentences.append(cleaned)
-		#clouds.append(get_wordcloud(sentences))
-		clouds = get_wordcloud(sentences)
-		data = word_counts(sentences.lower()) 
-		keys = list(data)
-		values= list(data.values())
-		#Make Bar Graph 
-		graphs= make_bargraph(keys, values)
-		#graphs.append(bar_graph)
-		return render_template("result_yt.html", sentences = sentences, video_title = video_title, clouds = clouds, graphs=graphs) #bar_graph = bar_graph, len = len(bloggy), length_mask = len(masks), masks = masks,
-	else:
-		sentence = "Could not transcribe! Please download the YouTube link as an mp3 file. Please go to the 'Upload' link to upload the mp3 file and try to transcribe the audio there."
-		return render_template("result_yt.html", sentence=sentence) #filepath= filepath,
-	#return ''
-
-
-if __name__ == "__main__":
-	app.run(debug=True)
+@app.route("/thanks")
+def thanks():
+	return render_template("thanks.html")
+'''
