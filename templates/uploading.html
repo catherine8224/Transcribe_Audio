@@ -22,12 +22,7 @@
   <h2>Select YouTube video</h2>
   <form method="POST" action="/result_yt" enctype="multipart/form-data">
     <dl>
-      <input type ="hidden" name="csrf_token" value="{{csrf_token() }}" />
       <p>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
         <div class="input-group-1" style="text-align: center;">
           <span contenteditable="true">
             <label>Text box</label>
@@ -58,7 +53,6 @@
   </hr>
 
   <body>
-
     <form id="upload" action="/result" method="POST" enctype="multipart/form-data">
       <fieldset>
         <legend> File Upload</legend>
@@ -70,8 +64,8 @@
           <div align="center" id="mainselection">
             <select name="site" class="form-control">
               <option selected>Select a language</option>
-              {% for site in sites %}
-              <option value="{{site}}">{{site}}</option>
+              {% for key, value in sites.items() %}
+              <option value="{{value}}" name="{{key}}">{{ key }}</option>
               {% endfor %}
             </select>
           </div>
@@ -100,7 +94,7 @@
           <!--<label class="btn btn-default btn-file"> <i class="glyphicon glyphicon-upload"></i>
             Start Upload <input type="submit" value="File" name="Analyze" style="display: none;" />
           </label>-->
-          <button type="submit" class="btn btn-primary start">
+          <button type="submit" name = "Analyze" value = "File" class="btn btn-primary start">
             <i class="glyphicon glyphicon-upload"></i>
             <span>Start upload</span>
           </button>
@@ -172,4 +166,4 @@
         </div>
 </body>
 
-        {% endblock %}
+{% endblock %}
