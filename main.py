@@ -341,49 +341,6 @@ def make_bar_ch(keys, values):
 	img_64 = base64.b64encode(buf.getbuffer()).decode('utf-8')
 	#data = base64.b64encode(img.getbuffer()).decode("ascii")
 	return img_64
-
-
-##Where I Upload Multiple Audio Files--only for wav files
-def length(fname): #finding the length of audio file
-	if fname.endswith(".wav") or fname.endswith(".WAV"):
-		with contextlib.closing(wave.open(fname,'r')) as f:
-			frames = f.getnframes()
-			rate = f.getframerate()
-			duration = frames / float(rate)
-		return duration
-	if fname.endswith(".mp3") or fname.endswith(".MP3"):
-		from mutagen.mp3 import MP3
-		audio = MP3(fname)
-		if audio is None: 
-			#var = os.system("ffmpeg -i /Users/catherineng/Downloads/0aeaedfc-b0ee-4ad1-a6b7-85ed8e588400.ogg -loglevel quiet -stats -f null - 2>&1 | awk '{print $2}' | sed s/://g | sed s/[a-z]//g | sed s/=//g")
-			var = os.system("ffmpeg -i " + fname + " -loglevel quiet -stats -f null - 2>&1 | awk '{print $2}' | sed s/://g | sed s/[a-z]//g | sed s/=//g")
-			return var
-		else: 
-			return audio.info.length
-	if fname.endswith(".flac"):
-		from mutagen.flac import FLAC
-		audio = FLAC(fname)
-		if audio is None: 
-			var = os.system("ffmpeg -i " + fname + " -loglevel quiet -stats -f null - 2>&1 | awk '{print $2}' | sed s/://g | sed s/[a-z]//g | sed s/=//g")
-			return var
-		else: 
-			return audio.info.length
-	if fname.endswith(".ogg"):
-		import mutagen
-		audio = mutagen.File(fname)
-		if audio is None: 
-			var = os.system("ffmpeg -i " + fname + " -loglevel quiet -stats -f null - 2>&1 | awk '{print $2}' | sed s/://g | sed s/[a-z]//g | sed s/=//g")
-			return var
-		else: 
-			return audio.info.length
-	if fname.endswith(".m4a"):
-		from mutagen.mp4 import MP4
-		audio = MP4(fname)
-		if audio is None: 
-			var = os.system("ffmpeg -i " + fname + " -loglevel quiet -stats -f null - 2>&1 | awk '{print $2}' | sed s/://g | sed s/[a-z]//g | sed s/=//g")
-			return var
-		else: 
-			return audio.info.length
 """
 
 """
