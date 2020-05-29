@@ -3,8 +3,9 @@
 ## WEBSITE
 https://audiotranscription12.herokuapp.com/
 <hr>
-## Description
-<h1> About Speech Performance Easy Analyzer for Kicks (SPEAK) </h1>
+## DESCRIPTION
+
+<h3> About Speech Performance Easy Analyzer for Kicks (SPEAK) </h3>
     <p font-size: > SPEAK is a micro web framework written in Python.</p>
     <p> SPEAK is an application that can take in pre-recorded audio files (wav, mp3, m4a, and FLAC)</p>
     <p> You can either do two things: 1) upload one/multiple audio file(s) or 2) upload a Youtube music video with captions so that it can process the captioned words. 
@@ -15,9 +16,7 @@ https://audiotranscription12.herokuapp.com/
       <li>
       The second option uses the YouTube API to scrape the captions of the music videos on YouTube. It will then create a Word Cloud and bar graph of the words said in the file. </li>
     </ol>
-
-    You can contact us in the "Contact Us" link if there are any issues. 
-    </p>
+<p>You can contact us in the "Contact Us" link if there are any issues. </p>
     <b> What is FLAC?</b>
     <p> It stands for Free Lossless Audio Codec.It is compatible with many phones (including the iPhone -- with an app), portable music players (PMP) including the PonoPlayer and hi-fi components. 
       FLAC files are available for roughly the same price as the equivalent MP3 in online stores and sound much better. Be sure that your flac files are complete, and has the usual MD5 signature. 
