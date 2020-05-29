@@ -64,7 +64,7 @@ mail.init_app(app) """
 
 ALLOWED_EXTENSIONS = set(['wav', 'flac', 'mp3', 'm4a', 'ogg'])
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="/Users/catherineng/Downloads/My Project 52130-da00a565db68.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="My Project 52130-da00a565db68.json"
 
 @app.route("/")
 def home():
