@@ -3,8 +3,6 @@
 ## WEBSITE
 https://audiotranscription12.herokuapp.com/
 <hr>
-## DESCRIPTION
-
 <h3> About Speech Performance Easy Analyzer for Kicks (SPEAK) </h3>
     <p font-size: > SPEAK is a micro web framework written in Python.</p>
     <p> SPEAK is an application that can take in pre-recorded audio files (wav, mp3, m4a, ogg and FLAC)</p>
