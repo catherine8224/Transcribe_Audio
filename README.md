@@ -7,7 +7,7 @@ https://audiotranscription12.herokuapp.com/
 
 <h3> About Speech Performance Easy Analyzer for Kicks (SPEAK) </h3>
     <p font-size: > SPEAK is a micro web framework written in Python.</p>
-    <p> SPEAK is an application that can take in pre-recorded audio files (wav, mp3, m4a, and FLAC)</p>
+    <p> SPEAK is an application that can take in pre-recorded audio files (wav, mp3, m4a, ogg and FLAC)</p>
     <p> You can either do two things: 1) upload one/multiple audio file(s) or 2) upload a Youtube music video with captions so that it can process the captioned words. 
       <ol>
       <li>
@@ -35,5 +35,5 @@ https://audiotranscription12.herokuapp.com/
     <p>Ogg is a free, open container format It allows users to stream and alter high quality digital multimedia files. The name “Ogg” derives from the jargon word “ogging.” Ogging refers to the killing of a carrier 
       by a suicide run in the game Netrek. Apple does not support OGG file formats, and the presence of more common and widely compatible formats like MP3 mean the OGG file is not that frequently distributed in the digital media world. </p>
   
-      Note: The Recorder produces a mono (1-channel) recording in .ogg format. 
+ Note: The Recorder produces a mono (1-channel) recording in .ogg format. 
     </div>
