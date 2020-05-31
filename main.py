@@ -4,17 +4,15 @@ from flask import (Blueprint, g, session, Flask, flash, make_response, render_te
 from werkzeug.utils import secure_filename
 from werkzeug.security import check_password_hash, generate_password_hash
 #from forms import ContactForm
-from transcribe import transcribe_audio#, transcribe_audio_french, transcribe_audio_naspanish, transcribe_audio_chinese, transcribe_google_punct
-#, get_duration, get_duration_channels
+from transcribe import transcribe_audio #transcribe_audio_chinese, transcribe_google_punct, get_duration, get_duration_channels
 #imports the Google Cloud Client library
 from google.cloud import storage
-import uuid; import simplejson; import requests; import sys; import io; import wave; import contextlib	
-import importlib
-#from googletrans import Translator
+import uuid; import simplejson; import requests; import sys; import io; import wave; import contextlib; import importlib
+from googletrans import Translator
 #import plotly
 #import plotly.graph_objs as go
-#import pandas as pd
-#from matplotlib.font_manager import FontProperties 
+from matplotlib.font_manager import FontProperties 
+#from two_speakers import sample_long_running_recognize_diarization
 
 #Youtube Captions 
 import html2text; import nltk; from os import path; import matplotlib.pyplot as plt; import numpy as np; import seaborn as sns;
@@ -33,7 +31,8 @@ from lxml import etree; import urllib.request
 from io import BytesIO; import io; from flask_wtf.csrf import CSRFProtect; from flask_wtf.csrf import CSRFError 
 
 app = Flask(__name__)
-app.secret_key = "dzt+QGupE5lVkNrPl5cPu6ICErr9pnPzV0wMCKBTcvA="  #used by Flask and extension to keep data safe. Set as a convient value during development, but should be overriden with a random value when deploying.
+app.secret_key = "dzt+QGupE5lVkNrPl5cPu6ICErr9pnPzV0wMCKBTcvA="  
+#used by Flask and extension to keep data safe. Set as a convient value during development, but should be overriden with a random value when deploying.
 csrf = CSRFProtect(app)
 
 
@@ -41,26 +40,14 @@ app = Flask(__name__)
 app.secret_key = "dzt+QGupE5lVkNrPl5cPu6ICErr9pnPzV0wMCKBTcvA="
 app.config['UPLOAD_FOLDER'] = 'static/uploaded_files' #where we will store the uploaded files
 #app.config['TEMPLATES_AUTO_RELOAD'] = True
-#from two_speakers import sample_long_running_recognize_diarization
 
 bootstrap = Bootstrap(app)
 
-#font_path = 'fonts/STFangSong.ttf'
-#chinese = FontProperties(fname=r'/Library/Fonts/Microsoft/SimHei.ttf', size=20) 
-#font_name= FontProperties('Heiti TC')
-
+font_path = 'fonts/STFangSong.ttf'
+chinese = FontProperties(fname=r'/Library/Fonts/Microsoft/SimHei.ttf', size=20) 
+font_name= FontProperties('Heiti TC')
 #UPLOADS_PATH = join(dirname(realpath(__file__)), 'static/uploads/..')
-
 #app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
-""" mail = Mail()
-
-app.config["MAIL_SERVER"] = "smtp.gmail.com"
-app.config["MAIL_PORT"] = 465
-app.config["MAIL_USE_SSL"] = True
-app.config["MAIL_USERNAME"] = 'cathygreat828@gmail.com'
-app.config["MAIL_PASSWORD"] = 'WenTiDoc456'
- 
-mail.init_app(app) """
 
 ALLOWED_EXTENSIONS = set(['wav', 'flac', 'mp3', 'm4a', 'ogg'])
 
@@ -73,33 +60,6 @@ def home():
 @app.errorhandler(CSRFError)
 def handle_csrf_error(e):
 	return render_template('csrf_error.html', reason=e.description), 400
-
-'''
-#Contact Us Form
-@app.route("/contact", methods= ['GET', 'POST'])
-def contact():
-	form = ContactForm()
-	if request.method == 'POST':
-		if form.validate_on_submit() == False:
-			flash('All fields are required.')
-			return render_template('contact.html', form=form)
-		else:
-			msg = Message(form.subject.data, sender='contact@example.com', recipients=['cathygreat828@gmail.com'])
-			msg.body = """
-			From: %s %s <%s>
-			%s
-			""" % (form.firstname.data, form.lastname.data, form.email.data, form.message.data)
-			msg.attach(
-			form.audiofile.data.filename,
-			'application/octect-stream',
-			form.audiofile.data.read())
-			mail.send(msg)
-
-			return render_template("contact.html", success=True)
- 
-	elif request.method == 'GET':
-		return render_template('contact.html', form=form)
-		
 		
 @app.route('/record_form')
 def record_form():
@@ -116,7 +76,7 @@ def upload():
 	bucket = gcs.get_bucket('awesome-bucketness')
 	blob = storage.Blob(secure_name, bucket)
 	blob.upload_from_string(audio_data, content_type='audio/ogg')
-	return make_response('All good')'''
+	return make_response('All good')
 
 
 @app.route("/start")
@@ -125,11 +85,58 @@ def start():
 	session_id = uuid.uuid4().hex
 	response.set_cookie('session_id', session_id)
 	return response
+userdict_list = ['阿Ｑ', '孔乙己', '单四嫂子']
 
+def jieba_processing_txt(text):
+	#jieba.enable_parallel(4) # Setting up parallel processes :4 ,but unable to run on Windows
+	for word in userdict_list:
+		jieba.add_word(word)
+
+	mywordlist = []
+	seg_list = jieba.cut(text, cut_all=False)
+	liststr = "/ ".join(seg_list)
+
+	for myword in liststr.split('/'):
+		if len(myword.strip()) > 1:
+			mywordlist.append(myword)
+	return ' '.join(mywordlist)
+
+def get_wordcloud_ch(text):
+	wc = WordCloud(font_path=font_path, background_color="white", max_words=2000, #mask=back_coloring,
+	max_font_size=100, random_state=42, width=1000, height=860, margin=2,).generate(jieba_processing_txt(text)).to_image()
+	img = io.BytesIO()
+	wc.save(img, "PNG")
+	img.seek(0)
+	img_64 = base64.b64encode(img.getvalue()).decode('utf-8')
+	#data = base64.b64encode(img.getbuffer()).decode("ascii")
+	return img_64
+
+def make_bar_ch(keys, values):
+	fig= Figure()
+	ax = fig.subplots()
+	width = 0.60
+	#barh plots horizontal barplot
+	ax.bar(keys, values, width)
+	# Set common labels
+	ax.set_title(u'说的字数', fontproperties=font_name) 
+	ax.set_xlabel(u'次数',fontproperties=font_name)
+	ax.set_ylabel(u'字', fontproperties=font_name)
+	ax.set_xticks(keys)
+	for label in ax.xaxis.get_majorticklabels():
+		label.set(fontproperties=font_name)
+	#set parameters for tick labels
+	ax.tick_params(axis='x', which='major', labelsize=5, grid_linewidth = 100)
+	#plt.xticks(keys, fontproperties=chinese) 
+	buf = BytesIO()
+	fig.savefig(buf, format="png")
+	#img_64 = base64.b64encode(buf.getbuffer()).decode('ascii')
+	img_64 = base64.b64encode(buf.getbuffer()).decode('utf-8')
+	#data = base64.b64encode(img.getbuffer()).decode("ascii")
+	return img_64
 @app.route('/youtube', methods=['GET', 'POST'])
 def uploading():
 	global sites
-	sites = {'English': 'en-US', 'French': 'fr-FR', 'Spanish': 'es-MX'}
+	sites = {'English': 'en-US', 'French': 'fr-FR', 'Spanish': 'es-MX', 'Chinese': 'zh-CN'}
 	return render_template('uploading.html', sites=sites) 
 
 @app.route('/result', methods=['POST'])
@@ -164,13 +171,22 @@ def resultss():
 						output.append(transcribe_audio(filepath, langue))
 					else:
 						sentence = "file size too big"
-						#return render_template("result.html", sentence=sentence) 
-					print("OUTPUT:", output)
+						return render_template("result.html", sentence=sentence) 
+					#print("OUTPUT:", output)
 		for i in range(0, len(uploaded_files)):
 			filename = secure_filename(file.filename)
-			cloud = get_wordcloud(output[i])
+			if langue =='zh-CN': #in filename:
+				words = jieba_processing_txt(output[i])
+				cloud = get_wordcloud_ch(words)
+				data = Counter(output[i])
+				#clouds.append(cloud) #keys = list(data) #values= list(data.values())
+				#Make Bar Graph 
+				#bar_graph= make_bar_ch(keys, values) 
+				#graphs.append(bar_graph)	
+			else:
+				cloud = get_wordcloud(output[i])
+				data = word_counts(output[i].lower()) 
 			clouds.append(cloud) #clouds1.append(get_wordcloud(output[i], mask = "static/img/french_flag.png")) #clouds2.append(get_wordcloud(output[i], mask = "static/img/spain_flag.png")) #clouds3.append(get_wordcloud(output[i], mask = "static/img/china_flag.jpg"))
-			data = word_counts(output[i].lower()) 
 			keys = list(data)
 			values= list(data.values())
 			#Make Bar Graph 
@@ -178,7 +194,6 @@ def resultss():
 			graphs.append(bar_graph)  
 		flash('File(s) successfully uploaded')
 		return render_template('result.html', clouds = clouds, filepaths = filepaths, graphs = graphs, len = len(uploaded_files), output=output)  #lens = len(filepaths), clouds1 = clouds1 , clouds2= clouds2 , clouds3=clouds3, masks= masks, length_mask = len(masks), 
-	#return ''
 
 def length(fname): #finding the length of audio file
 	if fname.endswith(".wav") or fname.endswith(".WAV"):
@@ -190,27 +205,20 @@ def length(fname): #finding the length of audio file
 	else:
 		extension = re.split('\.', fname)[1]  #flac, mp3
 		mymodule = importlib.import_module("mutagen." + extension)
-		#from mutagen.mp3 import MP3
-		if fname.endswith(".mp3"):
+		if fname.endswith(".mp3"): #from mutagen.mp3 import MP3
 			audio = mymodule.MP3(fname)
 		elif fname.endswith(".flac"):
 			audio = mymodule.FLACK(fname)
 		elif fname.endswith(".m4a"):
 			audio = mymodule.M4A(fname)
-		if audio is None: 
-			#var = os.system("ffmpeg -i /Users/catherineng/Downloads/0aeaedfc-b0ee-4ad1-a6b7-85ed8e588400.ogg -loglevel quiet -stats -f null - 2>&1 | awk '{print $2}' | sed s/://g | sed s/[a-z]//g | sed s/=//g")
+		elif fname.endswith(".ogg"):
+	 		import mutagen
+	 		audio = mutagen.File(fname)
+		if audio is None: #var = os.system("ffmpeg -i /Users/catherineng/Downloads/0aeaedfc-b0ee-4ad1-a6b7-85ed8e588400.ogg -loglevel quiet -stats -f null - 2>&1 | awk '{print $2}' | sed s/://g | sed s/[a-z]//g | sed s/=//g")
 			var = os.system("ffmpeg -i " + fname + " -loglevel quiet -stats -f null - 2>&1 | awk '{print $2}' | sed s/://g | sed s/[a-z]//g | sed s/=//g")
 			return var
 		else: 
 			return audio.info.length
-	# if fname.endswith(".ogg"):
-	# 	import mutagen
-	# 	audio = mutagen.File(fname)
-	# 	if audio is None: 
-	# 		var = os.system("ffmpeg -i " + fname + " -loglevel quiet -stats -f null - 2>&1 | awk '{print $2}' | sed s/://g | sed s/[a-z]//g | sed s/=//g")
-	# 		return var
-	# 	else: 
-	# 		return audio.info.length
 
 # @app.route("/start")
 # def start():
@@ -242,8 +250,7 @@ def get_wordcloud(text, mask = "static/img/american_flag.png"):
 	return img_64
 
 def make_bargraph(keys, values):
-	#fig= Figure()
-	#ax = fig.subplots()
+	#fig= Figure() #ax = fig.subplots()
 	sns.set_style("white")
 	f, ax = plt.subplots(figsize=(11, 9)) # this creates a figure 11 inch wide, 9 inch high
 	ax = sns.barplot(values, keys)
@@ -308,7 +315,7 @@ def youtube():
 		video_url = "https://www.youtube.com/watch?v=" + youtube_id
 		youtube = etree.HTML(urllib.request.urlopen(video_url).read()) #enter your youtube url here
 		video_title = youtube.xpath("//span[@id='eow-title']/@title") #get xpath using firepath firefox addon and gets NAME OF SONG
-		#''.join(video_title) #Lyrics_URL = 
+		#''.join(video_title)
 		#Lyrics = requests.get("http://video.google.com/timedtext?type=list&v=" + youtube_id).text
 		#if 'name=""' in Lyrics or 'name="en"' in Lyrics:
 		sentences = cleaning_lyrics(youtube_id)
@@ -330,69 +337,6 @@ def youtube():
 
 if __name__ == "__main__":
 	app.run(debug=True)
-
-# if 'ch' in filename:
-# 	words = jieba_processing_txt(output[i])
-# 	cloud = get_wordcloud_ch(words)
-# 	clouds.append(cloud)
-# 	data = Counter(output[i])
-# 	keys = list(data)
-# 	values= list(data.values())
-# 	#Make Bar Graph 
-# 	bar_graph= make_bar_ch(keys, values) 
-# 	graphs.append(bar_graph)	
-#else:
-"""userdict_list = ['阿Ｑ', '孔乙己', '单四嫂子']
-
-def jieba_processing_txt(text):
-	#jieba.enable_parallel(4)
-	# Setting up parallel processes :4 ,but unable to run on Windows
-	for word in userdict_list:
-		jieba.add_word(word)
-
-	mywordlist = []
-	seg_list = jieba.cut(text, cut_all=False)
-	liststr = "/ ".join(seg_list)
-
-	for myword in liststr.split('/'):
-		if len(myword.strip()) > 1:
-			mywordlist.append(myword)
-	return ' '.join(mywordlist)
-
-def get_wordcloud_ch(text):
-	wc = WordCloud(font_path=font_path, background_color="white", max_words=2000, #mask=back_coloring,
-	max_font_size=100, random_state=42, width=1000, height=860, margin=2,).generate(jieba_processing_txt(text)).to_image()
-	img = io.BytesIO()
-	wc.save(img, "PNG")
-	img.seek(0)
-	img_64 = base64.b64encode(img.getvalue()).decode('utf-8')
-	#data = base64.b64encode(img.getbuffer()).decode("ascii")
-	return img_64
-"""
-"""
-def make_bar_ch(keys, values):
-	fig= Figure()
-	ax = fig.subplots()
-	width = 0.60
-	#barh plots horizontal barplot
-	ax.bar(keys, values, width)
-	# Set common labels
-	ax.set_title(u'说的字数', fontproperties=font_name) 
-	ax.set_xlabel(u'次数',fontproperties=font_name)
-	ax.set_ylabel(u'字', fontproperties=font_name)
-	ax.set_xticks(keys)
-	for label in ax.xaxis.get_majorticklabels():
-		label.set(fontproperties=font_name)
-	#set parameters for tick labels
-	ax.tick_params(axis='x', which='major', labelsize=5, grid_linewidth = 100)
-	#plt.xticks(keys, fontproperties=chinese) 
-	buf = BytesIO()
-	fig.savefig(buf, format="png")
-	#img_64 = base64.b64encode(buf.getbuffer()).decode('ascii')
-	img_64 = base64.b64encode(buf.getbuffer()).decode('utf-8')
-	#data = base64.b64encode(img.getbuffer()).decode("ascii")
-	return img_64
-"""
 
 """
 #CREATE DOUBLE BARPLOT AND REGULAR BAR PLOT
@@ -502,11 +446,4 @@ def sample_long_running_recognize(storage_uri):
 def favicon():
 	return send_from_directory(os.path.join(app.root_path, 'static'),
 							   'favicon.ico', mimetype='image/vnd.microsoft.icon') 
-@app.route("/about")
-def about():
-	return render_template("about.html")
-
-@app.route("/thanks")
-def thanks():
-	return render_template("thanks.html")
 '''
