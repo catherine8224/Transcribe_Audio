@@ -4,8 +4,9 @@
 https://audiotranscription12.herokuapp.com/
 <hr>
 <h3> About Speech Performance Easy Analyzer for Kicks (SPEAK) </h3>
-'''diff
-- ** Currently being updated to support audio transcription for more than 30 seconds, and speaker diarization '''
+```diff
+- ** Currently being updated to support audio transcription for more than 30 seconds, and speaker diarization 
+```
     <p font-size: > SPEAK is a micro web framework written in Python.</p>
     <p> SPEAK is an application that can take in pre-recorded audio files (wav, mp3, m4a, ogg and FLAC)</p>
     <p> You can either do two things: 1) upload one/multiple audio file(s) or 2) upload a Youtube music video with captions so that it can process the captioned words. 
