@@ -6,10 +6,9 @@
 https://audiotranscription12.herokuapp.com/
 <hr>
 <h3> About Speech Performance Easy Analyzer for Kicks (SPEAK) </h3>
-
-    <p font-size: > SPEAK is a micro web framework written in Python.</p>
-    <p> SPEAK is an application that can take in pre-recorded audio files (wav, mp3, m4a, ogg and FLAC)</p>
-    <p> You can either do two things: 1) upload one/multiple audio file(s) or 2) upload a Youtube music video with captions so that it can process the captioned words. 
+<p font-size: > SPEAK is a micro web framework written in Python.</p>
+<p> SPEAK is an application that can take in pre-recorded audio files (wav, mp3, m4a, ogg and FLAC)</p>
+<p> You can either do two things: 1) upload one/multiple audio file(s) or 2) upload a Youtube music video with captions so that it can process the captioned words. 
       <ol>
       <li>
       For the first option, it can take in audio files in different languages (French, Spanish, Chinese, and English). Once it is processed and saved in Google Cloud Storage, it will transcribe the audio, and create a Word Cloud and bar graph of the words said in the file. 
