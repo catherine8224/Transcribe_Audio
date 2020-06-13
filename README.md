@@ -2,7 +2,7 @@
 An audio transcription website that relies on speech-to-text algorithms that will convert audio &amp; video files to text in minutes. Currently does not support speaker diarization.
 
 ```diff
-- Currently being updated to support audio transcription for more than 30 seconds, and speaker diarization 
+- Has been updated to support audio transcription for more than 30 seconds, and will be updated for speaker diarization 
 ```
 ## WEBSITE
 https://audiotranscription12.herokuapp.com/
