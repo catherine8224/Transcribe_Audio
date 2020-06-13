@@ -1,18 +1,16 @@
 {% extends "template.html" %}
 {% block content %}
   <head>
-    
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
     <title>Speech Recording</title>	
-    <link href="static/css/app.css" rel="stylesheet" type="text/css">
+    <link href="static/css/main.css" rel="stylesheet" type="text/css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
   </head>
   <script type="text/javascript">
     var csrf_token = "{{ csrf_token }}";
   </script>
+
+
   <body>
-    <!--<center><p id="timer" style="display: block;"><font size ="20">00:00</font></p></center>-->
     <div class="wrapper">
       <h1>Speech Recording</h1>
       <section class="top-display">

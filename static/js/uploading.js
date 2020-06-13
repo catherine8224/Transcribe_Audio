@@ -7,13 +7,11 @@
 		return document.getElementById(id);
 	}
 
-
 	// output information
 	function Output(msg) {
 		var m = $id("messages");
 		m.innerHTML = msg + m.innerHTML;
 	}
-
 
 	// file drag hover
 	function FileDragHover(e) {
@@ -21,7 +19,6 @@
 		e.preventDefault();
 		e.target.className = (e.type == "dragover" ? "hover" : "");
 	}
-
 
 	// file selection
 	function FileSelectHandler(e) {
@@ -39,7 +36,6 @@
 
 	}
 
-
 	// output file information
 	function ParseFile(file) {
 
@@ -52,10 +48,13 @@
 
 	}
 
+	// call initialization file
+	if (window.File && window.FileList && window.FileReader) {
+		Init();
+	}
 
 	// initialize
 	function Init() {
-
         var fileselect = $id("example-file"),
 			filedrag = $id("filedrag"),
 			submitbutton = $id("submitbutton");
@@ -79,28 +78,10 @@
 
 	}
 
-	// call initialization file
-	if (window.File && window.FileList && window.FileReader) {
-		Init();
-	}
+
 
 
 })();
 
 
-//SHOW DIFFERENT WORDCLOUD IMAGES BASED ON DROPDOWN SELECTION
-//document.getElementById("myBtn").addEventListener("click", displayDate);
 
-//$('#picDD').change(function () {
-//	var val = parseINt($)
-//})
-
-var imagesArray = [
-	"data:image/png;base64,{{clouds1[i]}}", // represents val 0,
-	"data:image/png;base64,{{clouds2[i]}}", // 1,
-	"data:image/png;base64,{{clouds3[i]}}"  // 2 ...
-  ];
-  
-  $('#picDD').change(function(){
-	$('#image')[0].src = imagesArray[this.value];
-  });

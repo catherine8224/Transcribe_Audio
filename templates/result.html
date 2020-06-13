@@ -1,56 +1,81 @@
 {% extends "template.html" %}
 <script src="{{ url_for('static', filename='js/upload.js') }}"></script>
 <script src="{{ url_for('static', filename='js/jquery-1.11.1.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/plots.js') }}"></script>
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/loadingbar.css') }}">
+
 {% block page_content %}
 
-<div class="wrappers">
+<style>
+  .column {
+    float: left;
+    width: 40%;
+    padding: 5px;
+  }
 
+  /* Clear floats after image containers */
+  .row::after {
+    content: "";
+    display: table;
+  }
+
+  .wrappers {
+    text-align: center;
+  }
+</style>
+
+<div class="wrappers">
   {% if len is defined %}
   {% for i in range(0, len) %}
   <h2> Transcription {{i+1}}</h2>
-  <center><audio src="{{ filepaths[i] }}" controls> </audio></center>
+  <audio src="{{ filepaths }}" controls> </audio>
   <br></br>
+
   <div class="header">
-    <!--<h3 class="text-muted">Transcription</h3>-->
-    <center><textarea id="text-val" rows="10" cols="75">{{output[i]}}</textarea></center>
-    <center><input type="button" id="dwn-btn" value="Download (.txt)" /></center>
-    <br></br>
+    <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+
+    <textarea name="editor1" id="text-val" rows="10" cols="150">{{output[i]}}</textarea>
+    <input type="button" id="dwn-btn" value="Download (.txt)" />
+    <script>
+      CKEDITOR.replace('editor1')
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script>
+      // Start file download.
+      document.getElementById("dwn-btn").addEventListener("click", function () {
+        // Generate download of hello.txt file with some content
+        var text = document.getElementById("text-val").value;
+        var filename = "Transcription.txt";
+
+        download(filename, text);
+      }, false);
+    </script>
   </div>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
-  <script>
-    // Start file download.
-    document.getElementById("dwn-btn").addEventListener("click", function () {
-      // Generate download of hello.txt file with some content
-      var text = document.getElementById("text-val").value;
-      var filename = "Transcription.txt";
-
-      download(filename, text);
-    }, false);
-  </script>
-
-  <center>
-    <div class="maintainers">
-      <img id="image" src="data:image/png;base64,{{clouds[i]}}" class="galimage" style="width:500px;height:500px;"
-        onerror="hideImage(this);" />
+  <div class="row">
+    <div class="column">
+      <div class="maintainers">
+        <img id="image" src="data:image/png;base64,{{clouds[i]}}" class="galimage" 
+          onerror="hideImage(this);" />
+      </div>
     </div>
-  </center>
 
-  <center>
-    <div class="maintainer">
-      <img src="data:image/png;base64,{{graphs[i]}}" class="galimage" onerror="hideImage(this);" />
+    <div class="column">
+      <div class="maintainer">
+        <img src="data:image/png;base64,{{graphs[i]}}" class="galimage" onerror="hideImage(this);" />
+      </div>
     </div>
-  </center>
-  {% endfor %}
-  {% endif %}
+  </div>
+</div>
+
+{% endfor %}
+{% endif %}
 
 
-  <br></br>
+<br></br>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="static/js/pace.js"></script>
 
-  {% endblock %}
+{% endblock %}
 
 </div>

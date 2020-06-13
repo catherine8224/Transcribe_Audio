@@ -1,39 +1,44 @@
 {% extends "template.html" %}
 
-<head> 
-  <script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+<head>
+	<script src="{{ url_for('static', filename='js/upload.js') }}"></script>
 </head>
 {% block page_content %}
-  
+
 <div class="wrappers">
-  <div class="header">
-    <h2> Transcription: {{video_title}}</h2>
-    <center><textarea id="text-vals" rows="10" cols="80">{{sentences}}</textarea></center>
-    <center><input type="button" id="dwn-btns" value="Download file (.txt)"/></center>
-  </br>
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script>
-    // Start file download.
-    document.getElementById("dwn-btns").addEventListener("click", function(){
-      // Generate download of hello.txt file with some content
-      var text = document.getElementById("text-vals").value;
-      var filename = "Transcription.txt";
-      
-      download(filename, text);
-    }, false);
-    </script>
+	<div class="header">
+		<h2> Transcription: {{video_title}}</h2>
+<textarea id="text-vals" rows="10" cols="80">{{sentences}}</textarea>
+<input type="button" id="dwn-btns" value="Download file (.txt)" />
+		</br>
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script>
+		// Start file download.
+		document.getElementById("dwn-btns").addEventListener("click", function () {
+			// Generate download of hello.txt file with some content
+			var text = document.getElementById("text-vals").value;
+			var filename = "Transcription.txt";
 
-  <center>
-  <div class="maintainers">
-    <img id="image" img src="data:image/png;base64,{{ clouds }}" class="galimage" onerror="hideImage(this);" style="text-align: center;" style="width:500px;height:500px;"/>
-  </div>
-  </center>
+			download(filename, text);
+		}, false);
+	</script>
 
-  <center><div class="maintainer">
-    <img src="data:image/png;base64,{{ graphs }}" class="galimage" onerror="hideImage(this);" style="text-align: center;"/>
-  </div></center>
-</div>
+	<div class="row">
+		<div class="column">
+			<div class="maintainers">
+				<img id="image" img src="data:image/png;base64,{{ clouds }}" class="galimage" onerror="hideImage(this);"
+					style="text-align: center;" />
+			</div>
+		</div>
+
+		<div class="column">
+			<div class="maintainer">
+				<img src="data:image/png;base64,{{ graphs }}" class="galimage" onerror="hideImage(this);"
+					style="text-align: center;" />
+			</div>
+		</div>
+	</div>
 
 </div>
 </form>

@@ -1,4 +1,8 @@
 //UPLOADING AND DELETING FILES TO BE TRANSCRIBED IN FRENCH CHINESE ENGLISH 
+function de() {
+  $("input[type=button]").attr("style", "display:none");
+}
+
 $(document).ready(function() {
   de();
 
@@ -21,11 +25,6 @@ $(document).ready(function() {
   })
 
 })
-
-function de() {
-  $("input[type=button]").attr("style", "display:none");
-}
-
 
 function download(filename, text) {
 	var element = document.createElement('a');

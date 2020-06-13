@@ -3,7 +3,7 @@
 const record = document.querySelector('.record');
 //const pause = document.querySelector('.pause');
 //const pauseButton = document.getElementById("pauseButton")
-const pauseButton = document.querySelector(".pause")
+const pauseButton = document.querySelector(".pause");
 const stop = document.querySelector('.stop');
 const soundClips = document.querySelector('.sound-clips');
 const canvas = document.querySelector('.visualizer');
@@ -22,7 +22,7 @@ var ignoreAutoPlay = false;
 //disable pause button while not recording
 stop.disabled = true;
 upload.disabled = false;
-pauseButton.disabled = true; 
+pauseButton.disabled = true;
 
 // visualiser setup - create web audio api context and canvas
 
@@ -62,52 +62,52 @@ if (navigator.mediaDevices.getUserMedia) {
 
   // Create a MediaStreamAudioSourceNode
   // Feed the HTMLMediaElement into it
-  let onSuccess = function(stream) {
+  let onSuccess = function (stream) {
     const mediaRecorder = new MediaRecorder(stream);
     var audioCtx = new AudioContext();
     mediaStreamSource = audioCtx.createMediaStreamSource(stream);
     visualize(stream);
 
-    record.onclick = function() {
+    record.onclick = function () {
       mediaRecorder.start();
       console.log(mediaRecorder.state);
       console.log("recorder started");
       record.style.background = "red";
       stop.disabled = false;
       record.disabled = true;
-      pauseButton.disabled= false;
-    } 
+      pauseButton.disabled = false;
+    }
 
     //pauses the recording
-    pauseButton.onclick = function() {
-      if(mediaRecorder.state === "recording") {
+    pauseButton.onclick = function () {
+      if (mediaRecorder.state === "recording") {
         mediaRecorder.pause();
         stop.disabled = false;
         record.disabled = false;
-        pauseButton.disabled= false;
+        pauseButton.disabled = false;
         // recording paused
-      } else if(mediaRecorder.state === "paused") {
+      } else if (mediaRecorder.state === "paused") {
         mediaRecorder.resume();
         stop.disabled = false;
         record.disabled = true;
-        pauseButton.disabled= false;
+        pauseButton.disabled = false;
         // resume recording
       }
     }
-  
-    mediaRecorder.onpause = function() {
+
+    mediaRecorder.onpause = function () {
       // do something in response to
       // recording being paused
       pauseButton.innerHTML = 'Resume'
     }
-  
-    mediaRecorder.onresume = function() {
+
+    mediaRecorder.onresume = function () {
       // do something in response to
       // recording being resumed
       pauseButton.innerHTML = 'Pause'
     }
 
-    stop.onclick = function() {
+    stop.onclick = function () {
       mediaRecorder.stop();
       console.log(mediaRecorder.state);
       console.log("recorder stopped");
@@ -116,102 +116,89 @@ if (navigator.mediaDevices.getUserMedia) {
       // mediaRecorder.requestData();
       stop.disabled = true;
       record.disabled = false;
-      pauseButton.disabled= false;  
-      upload.disabled=false; 
-      promptToSave();
+      pauseButton.disabled = false;
+      upload.disabled = false;
+      //promptToSave();
     }
 
-    upload.onclick = function() {
+    upload.onclick = function () {
       saveRecordings();
     }
-  
-    mediaRecorder.onstop = function(e) {
+
+    mediaRecorder.onstop = function (e) {
       console.log("data available after MediaRecorder.stop() called.");
+      if (confirm('Are you ready to upload your words?\nIf not, press cancel now, and then press Upload once you are ready.')) {
+        const clipName = prompt('Enter a name for your sound clip?', 'My unnamed clip');
+        console.log(clipName);
+        const clipContainer = document.createElement('article'); //<article class="clip">
+        const clipLabel = document.createElement('p'); //<p>My unnamed clip</p>
+        const audio = document.createElement('audio'); //<audio controls src="a;slkf;asf"></audio>
+        const link = document.createElement('a');
+        const deleteButton = document.createElement('button');
 
-      const clipName = prompt('Enter a name for your sound clip?','My unnamed clip');
-      console.log(clipName);
-      const clipContainer = document.createElement('article'); //<article class="clip">
-      const clipLabel = document.createElement('p'); //<p>My unnamed clip</p>
-      const audio = document.createElement('audio'); //<audio controls src="a;slkf;asf"></audio>
-      const link = document.createElement('a');
-      const deleteButton = document.createElement('button');
-
-      clipContainer.classList.add('clip'); //<article class="clip">
-      audio.setAttribute('controls', '');//<audio controls...>
-      deleteButton.textContent = 'Delete';
-      deleteButton.className = 'delete';
-
-      //clipLabel.onclick = function() {
-        //const existingName = clipLabel.textContent;
-        //const newClipName = prompt('Enter a new name for your sound clip?');
-      if(clipName === null) {
-        clipLabel.textContent = 'My unnamed clip';
-      } else {
-        clipLabel.textContent = clipName;
-      }
-     
-      /*fileNumber=0;
-      if(clipName === null) {
-        allClips = document.querySelectorAll('.clip');
-        clipLabel.textContent = 'Unnamedclip_' + fileNumber;
-        //allClips.length
-        if(clipLabel.textContent.exists()) {
-          clipLabel.textContent = 'Unnamedclip_' + (fileNumber++);
-        }
-
-      } else {
-        clipLabel.textContent = clipName;
-      }*/
-
-      clipContainer.appendChild(audio);
-      clipContainer.appendChild(clipLabel);
-      clipContainer.appendChild(deleteButton);
-      clipContainer.appendChild(link)
-      soundClips.appendChild(clipContainer);
-
-      audio.controls = true;
-      const blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
-      chunks = [];
-      const audioURL = window.URL.createObjectURL(blob);
-      audio.src = audioURL;
-      link.href = audioURL;
-      link.download = clipName + ".mp3";
-      link.innerHTML= "Save to disk";
-      console.log("recorder stopped");
-
-      deleteButton.onclick = function(e) {
-        evtTgt = e.target;
-        evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode);
-      }
-
-      clipLabel.onclick = function() {
-        const existingName = clipLabel.textContent;
-        const newClipName = prompt('Enter a new name for your sound clip?');
-        if(newClipName === null) {
-          clipLabel.textContent = existingName;
+        clipContainer.classList.add('clip'); //<article class="clip">
+        audio.setAttribute('controls', '');//<audio controls...>
+        deleteButton.textContent = 'Delete';
+        deleteButton.className = 'delete';
+        if (clipName === null) {
+          clipLabel.textContent = 'My unnamed clip';
         } else {
-          clipLabel.textContent = newClipName;
+          clipLabel.textContent = clipName;
         }
+
+
+        clipContainer.appendChild(audio);
+        clipContainer.appendChild(clipLabel);
+        clipContainer.appendChild(deleteButton);
+        clipContainer.appendChild(link)
+        soundClips.appendChild(clipContainer);
+
+        audio.controls = true;
+        const blob = new Blob(chunks, { 'type': 'audio/ogg; codecs=opus' });
+        chunks = [];
+        const audioURL = window.URL.createObjectURL(blob);
+        audio.src = audioURL;
+        link.href = audioURL;
+        link.download = clipName + ".mp3";
+        link.innerHTML = "Save to disk";
+        console.log("recorder stopped");
+
+        deleteButton.onclick = function (e) {
+          evtTgt = e.target;
+          evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode);
+        }
+
+        clipLabel.onclick = function () {
+          const existingName = clipLabel.textContent;
+          const newClipName = prompt('Enter a new name for your sound clip?');
+          if (newClipName === null) {
+            clipLabel.textContent = existingName;
+          } else {
+            clipLabel.textContent = newClipName;
+          }
+        }
+
       }
-    }
+      upload.disabled = false;
+      //saveRecordings();
 
-    mediaRecorder.ondataavailable = function(e) {
-      chunks.push(e.data);
     }
+    mediaRecorder.ondataavailable = function (e) {
+      chunks.push(e.data);}
   }
 
-  let onError = function(err) {
-    console.log('The following error occured: ' + err);
-  }
 
-  navigator.mediaDevices.getUserMedia(constraints).then(onSuccess, onError);
+    let onError = function (err) {
+      console.log('The following error occured: ' + err);
+    }
 
-} else {
-   console.log('getUserMedia not supported on your browser!');
+    navigator.mediaDevices.getUserMedia(constraints).then(onSuccess, onError);
+  } else {
+    console.log('getUserMedia not supported on your browser!');
 }
 
 function visualize(stream) {
-  if(!audioCtx) {
+  if (!audioCtx) {
     audioCtx = new AudioContext();
   }
 
@@ -247,12 +234,12 @@ function visualize(stream) {
     let x = 0;
 
 
-    for(let i = 0; i < bufferLength; i++) {
+    for (let i = 0; i < bufferLength; i++) {
 
       let v = dataArray[i] / 128.0;
-      let y = v * HEIGHT/2;
+      let y = v * HEIGHT / 2;
 
-      if(i === 0) {
+      if (i === 0) {
         canvasCtx.moveTo(x, y);
       } else {
         canvasCtx.lineTo(x, y);
@@ -261,25 +248,17 @@ function visualize(stream) {
       x += sliceWidth;
     }
 
-    canvasCtx.lineTo(canvas.width, canvas.height/2);
+    canvasCtx.lineTo(canvas.width, canvas.height / 2);
     canvasCtx.stroke();
 
   }
 }
 
-window.onresize = function() {
+window.onresize = function () {
   canvas.width = mainSection.offsetWidth;
 }
 
 window.onresize();
-
-function promptToSave() {
-  if (confirm('Are you ready to upload your words?\nIf not, press cancel now,' + 
-	      ' and then press Upload once you are ready.')) {
-    saveRecordings();
-  }
-  upload.disabled = false;
-}
 
 var allClips;
 var clipIndex;
@@ -302,7 +281,7 @@ function saveRecordings() {
   mediaStreamSource.disconnect();
   allClips = document.querySelectorAll('.clip');
   console.log('allClips: ', allClips)
-  clipIndex=0;
+  clipIndex = 0;
   uploadNextClip();
 }
 
@@ -315,26 +294,26 @@ function uploadNextClip() {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', audioBlobUrl, true);
   xhr.responseType = 'blob';
-  xhr.onload = function(e) {
+  xhr.onload = function (e) {
     if (this.status == 200) {
       var blob = this.response;
       var ajaxRequest = new XMLHttpRequest();
       var uploadUrl = '/record_form?word=' + word; //+ '&_csrf_token=' + csrf_token;
       ajaxRequest.open('POST', uploadUrl, true);
-      ajaxRequest.setRequestHeader('Content-Type', 'application/json');    
-      ajaxRequest.onreadystatechange = function() {
+      ajaxRequest.setRequestHeader('Content-Type', 'application/json');
+      ajaxRequest.onreadystatechange = function () {
         if (ajaxRequest.readyState == 4) {
-    if (ajaxRequest.status === 200) {
+          if (ajaxRequest.status === 200) {
             clipIndex += 1;
             if (clipIndex < allClips.length) {
-        uploadNextClip();
-      } else {
-        allDone();
-      }
+              uploadNextClip();
+            } else {
+              allDone();
+            }
           } else {
             alert('Uploading failed with error code ' + ajaxRequest.status);
           }
-  }
+        }
       };
       ajaxRequest.send(blob);
     }
@@ -347,13 +326,13 @@ function allDone() {
   location.reload(true);
 }
 
-document.getElementById("timer").onclick = function() {revealMessage()};
+document.getElementById("timer").onclick = function () { revealMessage() };
 
 function revealMessage() {
   document.getElementById("timer").style.display = 'block';
 }
 
-(function(){
+(function () {
   "use strict";
   var $start_button = document.getElementById("recordButton");
   var $stop_button = document.getElementById("stopButton");
@@ -371,23 +350,23 @@ function revealMessage() {
     updateSecond(second + 1);
   }
   var timer_handle = -1;
-  $start_button.addEventListener("click", function(ev) {
+  $start_button.addEventListener("click", function (ev) {
     timer_handle = setInterval(nextSecond, 1000);
   }, false);
-  $stop_button.addEventListener("click", function(ev) {
+  $stop_button.addEventListener("click", function (ev) {
     if (timer_handle != -1) {
       clearInterval(timer_handle);
       timer_handle = -1;
       updateSecond(0);
     }
   }, false);
-  $pause_button.addEventListener("click", function(ev) {
+  $pause_button.addEventListener("click", function (ev) {
     if (timer_handle != -1) {
-    clearInterval(timer_handle);
-    timer_handle = -1;
-  }
-  else {
-    timer_handle = setInterval(nextSecond, 1000);
-  }
-}, false);
+      clearInterval(timer_handle);
+      timer_handle = -1;
+    }
+    else {
+      timer_handle = setInterval(nextSecond, 1000);
+    }
+  }, false);
 })();

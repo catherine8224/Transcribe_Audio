@@ -2,11 +2,12 @@
 
 {% block head %}
 {{ super() }}
-<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+<link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon">
+<link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon">
+<script src="static/js/translate.js"></script>
 
 <!-- Generic page styles -->
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" type="text/css" media="all" href="{{ url_for('static', filename='css/main.css') }}">
 
 <!-- blueimp Gallery styles -->
 <link rel="stylesheet" href="http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
@@ -14,6 +15,8 @@
 <!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
 <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.fileupload.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.fileupload-ui.css') }}">
+<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+
 {% endblock %}
 
 {% block navbar %}
@@ -22,14 +25,10 @@
 
 <head>
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-
-
-  <meta charset="utf-8">
   <title>SPEAK</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <script src="static/js/translate.js"></script>
-  <link href="static/css/app.css" rel="stylesheet" type="text/css">
+  <link href="static/css/main.css" rel="stylesheet" type="text/css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
 
   <!-- Latest compiled and minified CSS -->
@@ -49,12 +48,10 @@
 <body>
 
   <header>
-    <h1 class="logo">SPEAK</h1>
-    <div class="container">
-      <strong>
+    <h1 class="logo"><a href="{{ url_for('home') }}">SPEAK</a></h1>
+      <div class="container">
         <nav>
           <ul class="menu">
-            <li><a href="{{ url_for('home') }}">Home</a></li>
             <li><a href="{{ url_for('uploading') }}">Upload</a></li>
             <li><a href="{{ url_for('record_form') }}">Record</a></li>
             <li>
@@ -86,35 +83,35 @@
                   </button>
                   <div class="dropdown-menu dropdown-menu-right">
                     <div class="dropdown-menu-col">
-                      <a href="javascript:;" id="English" onclick="translateLanguage(this.id);"><span id="bimp"><img
-                            src="static/img/american_flag.png" alt="" style="width:15px;height:10px;" />English
+                      <a href="javascript:;" id="English" onclick="translateLanguage(this.id);"><span id="bimp"><div style="float: left;"><img
+                            src="static/img/american_flag.png" alt="" style="width:15px;height:10px;" /></div>English
                         </span></a>
-                      <a href="javascript:;" id="German" onclick="translateLanguage(this.id);"><img
-                          src="static/img/germany_flag.png" alt="" style="width:15px;height:10px;" /><span
-                          id="bimp">Deutsch
+                      <a href="javascript:;" id="German" onclick="translateLanguage(this.id);"><span id="bimp"><div style="float: left;"><img
+                          src="static/img/germany_flag.png" alt="" style="width:15px;height:10px;" /></div>Deutsch
                         </span></a>
-                      <a href="javascript:;" id="Italian" onclick="translateLanguage(this.id);"><span id="bimp"><img
-                            src="static/img/italy_flag.png" alt="" style="width:15px;height:10px;" />Italiano
+                      <a href="javascript:;" id="Italian" onclick="translateLanguage(this.id);"><span id="bimp"><div style="float: left;"><img
+                            src="static/img/italy_flag.png" alt="" style="width:15px;height:10px;" /></div>Italiano
                         </span></a>
-                      <a href="javascript:;" id="Hindi" onclick="translateLanguage(this.id);"><span id="bimp"><img
-                            src="static/img/india_flag.png" alt="" style="width:15px;height:10px;" /></a>
-                      हिंदी </span>
-                      <a href="javascript:;" id="French" onclick="translateLanguage(this.id);"><span>Français </span>
-                        <img src="static/img/french_flag.png" alt="" style="width:15px;height:10px;" /></a>
+                      <a href="javascript:;" id="Hindi" onclick="translateLanguage(this.id);"><span id="bimp"><div style="float: left;"><img
+                            src="static/img/india_flag.png" alt="" style="width:15px;height:10px;" /></div>हिंदी 
+                        </span></a>
+                      <a href="javascript:;" id="French" onclick="translateLanguage(this.id);"><span id="bimp"><div style="float: left;"><img 
+                        src="static/img/french_flag.png" alt="" style="width:15px;height:10px;" /></div>Français
+                      </span></a>
                     </div>
                     <div class="dropdown-menu-col">
-                      <a href="javascript:;" id="Spanish" onclick="translateLanguage(this.id);"><span
-                          id="bimp">Español</span>
-                        <img src="static/img/spain_flag.png" alt="" style="width:15px;height:10px;" /></a>
-                      <a href="javascript:;" id="Russian" onclick="translateLanguage(this.id);"><span
-                          id="bimp">Русский</span>
-                        <img src="static/img/russia_flag.png" alt="" style="width:15px;height:10px;" /></a>
-                      <a href="javascript:;" id="Filipino" onclick="translateLanguage(this.id);"><span
-                          id="bimp">Tagalog</span>
-                        <img src="static/img/philippines_flag.png" alt="" style="width:15px;height:10px;" /></a>
-                      <a href="javascript:;" id="Bengali" onclick="translateLanguage(this.id);"><span
-                          id="bimp">বাংলা</span>
-                        <img src="static/img/bangladesh_flag.png" alt="" style="width:15px;height:10px;" /></a>
+                      <a href="javascript:;" id="Spanish" onclick="translateLanguage(this.id);"><span id="bimp"><div style="float: left;"><img 
+                        src="static/img/spain_flag.png" alt="" style="width:15px;height:10px;" /></div>Español</span>
+                        </a>
+                      <a href="javascript:;" id="Russian" onclick="translateLanguage(this.id);"><span id="bimp"><div style="float: left;"><img 
+                        src="static/img/russia_flag.png" alt="" style="width:15px;height:10px;" /></div>Русский</span>
+                        </a>
+                      <a href="javascript:;" id="Filipino" onclick="translateLanguage(this.id);"><span id="bimp"><div style="float: left;"><img 
+                        src="static/img/philippines_flag.png" alt="" style="width:15px;height:10px;" /></div>Tagalog</span>
+                        </a>
+                      <a href="javascript:;" id="Bengali" onclick="translateLanguage(this.id);"><span id="bimp"><div style="float: left;"><img 
+                        src="static/img/bangladesh_flag.png" alt="" style="width:15px;height:10px;" /></div>বাংলা</span>
+                        </a>
                     </div>
                   </div>
                 </div>
@@ -122,7 +119,8 @@
             </li>
           </ul>
         </nav>
-      </strong>
+      </div>
+    </h1>
   </header>
 
   <script>
