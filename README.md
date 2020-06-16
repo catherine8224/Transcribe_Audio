@@ -1,7 +1,7 @@
 # Transcribe_Audio
 An audio transcription website that relies on speech-to-text algorithms that will convert audio &amp; video files to text in minutes. Currently does not support speaker diarization.
 ```diff
-- Has been updated to support audio transcription for more than 30 seconds, and will be updated for speaker diarization 
+- Currently had an issue with google cloud storage. Will resolve soon. Has been updated to support audio transcription for more than 30 seconds, and will be updated for speaker diarization
 ```
 ## WEBSITE
 https://www.speechanalyzer.me/
