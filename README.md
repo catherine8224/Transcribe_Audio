@@ -6,9 +6,9 @@ An audio transcription website that relies on speech-to-text algorithms that wil
 ## WEBSITE
 https://www.speechanalyzer.me/
 <hr>
-<h3> About Speech Performance Easy Analyzer for Kicks (SPEAK) </h3>
-<p font-size: > SPEAK is a micro web framework written in Python.</p>
-<p> SPEAK is an application that can take in pre-recorded audio files (wav, mp3, m4a, ogg and FLAC)</p>
+<h3> About Speech Analyzer </h3>
+<p font-size: > Speech Analyzer is a micro web framework written in Python.</p>
+<p> Speech Analyzer is a web application that can take in pre-recorded audio files (wav, mp3, m4a, ogg and FLAC)</p>
 <p> You can either do two things: 1) upload one/multiple audio file(s) or 2) upload a Youtube music video with captions so that it can process the captioned words. 
       <ol>
       <li>
