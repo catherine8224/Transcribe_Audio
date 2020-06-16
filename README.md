@@ -4,7 +4,7 @@ An audio transcription website that relies on speech-to-text algorithms that wil
 - Has been updated to support audio transcription for more than 30 seconds, and will be updated for speaker diarization 
 ```
 ## WEBSITE
-https://audiotranscription12.herokuapp.com/
+https://www.speechanalyzer.me/
 <hr>
 <h3> About Speech Performance Easy Analyzer for Kicks (SPEAK) </h3>
 <p font-size: > SPEAK is a micro web framework written in Python.</p>
